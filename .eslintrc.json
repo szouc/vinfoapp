@@ -1,0 +1,38 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 7,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "classes": true,
+      "defaultParams": true
+    }
+  },
+  "extends": [
+    "prettier",
+    "standard",
+    "standard-jsx",
+    "plugin:flowtype/recommended"
+  ],
+  "plugins": ["flowtype", "prettier"],
+  "rules": {
+    "semi": ["error", "never"],
+    "no-unexpected-multiline": "error",
+    "no-const-assign": "warn",
+    "no-this-before-super": "warn",
+    "no-undef": "warn",
+    "no-unreachable": "warn",
+    "no-unused-vars": "warn",
+    "constructor-super": "warn",
+    "valid-typeof": "warn",
+    "space-before-function-paren": "off",
+    "no-useless-constructor": "off"
+  }
+}
