@@ -1,2 +1,2 @@
 export reducer from './reducer'
-export AppStackNavigator from './AppStackNavigator'
+export AppSwitchNavigator from './AppSwitchNavigator'

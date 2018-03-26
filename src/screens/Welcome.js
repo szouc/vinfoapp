@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, Button, StyleSheet } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 
 class Welcome extends Component {
   render() {
@@ -9,10 +10,23 @@ class Welcome extends Component {
         <Text style={styles.title}>World!</Text>
         <Button
           title='Goto Login'
-          onPress={() => this.props.navigation.navigate('Login')}
+          onPress={() =>
+            this.props.navigation.dispatch(
+              NavigationActions.navigate({ routeName: 'Login' })
+            )
+          }
           style={styles.title1}
         />
         <Text style={styles.title1}>By!</Text>
+        <Button
+          title='Goto Login'
+          onPress={() =>
+            this.props.navigation.dispatch(
+              NavigationActions.navigate({ routeName: 'Main' })
+            )
+          }
+          style={styles.title1}
+        />
         <Text style={styles.title1}>SZOUC!</Text>
       </View>
     )

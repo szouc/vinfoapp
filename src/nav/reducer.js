@@ -1,7 +1,7 @@
-import AppStackNavigator from './AppStackNavigator'
+import AppSwitchNavigator from './AppSwitchNavigator'
 
 import { createNavReducer } from '../redux/createNavReducer'
 
-const navReducer = createNavReducer(AppStackNavigator)
+const navReducer = createNavReducer(AppSwitchNavigator)
 
 export default navReducer

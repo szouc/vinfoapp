@@ -3,10 +3,6 @@
 import '../settings/reactotronConfig'
 
 import { autoRehydrate, persistStore } from 'redux-persist-immutable'
-import {
-  createReduxBoundAddListener,
-  createReactNavigationReduxMiddleware
-} from 'react-navigation-redux-helpers'
 
 import { AsyncStorage } from 'react-native'
 import type { fromJS as Immut } from 'immutable'
@@ -15,6 +11,7 @@ import Reactotron from 'reactotron-react-native'
 import { applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import createSagaMiddleware from 'redux-saga'
+import { middleware as navMiddleware } from './navReduxHelper'
 import rootReducer from './reducer'
 import rootSaga from './saga'
 
@@ -23,10 +20,6 @@ const sagaMonitor = Reactotron.createSagaMonitor()
 const sagaMiddleware = createSagaMiddleware({
   sagaMonitor
 })
-const navMiddleware = createReactNavigationReduxMiddleware('root', state =>
-  state.get('nav')
-)
-export const addListener = createReduxBoundAddListener('root')
 const middleware = [sagaMiddleware, navMiddleware]
 const enhancer = composeWithDevTools(
   applyMiddleware(...middleware),

@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "tmp": "babel-node ./tmp.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -28,6 +29,8 @@
     "reselect": "^3.0.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
     "babel-jest": "22.4.3",
     "babel-plugin-transform-export-extensions": "^6.22.0",

@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { BackHandler } from 'react-native'
 import immutPropsToJS from './utils/immutPropsToJS'
 import { addNavigationHelpers, NavigationActions } from 'react-navigation'
-import { AppStackNavigator } from './nav'
-import { addListener } from './redux/configureStore'
+import { AppSwitchNavigator } from './nav'
+import { addListener } from './redux/navReduxHelper'
 
 const mapStateToProps = state => ({
   nav: state.get('nav')
@@ -21,7 +21,13 @@ class AppWithNavState extends Component {
 
   onBackPress = () => {
     const { dispatch, nav } = this.props
-    if (nav.index === 0) {
+    if (nav.routes[nav.index].routeName === 'Welcome') {
+      return false
+    }
+    if (nav.routes[nav.index].routeName === 'Login') {
+      return false
+    }
+    if (nav.routes[nav.index].routeName === 'Main') {
       return false
     }
     dispatch(NavigationActions.back())
@@ -31,7 +37,7 @@ class AppWithNavState extends Component {
   render() {
     const { dispatch, nav } = this.props
     return (
-      <AppStackNavigator
+      <AppSwitchNavigator
         navigation={addNavigationHelpers({ dispatch, state: nav, addListener })}
       />
     )
