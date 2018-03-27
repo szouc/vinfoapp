@@ -1,11 +1,18 @@
-import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 
-class Login extends Component {
+import { LoginForm } from '../modules/auth/containers'
+import { Logo } from '../modules/auth/components'
+import React from 'react'
+
+class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Login</Text>
+        <Logo />
+        <LoginForm />
+        <View style={styles.copyright}>
+          <Text style={styles.copyrightText}>2018</Text>
+        </View>
       </View>
     )
   }
@@ -14,13 +21,18 @@ class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f5f'
+    alignItems: 'center',
+    backgroundColor: '#455a64'
   },
-
-  title: {
-    fontWeight: '800'
+  copyright: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    marginVertical: 12
+  },
+  copyrightText: {
+    color: 'rgba(255,255,255,0.6)',
+    fontSize: 16
   }
 })
 

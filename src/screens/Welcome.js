@@ -9,10 +9,10 @@ class Welcome extends Component {
         <Text style={styles.title}>Hello!</Text>
         <Text style={styles.title}>World!</Text>
         <Button
-          title='Goto Login'
+          title='Goto AuthLoading'
           onPress={() =>
             this.props.navigation.dispatch(
-              NavigationActions.navigate({ routeName: 'Login' })
+              NavigationActions.navigate({ routeName: 'AuthLoading' })
             )
           }
           style={styles.title1}

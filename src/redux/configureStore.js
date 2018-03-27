@@ -20,7 +20,7 @@ const sagaMonitor = Reactotron.createSagaMonitor()
 const sagaMiddleware = createSagaMiddleware({
   sagaMonitor
 })
-const middleware = [sagaMiddleware, navMiddleware]
+const middleware = [navMiddleware, sagaMiddleware]
 const enhancer = composeWithDevTools(
   applyMiddleware(...middleware),
   autoRehydrate()
