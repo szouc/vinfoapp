@@ -24,8 +24,7 @@ const machineState = {
       failure: 'error'
     },
     main_screen: {
-      logout: 'login_screen',
-      failure: 'error'
+      logout: 'loading'
     },
     error: {
       login_retry: 'login_screen',
@@ -41,7 +40,7 @@ function * clearError() {
 
 function * loginScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
-    case 'login':
+    case 'logout':
       yield put({
         type: Type.REMOVE_AUTH
       })
@@ -55,7 +54,7 @@ function * loginScreenEffect(scope, action, data = '', pagination = {}) {
 
 function * mainScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
-    case 'logout':
+    case 'login':
       yield put({
         type: Type.SET_AUTH,
         payload: data

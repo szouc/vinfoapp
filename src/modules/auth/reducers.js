@@ -18,8 +18,8 @@ const authReducer = (
   switch (type) {
     case Type.SET_AUTH:
       return state
-        .set('loggedIn', payload.loggedIn)
-        .set('username', payload.username)
+        .set('loggedIn', true)
+        .set('username', payload)
     case Type.REMOVE_AUTH:
       return state.delete('loggedIn').delete('username')
     case Type.SET_LOADING:
