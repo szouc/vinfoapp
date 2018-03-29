@@ -7,7 +7,7 @@ import Immutable from 'immutable'
 
 const initialState = Immutable.fromJS({
   formLoading: false,
-  wholeLoading: false
+  screenLoading: false
 })
 
 const authReducer = (

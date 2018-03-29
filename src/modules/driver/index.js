@@ -1,2 +1,2 @@
 export reducer from './reducers'
-export * from './actionTypes'
+export saga from './sagas'

@@ -10,10 +10,9 @@ import type { fromJS as Immut } from 'immutable'
 import { fromJS } from 'immutable'
 import Machine from '../../utils/machine'
 import { NavigationActions } from 'react-navigation'
-import { delay } from 'redux-saga'
 
 const machineState = {
-  currentState: 'login_screen',
+  currentState: 'loading',
   states: {
     login_screen: {
       login: 'loading'
@@ -33,11 +32,6 @@ const machineState = {
   }
 }
 
-function * clearError() {
-  yield delay(2000)
-  yield put({ type: REQUEST_ERROR, payload: '' })
-}
-
 function * loginScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
     case 'logout':
@@ -45,6 +39,13 @@ function * loginScreenEffect(scope, action, data = '', pagination = {}) {
         type: Type.REMOVE_AUTH
       })
       yield put(NavigationActions.navigate({ routeName: 'Login' }))
+      break
+    default:
+      yield put({
+        type: REQUEST_ERROR,
+        payload: fromJS({ message: '没有相应的操作。' })
+      })
+      break
   }
   yield put({
     type: Type.SET_LOADING,
@@ -60,6 +61,13 @@ function * mainScreenEffect(scope, action, data = '', pagination = {}) {
         payload: data
       })
       yield put(NavigationActions.navigate({ routeName: 'Main' }))
+      break
+    default:
+      yield put({
+        type: REQUEST_ERROR,
+        payload: fromJS({ message: '没有相应的操作。' })
+      })
+      break
   }
   yield put({
     type: Type.SET_LOADING,
@@ -80,7 +88,6 @@ function * errorEffect(scope, error) {
     type: Type.SET_LOADING,
     payload: { scope: scope, loading: false }
   })
-  yield fork(clearError)
 }
 
 const effects = {
@@ -128,14 +135,14 @@ export function * loginFlow(): any {
 export function * logoutFlow(): any {
   while (true) {
     yield take(Type.LOGOUT_REQUEST)
-    yield logoutEffect('whole')
+    yield logoutEffect('screen')
     try {
       let isLogout: ?boolean = yield call(Api.logout)
       if (isLogout) {
-        yield logoutSuccessEffect('form', 'logout')
+        yield logoutSuccessEffect('screen', 'logout')
       }
     } catch (error) {
-      yield failureEffect('whole', error)
+      yield failureEffect('screen', error)
       machine.operation('logout_retry')
     }
   }

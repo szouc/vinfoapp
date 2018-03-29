@@ -1,4 +1,4 @@
-import { Transport, Fuel, Maintain } from '../screens'
+import { Transport, Fuel, Maintain, Profile } from '../screens'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 import React from 'react'
@@ -6,7 +6,7 @@ import { TabNavigator } from 'react-navigation'
 import { Dimensions } from 'react-native'
 
 const deviceWidth = Dimensions.get('window').width
-const tabCount = 3
+const tabCount = 4
 const tabWidth = deviceWidth / tabCount
 
 const MainNavigator = TabNavigator(
@@ -35,6 +35,15 @@ const MainNavigator = TabNavigator(
         tabBarLabel: '维修',
         tabBarIcon: ({ focused, tintColor }) => (
           <Icon name='wrench' size={26} color={focused ? tintColor : null} />
+        )
+      }
+    },
+    Profile: {
+      screen: Profile,
+      navigationOptions: {
+        tabBarLabel: '我的',
+        tabBarIcon: ({ focused, tintColor }) => (
+          <Icon name='user' size={26} color={focused ? tintColor : null} />
         )
       }
     }

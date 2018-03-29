@@ -4,13 +4,15 @@ import { reducer as navReducer } from '../nav'
 import { reducer as entityReducer } from '../modules/entity'
 import { reducer as authReducer } from '../modules/auth'
 import { reducer as errorReducer } from '../modules/error'
+import { reducer as driverReducer } from '../modules/driver'
 
 const rootReducer = combineReducers({
   auth: authReducer,
   error: errorReducer,
   entities: entityReducer,
   nav: navReducer,
-  form: formReducer
+  form: formReducer,
+  driver: driverReducer
 })
 
 export default rootReducer
