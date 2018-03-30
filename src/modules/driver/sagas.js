@@ -32,7 +32,7 @@ function * screenEffect(scope, action, data = '', pagination = {}) {
       })
       yield put({
         type: ADD_USER_ENTITY,
-        payload: data
+        payload: data.get('entities')
       })
       break
     default:
@@ -66,7 +66,7 @@ function * errorEffect(scope, error) {
 const driverEffects = {
   loading: loadingEffect,
   error: errorEffect,
-  screen: screenEffect
+  driver_screen: screenEffect
 }
 
 const machine = new Machine(driverState, driverEffects)
@@ -79,9 +79,7 @@ function * fetchProfileFlow(args) {
     const { payload } = yield take(Type.FETCH_PROFILE_REQUEST)
     yield fetchEffect('screen')
     try {
-      const driver = yield call(
-        Api.getDriverByUsername(payload)
-      )
+      const driver = yield call(Api.getDriverByUsername, payload)
       if (driver) {
         yield successEffect('screen', 'fetch', driver)
       }

@@ -90,6 +90,10 @@ const productNormalize = data => normalize(data, productSchema)
 const productArrayNormalize = data => normalize(data, [productSchema])
 const vehicleNormalize = data => normalize(data, vehicleSchema)
 const vehicleArrayNormalize = data => normalize(data, [vehicleSchema])
+const fuelNormalize = data => normalize(data, fuelSchema)
+const fuelArrayNormalize = data => normalize(data, [fuelSchema])
+const maintainNormalize = data => normalize(data, maintainSchema)
+const maintainArrayNormalize = data => normalize(data, [maintainSchema])
 const transportNormalize = data => normalize(data, transportSchema)
 const transportArrayNormalize = data => normalize(data, [transportSchema])
 
@@ -102,6 +106,10 @@ export {
   productArrayNormalize,
   vehicleNormalize,
   vehicleArrayNormalize,
+  fuelNormalize,
+  fuelArrayNormalize,
+  maintainNormalize,
+  maintainArrayNormalize,
   transportNormalize,
   transportArrayNormalize
 }

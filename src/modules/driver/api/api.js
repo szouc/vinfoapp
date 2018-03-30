@@ -11,7 +11,9 @@ async function getDriverByUsername (username) {
     const driver = userNormalize(data)
     return fromJS(driver)
   }
+  throw new Error('Something Wrong.(getDriverByUsername)')
 }
+
 async function changePasswordByUsername (values) {
   const username = values.get('username')
   const password = values.get('password')
@@ -21,6 +23,7 @@ async function changePasswordByUsername (values) {
     const driver = userNormalize(data)
     return fromJS(driver)
   }
+  throw new Error('Something Wrong.(changePasswordByUsername)')
 }
 export {
   getDriverByUsername,

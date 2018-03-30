@@ -2,6 +2,7 @@
   "presets": ["react-native"],
   "plugins": [
     ["transform-export-extensions"],
-    ["import", { "libraryName": "antd-mobile" }]
+    ["import", { "libraryName": "antd-mobile" }],
+    ["transform-react-jsx-source"]
   ]
 }

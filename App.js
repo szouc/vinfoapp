@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react'
 import moment from 'moment'
+import 'moment/locale/zh-cn'
 import Vinfo from './src'
 
 moment.locale('zh-cn')
