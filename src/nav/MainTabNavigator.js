@@ -1,4 +1,4 @@
-import { Transport, Fuel, Maintain, Profile } from '../screens'
+import { Transport, Maintain, Profile, FuelMainScreen } from '../screens'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 import React from 'react'
@@ -21,7 +21,7 @@ const MainNavigator = TabNavigator(
       }
     },
     Fuel: {
-      screen: Fuel,
+      screen: FuelMainScreen,
       navigationOptions: {
         tabBarLabel: '加油',
         tabBarIcon: ({ focused, tintColor }) => (

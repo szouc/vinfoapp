@@ -1,18 +1,18 @@
 import { SwitchNavigator } from 'react-navigation'
 
 import { Login, Welcome, AuthLoading } from '../screens'
-import Main from './MainTabNavigator'
+import App from './AppStackNavigator'
 
-const AppNavigator = SwitchNavigator(
+const AppSwitchNavigator = SwitchNavigator(
   {
     AuthLoading: { screen: AuthLoading },
     Welcome: { screen: Welcome },
     Login: { screen: Login },
-    Main: { screen: Main }
+    App: { screen: App }
   },
   {
     initialRouteName: 'Welcome'
   }
 )
 
-export default AppNavigator
+export default AppSwitchNavigator

@@ -7,7 +7,7 @@ class AuthLoading extends Component {
   componentDidMount = async () => {
     const isLoggedIn = await getLocalLoggedIn()
     const navAction = NavigationActions.navigate(
-      isLoggedIn ? { routeName: 'Main' } : { routeName: 'Login' }
+      isLoggedIn ? { routeName: 'App' } : { routeName: 'Login' }
     )
     this.props.navigation.dispatch(navAction)
   }

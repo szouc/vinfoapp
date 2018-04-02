@@ -18,7 +18,7 @@ async function getDriverVehicles(username) {
   throw new Error('Something wrong.(getDriverVehicles)')
 }
 
-async function addVehicleFuel(username, data) {
+async function addVehicleFuel({ username, data }) {
   const response = await Request.addVehicleFuel(username, data)
   if (response.status === STATUS_OK) {
     const data = response.data.result
@@ -28,7 +28,7 @@ async function addVehicleFuel(username, data) {
   throw new Error('Something wrong.(addVehicleFuel)')
 }
 
-async function getVehicleFuels(username, vehicleId) {
+async function getVehicleFuels({ username, vehicleId }) {
   const response = await Request.getDriverVehicles(username, vehicleId)
   if (response.status === STATUS_OK) {
     const data = response.data.result
@@ -38,7 +38,7 @@ async function getVehicleFuels(username, vehicleId) {
   throw new Error('Something wrong.(getVehicleFuels)')
 }
 
-async function deleteVehicleFuel(username, fuelId) {
+async function deleteVehicleFuel({ username, fuelId }) {
   const response = await Request.deleteVehicleFuel(username, fuelId)
   if (response.status === STATUS_OK) {
     const data = response.data.result

@@ -27,7 +27,7 @@ class AppWithNavState extends Component {
     if (nav.routes[nav.index].routeName === 'Login') {
       return false
     }
-    if (nav.routes[nav.index].routeName === 'Main') {
+    if (nav.routes[nav.index].index === 0) {
       return false
     }
     dispatch(NavigationActions.back())

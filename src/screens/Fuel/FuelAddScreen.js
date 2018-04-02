@@ -5,7 +5,7 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Fuel</Text>
+        <Text style={styles.title}>FuelAdd</Text>
       </View>
     )
   }

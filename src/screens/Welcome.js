@@ -22,7 +22,7 @@ class Welcome extends Component {
           title='Goto Login'
           onPress={() =>
             this.props.navigation.dispatch(
-              NavigationActions.navigate({ routeName: 'Main' })
+              NavigationActions.navigate({ routeName: 'App' })
             )
           }
           style={styles.title1}

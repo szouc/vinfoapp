@@ -2,6 +2,8 @@ import { NavigationActions } from 'react-navigation'
 import { fromJS } from 'immutable'
 
 const Actions = [
+  // https://github.com/react-navigation/react-navigation/issues/3560
+  // NavigationActions.COMPLETE_TRANSITION,
   NavigationActions.BACK,
   NavigationActions.INIT,
   NavigationActions.NAVIGATE,
@@ -11,8 +13,7 @@ const Actions = [
   NavigationActions.PUSH,
   NavigationActions.REPLACE,
   NavigationActions.RESET,
-  NavigationActions.URI,
-  NavigationActions.COMPLETE_TRANSITION
+  NavigationActions.URI
 ]
 
 const initAction = NavigationActions.init()
