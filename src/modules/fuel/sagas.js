@@ -257,7 +257,7 @@ function * backFlow() {
     const { payload } = yield take(Type.BACK_REQUEST)
     yield backEffect('screen')
     try {
-      const fuels = yield call(Api.getDriverFuels, payload)
+      const fuels = yield call(Api.getDriverVehicles, payload)
       if (fuels) {
         yield backSuccessEffect('screen', 'back', fuels)
       }

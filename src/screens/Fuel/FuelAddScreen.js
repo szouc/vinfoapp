@@ -1,7 +1,36 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, BackHandler } from 'react-native'
+import { backRequest } from '../../modules/fuel/actions'
+import { connect } from 'react-redux'
+import immutPropsToJS from '../../utils/immutPropsToJS'
 
-class Login extends Component {
+const mapStateToProps = (state, ownProps) => {
+  return {
+    username: state.getIn(['auth', 'username'])
+  }
+}
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    backToMain: username => {
+      dispatch(backRequest(username))
+    }
+  }
+}
+
+class FuelAddScreen extends Component {
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.onBackPress)
+  }
+
+  onBackPress = () => {
+    this.props.backToMain(this.props.username)
+    return true
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -24,4 +53,6 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Login
+export default connect(mapStateToProps, mapDispatchToProps)(
+  immutPropsToJS(FuelAddScreen)
+)
