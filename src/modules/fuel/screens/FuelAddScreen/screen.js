@@ -4,9 +4,15 @@ import { backRequest } from '../../modules/fuel/actions'
 import { connect } from 'react-redux'
 import immutPropsToJS from '../../utils/immutPropsToJS'
 import { BackButton, FuelAddForm } from '../../modules/fuel/containers'
+import { withNavigation } from 'react-navigation'
 
 const WithHardwareBack = Component => {
   class WrapperComponent extends React.Component {
+    static navigationOptions = {
+      title: '新增加油记录',
+      headerLeft: (<BackButton />)
+    }
+
     componentDidMount() {
       BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
     }
@@ -21,7 +27,8 @@ const WithHardwareBack = Component => {
     }
 
     render() {
-      return <Component />
+      const WithNavComponent = withNavigation(Component)
+      return <WithNavComponent />
     }
   }
 
@@ -44,15 +51,4 @@ const WithHardwareBack = Component => {
   )
 }
 
-const FuelAddFormWithBack = WithHardwareBack(FuelAddForm)
-
-export default class FuelAddScreen extends React.Component {
-  static navigationOptions = {
-    title: 'whatever',
-    headerLeft: () => <BackButton />
-  }
-
-  render() {
-    return <FuelAddFormWithBack />
-  }
-}
+export default WithHardwareBack(FuelAddForm)

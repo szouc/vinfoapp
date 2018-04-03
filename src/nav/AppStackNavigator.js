@@ -8,8 +8,7 @@ const AppStackNavigator = StackNavigator({
   FuelFetch: { screen: FuelFetchScreen }
 },
 {
-  initialRouteName: 'Main',
-  headerMode: 'none'
+  initialRouteName: 'Main'
 }
 )
 

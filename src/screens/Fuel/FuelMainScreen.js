@@ -3,6 +3,10 @@ import { View, Text, StyleSheet, BackHandler } from 'react-native'
 import { FuelGrid } from '../../modules/fuel/containers'
 
 class FuelMainScreen extends Component {
+  static navigationOptions = {
+    header: null
+  }
+
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
   }
