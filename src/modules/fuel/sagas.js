@@ -14,10 +14,14 @@ const fuelState = {
   currentState: 'main_screen',
   states: {
     main_screen: {
+      fetch_vehicle: 'loading',
+      set: 'loading',
       to_add: 'loading',
       to_fetch: 'loading'
     },
     loading: {
+      fetch_vehicle_success: 'main_screen',
+      set_success: 'main_screen',
       add_success: 'add_screen',
       fetch_success: 'fetch_screen',
       delete_success: 'fetch_screen',
@@ -43,6 +47,16 @@ const fuelState = {
 
 function * mainScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
+    case 'initial':
+      yield put({
+        type: Type.FETCH_VEHICLE_SUCCESS,
+        payload: data.get('result')
+      })
+      yield put({
+        type: ADD_VEHICLE_ENTITY,
+        payload: data.get('entities')
+      })
+      break
     case 'set':
       yield put({
         type: Type.SET_VEHICLE_SUCCESS,
@@ -179,8 +193,12 @@ const fuelEffects = {
 }
 
 const machine = new Machine(fuelState, fuelEffects)
+const fetchVehicleEffect = machine.getEffect('fetch_vehicle')
+const setVehicleEffect = machine.getEffect('set')
 const toAddScreenEffect = machine.getEffect('to_add')
 const toFetchScreenEffect = machine.getEffect('to_fetch')
+const fetchVehicleSuccessEffect = machine.getEffect('fetch_vehicle_success')
+const setSuccessEffect = machine.getEffect('set_success')
 const addSuccessEffect = machine.getEffect('add_success')
 const fetchSuccessEffect = machine.getEffect('fetch_success')
 const deleteSuccessEffect = machine.getEffect('delete_success')
@@ -190,6 +208,35 @@ const addFuelEffect = machine.getEffect('add')
 const fetchFuelsEffect = machine.getEffect('fetch')
 const deleteFuelEffect = machine.getEffect('delete')
 const backEffect = machine.getEffect('back')
+
+function * fetchVehicleFlow() {
+  while (true) {
+    const { payload } = yield take(Type.FETCH_VEHICLE_REQUEST)
+    yield fetchVehicleEffect('screen')
+    try {
+      const vehicles = yield call(Api.getDriverVehicles, payload)
+      if (vehicles) {
+        yield fetchVehicleSuccessEffect('screen', 'initial', vehicles)
+      }
+    } catch (error) {
+      yield failureEffect('screen', error)
+      machine.operation('main_retry')
+    }
+  }
+}
+
+function * setVehicleFlow() {
+  while (true) {
+    const { payload } = yield take(Type.SET_VEHICLE_REQUEST)
+    yield setVehicleEffect('screen')
+    try {
+      yield setSuccessEffect('screen', 'set', payload)
+    } catch (error) {
+      yield failureEffect('screen', error)
+      machine.operation('main_retry')
+    }
+  }
+}
 
 function * toAddScreenFlow() {
   while (true) {
@@ -288,6 +335,8 @@ function * backFlow() {
 }
 
 export default function * rootSagas() {
+  yield fork(fetchVehicleFlow)
+  yield fork(setVehicleFlow)
   yield fork(toAddScreenFlow)
   yield fork(toFetchScreenFlow)
   yield fork(addFuelFlow)

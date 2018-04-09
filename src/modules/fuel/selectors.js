@@ -11,24 +11,29 @@ const vehicleIds = state => state.getIn(['fuel', 'vehicleIds'])
 
 const userSelector = createImmutableSelector(
   [userEntity, username],
-  (users, username) => (username ? users.get(username) : undefined)
+  (users, username) =>
+    !users.isEmpty() && username ? users.get(username) : fromJS({})
 )
 
 const vehicleArraySelector = createImmutableSelector(
   [vehicleEntity, vehicleIds],
-  (vehicles, ids) =>
-    ids ? fromJS(ids.map(item => vehicles.get(item))) : fromJS([])
+  (vehicles, ids) => {
+    return !vehicles.isEmpty() && !ids.isEmpty()
+      ? ids.map(item => vehicles.get(item))
+      : fromJS([])
+  }
 )
 
 const vehicleCurrentSelector = createImmutableSelector(
   [vehicleEntity, currentVehicle],
-  (vehicles, current) => (current ? vehicles.get(current) : fromJS({}))
+  (vehicles, current) =>
+    !vehicles.isEmpty() && current ? vehicles.get(current) : fromJS({})
 )
 
 const vehiclePickerSelector = createImmutableSelector(
   [vehicleArraySelector],
-  vehicles =>
-    vehicles
+  vehicles => {
+    return !vehicles.isEmpty()
       ? vehicles.map(item =>
         fromJS({
           label: item.get('plate'),
@@ -36,24 +41,29 @@ const vehiclePickerSelector = createImmutableSelector(
         })
       )
       : fromJS([])
+  }
 )
 
 const vehicleInitPickerSelector = createImmutableSelector(
   [vehicleCurrentSelector, userSelector],
   (vehicle, user) =>
-    vehicle
-      ? { vehicleId: vehicle.get('_id'), applicant: user }
-      : { vehicleId: undefined, applicant: user }
+    !vehicle.isEmpty() && !user.isEmpty()
+      ? fromJS({ vehicleId: vehicle.get('_id'), applicant: user })
+      : fromJS({})
 )
 
 const fuelArraySelector = createImmutableSelector(
   [fuelEntity, fuelIds],
-  (fuels, ids) => (ids ? ids.map(item => fuels.get(item)) : fromJS([]))
+  (fuels, ids) =>
+    !fuels.isEmpty() && !ids.isEmpty()
+      ? ids.map(item => fuels.get(item))
+      : fromJS([])
 )
 
 export {
   userSelector,
   vehicleArraySelector,
+  vehicleCurrentSelector,
   vehiclePickerSelector,
   vehicleInitPickerSelector,
   fuelArraySelector

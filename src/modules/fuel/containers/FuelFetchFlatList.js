@@ -6,7 +6,6 @@ import { fuelArraySelector } from '../selectors'
 
 const mapStateToProps = (state, ownProps) => {
   const fuels = fuelArraySelector(state)
-  console.log(fuels)
   return {
     username: state.getIn(['auth', 'username']),
     fuels

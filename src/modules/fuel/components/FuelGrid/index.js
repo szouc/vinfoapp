@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, WingBlank } from 'antd-mobile'
+import { Grid } from 'antd-mobile'
 import GridItem from './GridItem'
 
 class FuelGrid extends Component {
@@ -9,12 +9,12 @@ class FuelGrid extends Component {
       {
         icon: 'plus',
         text: '添加',
-        action: this.props.navToAdd(this.props.username)
+        action: this.props.navToUserAdd
       },
       {
         icon: 'list-alt',
         text: '查询',
-        action: this.props.navToFetch(this.props.username)
+        action: this.props.navToUserFetch
       }
     ]
   }
@@ -23,13 +23,7 @@ class FuelGrid extends Component {
 
   render() {
     return (
-      <WingBlank>
-        <Grid
-          data={this.data}
-          hasLine={false}
-          renderItem={this.renderItem}
-        />
-      </WingBlank>
+      <Grid data={this.data} hasLine={false} renderItem={this.renderItem} />
     )
   }
 }
