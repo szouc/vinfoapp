@@ -1,23 +1,16 @@
-import {
-  NavigationActions,
-  StackActions,
-  DrawerActions
-} from 'react-navigation'
+const search = function(data, param) {
+  let itera = Object.keys(param)[Symbol.iterator]()
+  let result = []
+  let filter = function(res) {
+    let i = itera.next()
+    if (i.done) return
+    result = res.filter(val => {
+      return val[i.value].toString().includes(param[i.value])
+    })
+    filter(result)
+  }
+  filter(data)
+  return result
+}
 
-const Actions = [
-  NavigationActions.BACK,
-  NavigationActions.INIT,
-  NavigationActions.NAVIGATE,
-  NavigationActions.SET_PARAMS,
-  StackActions.POP,
-  StackActions.POP_TO_TOP,
-  StackActions.PUSH,
-  StackActions.RESET,
-  StackActions.REPLACE,
-  StackActions.COMPLETE_TRANSITION,
-  DrawerActions.OPEN_DRAWER,
-  DrawerActions.CLOSE_DRAWER,
-  DrawerActions.TOGGLE_DRAWER
-]
-
-console.log(Actions)
+export default search

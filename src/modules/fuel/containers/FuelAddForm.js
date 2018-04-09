@@ -1,14 +1,34 @@
 import { FuelAddForm } from '../components'
 import { connect } from 'react-redux'
 import immutPropsToJS from '../../../utils/immutPropsToJS'
-import { addFuelRequest } from '../actions'
+import { addFuelRequest, backRequest } from '../actions'
+import { vehiclePickerSelector, vehicleInitPickerSelector } from '../selectors'
+
+const mapStateToProps = (state, ownProps) => {
+  const vehicles = vehiclePickerSelector(state)
+  const initialValues = vehicleInitPickerSelector(state)
+  return {
+    username: state.getIn(['auth', 'username']),
+    vehicles,
+    initialValues
+  }
+}
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onSubmit: values => {
-      dispatch(addFuelRequest(values))
+    backToMain: username => {
+      dispatch(backRequest(username))
+    },
+    onSubmit: username => values => {
+      const vehicleId = values.get('vehicleId')
+      const restValue = values.delete('vehicleId')
+      const result = { vehicleId, values: [restValue] }
+
+      dispatch(addFuelRequest({ username, data: result }))
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(immutPropsToJS(FuelAddForm))
+export default connect(mapStateToProps, mapDispatchToProps)(
+  immutPropsToJS(FuelAddForm)
+)

@@ -6,16 +6,19 @@ const BackButton = props => {
   return (
     <TouchableOpacity
       onPress={props.backToMain(props.username)}
-      style={{ width: 100 }}
+      style={styles.container}
     >
-      <Icon name='chevron-left' />
+      <Icon name='chevron-left' size={20} color='#16F' />
     </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 50
   }
 })
 

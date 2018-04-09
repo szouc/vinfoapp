@@ -1,27 +1,15 @@
-import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import React from 'react'
+import { BackButton, FuelFetchFlatList } from '../../modules/fuel/containers'
 
-class Login extends Component {
+class FuelFetchScreen extends React.PureComponent {
+  static navigationOptions = {
+    title: '加油记录',
+    headerLeft: <BackButton />
+  }
+
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>FuelFetch</Text>
-      </View>
-    )
+    return <FuelFetchFlatList />
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f5f'
-  },
-
-  title: {
-    fontWeight: '800'
-  }
-})
-
-export default Login
+export default FuelFetchScreen

@@ -4,6 +4,8 @@ import { REQUEST_ERROR } from '../error'
 import { ADD_VEHICLE_ENTITY, DELETE_ENTITY } from '../entity'
 import { fromJS } from 'immutable'
 import { NavigationActions } from 'react-navigation'
+import { reset } from 'redux-form'
+import { Toast } from 'antd-mobile'
 
 import { call, fork, put, take } from 'redux-saga/effects'
 import Machine from '../../utils/machine'
@@ -123,6 +125,8 @@ function * addScreenEffect(scope, action, data = '', pagination = {}) {
         type: ADD_VEHICLE_ENTITY,
         payload: data.get('entities')
       })
+      yield put(reset('FuelAddForm'))
+      Toast.success('提交成功！', 2)
       break
     default:
       yield put({
