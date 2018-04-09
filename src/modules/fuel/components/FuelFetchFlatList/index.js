@@ -1,6 +1,7 @@
 import React from 'react'
 import { FlatList, BackHandler } from 'react-native'
 import FuelCard from './FuelCard'
+import { WingBlank } from 'antd-mobile'
 
 class FuelFetchFlatList extends React.PureComponent {
   componentDidMount() {
@@ -21,11 +22,13 @@ class FuelFetchFlatList extends React.PureComponent {
 
   render() {
     return (
-      <FlatList
-        data={this.props.fuels}
-        keyExtractor={this._keyExtractor}
-        renderItem={this._renderItem}
-      />
+      <WingBlank>
+        <FlatList
+          data={this.props.fuels}
+          keyExtractor={this._keyExtractor}
+          renderItem={this._renderItem}
+        />
+      </WingBlank>
     )
   }
 }

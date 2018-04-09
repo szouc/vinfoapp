@@ -4,7 +4,9 @@ import { fromJS } from 'immutable'
 const userEntity = state => state.getIn(['entities', 'users'])
 const username = state => state.getIn(['auth', 'username'])
 const fuelEntity = state => state.getIn(['entities', 'fuels'])
+const fuelIds = state => state.getIn(['fuel', 'fuelIds'])
 const vehicleEntity = state => state.getIn(['entities', 'vehicles'])
+const currentVehicle = state => state.getIn(['fuel', 'currentVehicle'])
 const vehicleIds = state => state.getIn(['fuel', 'vehicleIds'])
 
 const userSelector = createImmutableSelector(
@@ -16,6 +18,11 @@ const vehicleArraySelector = createImmutableSelector(
   [vehicleEntity, vehicleIds],
   (vehicles, ids) =>
     ids ? fromJS(ids.map(item => vehicles.get(item))) : fromJS([])
+)
+
+const vehicleCurrentSelector = createImmutableSelector(
+  [vehicleEntity, currentVehicle],
+  (vehicles, current) => (current ? vehicles.get(current) : fromJS({}))
 )
 
 const vehiclePickerSelector = createImmutableSelector(
@@ -32,19 +39,16 @@ const vehiclePickerSelector = createImmutableSelector(
 )
 
 const vehicleInitPickerSelector = createImmutableSelector(
-  [vehiclePickerSelector, userSelector],
-  (vehicles, user) =>
-    vehicles
-      ? { vehicleId: vehicles.getIn([0, 'value']), applicant: user }
+  [vehicleCurrentSelector, userSelector],
+  (vehicle, user) =>
+    vehicle
+      ? { vehicleId: vehicle.get('_id'), applicant: user }
       : { vehicleId: undefined, applicant: user }
 )
 
 const fuelArraySelector = createImmutableSelector(
-  [vehicleArraySelector, fuelEntity],
-  (vehicles, fuels) =>
-    vehicles
-      ? vehicles.getIn([0, 'fuels']).map(item => fuels.get(item))
-      : fromJS([])
+  [fuelEntity, fuelIds],
+  (fuels, ids) => (ids ? ids.map(item => fuels.get(item)) : fromJS([]))
 )
 
 export {

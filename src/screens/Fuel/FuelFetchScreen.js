@@ -1,5 +1,7 @@
 import React from 'react'
+import { View } from 'react-native'
 import { BackButton, FuelFetchFlatList } from '../../modules/fuel/containers'
+import { WhiteSpace } from 'antd-mobile'
 
 class FuelFetchScreen extends React.PureComponent {
   static navigationOptions = {
@@ -8,7 +10,12 @@ class FuelFetchScreen extends React.PureComponent {
   }
 
   render() {
-    return <FuelFetchFlatList />
+    return (
+      <View>
+        <WhiteSpace size='xl' />
+        <FuelFetchFlatList />
+      </View>
+    )
   }
 }
 

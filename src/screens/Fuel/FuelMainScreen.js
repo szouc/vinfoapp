@@ -22,8 +22,12 @@ class FuelMainScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Fuel</Text>
-        <FuelGrid />
+        <View style={styles.title}>
+          <Text>加油页面</Text>
+        </View>
+        <View style={styles.grid}>
+          <FuelGrid />
+        </View>
       </View>
     )
   }
@@ -32,13 +36,15 @@ class FuelMainScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f5f'
+    justifyContent: 'center'
   },
-
   title: {
-    fontWeight: '800'
+    flex: 1,
+    alignSelf: 'center',
+    justifyContent: 'center'
+  },
+  grid: {
+    flex: 2
   }
 })
 

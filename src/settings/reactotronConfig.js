@@ -9,7 +9,7 @@ import sagaPlugin from 'reactotron-redux-saga'
 
 Reactotron.configure({
   name: 'React Native Demo',
-  host: '192.168.199.160',
+  host: '192.168.1.2',
   port: 9090
 })
 Reactotron.useReactNative()

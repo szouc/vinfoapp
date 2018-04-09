@@ -1,10 +1,10 @@
 import * as Api from './api'
 import * as Type from './actionTypes'
 import { REQUEST_ERROR } from '../error'
-import { ADD_VEHICLE_ENTITY, DELETE_ENTITY } from '../entity'
+import { ADD_VEHICLE_ENTITY, ADD_FUEL_ENTITY, DELETE_ENTITY } from '../entity'
 import { fromJS } from 'immutable'
 import { NavigationActions } from 'react-navigation'
-import { reset } from 'redux-form'
+import { resetSection } from 'redux-form'
 import { Toast } from 'antd-mobile'
 
 import { call, fork, put, take } from 'redux-saga/effects'
@@ -42,7 +42,22 @@ const fuelState = {
 }
 
 function * mainScreenEffect(scope, action, data = '', pagination = {}) {
-  yield put(NavigationActions.back())
+  switch (action) {
+    case 'set':
+      yield put({
+        type: Type.SET_VEHICLE_SUCCESS,
+        payload: data
+      })
+      break
+    case 'back':
+      yield put(NavigationActions.back())
+      break
+    default:
+      yield put({
+        type: REQUEST_ERROR,
+        payload: fromJS({ message: '没有相应的操作。' })
+      })
+  }
   yield put({
     type: Type.SET_LOADING,
     payload: { scope: scope, loading: false }
@@ -77,7 +92,7 @@ function * fetchScreenEffect(scope, action, data = '', pagination = {}) {
         payload: data.get('result')
       })
       yield put({
-        type: ADD_VEHICLE_ENTITY,
+        type: ADD_FUEL_ENTITY,
         payload: data.get('entities')
       })
       break
@@ -125,7 +140,7 @@ function * addScreenEffect(scope, action, data = '', pagination = {}) {
         type: ADD_VEHICLE_ENTITY,
         payload: data.get('entities')
       })
-      yield put(reset('FuelAddForm'))
+      yield put(resetSection('FuelAddForm', 'litre', 'cost', 'mile'))
       Toast.success('提交成功！', 2)
       break
     default:

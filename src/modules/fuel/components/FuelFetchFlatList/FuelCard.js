@@ -1,8 +1,8 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text } from 'react-native'
 import R from 'ramda'
 import moment from 'moment'
-import { Card, WingBlank } from 'antd-mobile'
+import { Card } from 'antd-mobile'
 
 class FuelCard extends React.PureComponent {
   constructor(props) {
@@ -40,29 +40,27 @@ class FuelCard extends React.PureComponent {
     // )
 
     return (
-      <WingBlank>
-        <Card>
-          <Card.Header
-            title={date.isValid() ? date.format('LL') : ''}
-            extra={isCheck ? '通过' : '未审核'}
-          />
-          <Card.Body>
-            <View>
-              <Text>升数：</Text>
-              <Text>{litre}</Text>
-            </View>
-            <View>
-              <Text>费用：</Text>
-              <Text>{cost}</Text>
-            </View>
-            <View>
-              <Text>里程：</Text>
-              <Text>{mile}</Text>
-            </View>
-          </Card.Body>
-          <Card.Footer extra={<Text>{`${fullname}(${username})`}</Text>} />
-        </Card>
-      </WingBlank>
+      <Card>
+        <Card.Header
+          title={date.isValid() ? date.format('LL') : ''}
+          extra={isCheck ? '通过' : '未审核'}
+        />
+        <Card.Body>
+          <View>
+            <Text>升数：</Text>
+            <Text>{litre}</Text>
+          </View>
+          <View>
+            <Text>费用：</Text>
+            <Text>{cost}</Text>
+          </View>
+          <View>
+            <Text>里程：</Text>
+            <Text>{mile}</Text>
+          </View>
+        </Card.Body>
+        <Card.Footer extra={<Text>{`${fullname}(${username})`}</Text>} />
+      </Card>
     )
   }
 }

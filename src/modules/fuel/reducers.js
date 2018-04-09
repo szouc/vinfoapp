@@ -5,16 +5,24 @@ import Immutable from 'immutable'
 const initialState = Immutable.fromJS({
   screenLoading: false,
   formLoading: false,
-  vehicleIds: undefined
+  currentVehicle: undefined,
+  fuelIds: [],
+  vehicleIds: []
 })
 
 const fuelReducer = (state = initialState, action) => {
   const { type, payload } = action
   switch (type) {
     case Type.FETCH_VEHICLE_SUCCESS:
-      return state.set('vehicleIds', payload)
+      return state.get('currentVehicle')
+        ? state.set('vehicleIds', payload)
+        : state.set('vehicleIds', payload).set('currentVehicle', payload.get(0))
+    case Type.SET_VEHICLE_SUCCESS:
+      return state.set('currentVehicle', payload)
+    case Type.FETCH_SUCCESS:
+      return state.set('fuelIds', payload)
     case Type.ADD_SUCCESS:
-      return state.set('current', payload)
+      return state.set('currentVehicle', payload)
     case Type.SET_LOADING:
       return state.set(`${payload.scope}Loading`, payload.loading)
     default:
