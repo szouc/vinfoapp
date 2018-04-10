@@ -3,10 +3,12 @@ import { View, Text, StyleSheet, BackHandler } from 'react-native'
 import FuelGrid from '../FuelGrid'
 import DefaultVehiclePicker from '../DefaultVehiclePicker'
 import { ErrorBoundary } from '../../../shared'
+import { WingBlank } from 'antd-mobile'
 
 class FuelMain extends Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
+    this.props.getDriverVehicles(this.props.username)
   }
 
   componentWillUnmount() {
@@ -19,36 +21,29 @@ class FuelMain extends Component {
 
   render() {
     const {
-      username,
       currentVehicle,
       vehicles,
       navToAdd,
       navToFetch,
-      getDriverVehicles,
       setVehicle
     } = this.props
-    const getUserVehicles = getDriverVehicles(username)
-    const navToUserAdd = navToAdd(username)
-    const navToUserFetch = navToFetch(username)
     return (
       <View style={styles.container}>
         <View style={styles.title}>
           <Text>加油页面</Text>
         </View>
         <View style={styles.vehicle}>
-          <DefaultVehiclePicker
-            currentVehicle={currentVehicle}
-            vehicles={vehicles}
-            getUserVehicles={getUserVehicles}
-            setVehicle={setVehicle}
-          />
+          <WingBlank>
+            <DefaultVehiclePicker
+              currentVehicle={currentVehicle}
+              vehicles={vehicles}
+              setVehicle={setVehicle}
+            />
+          </WingBlank>
         </View>
         <View style={styles.grid}>
           <ErrorBoundary>
-            <FuelGrid
-              navToUserAdd={navToUserAdd}
-              navToUserFetch={navToUserFetch}
-            />
+            <FuelGrid navToAdd={navToAdd} navToFetch={navToFetch} />
           </ErrorBoundary>
         </View>
       </View>

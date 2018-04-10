@@ -9,12 +9,12 @@ class FuelGrid extends Component {
       {
         icon: 'plus',
         text: '添加',
-        action: this.props.navToUserAdd
+        action: this.props.navToAdd
       },
       {
         icon: 'list-alt',
         text: '查询',
-        action: this.props.navToUserFetch
+        action: this.props.navToFetch
       }
     ]
   }

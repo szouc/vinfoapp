@@ -29,7 +29,7 @@ async function addVehicleFuel({ username, data }) {
 }
 
 async function getVehicleFuels({ username, vehicleId }) {
-  const response = await Request.getDriverVehicles(username, vehicleId)
+  const response = await Request.getVehicleFuels(username, vehicleId)
   if (response.status === STATUS_OK) {
     const data = response.data.result
     const fuels = fuelArrayNormalize(data)

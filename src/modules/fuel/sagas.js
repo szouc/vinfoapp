@@ -90,14 +90,6 @@ function * mainScreenEffect(scope, action, data = '', pagination = {}) {
 function * fetchScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
     case 'initial':
-      yield put({
-        type: Type.FETCH_VEHICLE_SUCCESS,
-        payload: data.get('result')
-      })
-      yield put({
-        type: ADD_VEHICLE_ENTITY,
-        payload: data.get('entities')
-      })
       yield put(NavigationActions.navigate({ routeName: 'FuelFetch' }))
       break
     case 'fetch':
@@ -135,14 +127,6 @@ function * fetchScreenEffect(scope, action, data = '', pagination = {}) {
 function * addScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
     case 'initial':
-      yield put({
-        type: Type.FETCH_VEHICLE_SUCCESS,
-        payload: data.get('result')
-      })
-      yield put({
-        type: ADD_VEHICLE_ENTITY,
-        payload: data.get('entities')
-      })
       yield put(NavigationActions.navigate({ routeName: 'FuelAdd' }))
       break
     case 'add':
@@ -240,13 +224,10 @@ function * setVehicleFlow() {
 
 function * toAddScreenFlow() {
   while (true) {
-    const { payload } = yield take(Type.TO_ADD_REQUEST)
+    yield take(Type.TO_ADD_REQUEST)
     yield toAddScreenEffect('screen')
     try {
-      const vehicles = yield call(Api.getDriverVehicles, payload)
-      if (vehicles) {
-        yield addSuccessEffect('screen', 'initial', vehicles)
-      }
+      yield addSuccessEffect('screen', 'initial')
     } catch (error) {
       yield failureEffect('screen', error)
       machine.operation('main_retry')
@@ -256,13 +237,10 @@ function * toAddScreenFlow() {
 
 function * toFetchScreenFlow() {
   while (true) {
-    const { payload } = yield take(Type.TO_FETCH_REQUEST)
+    yield take(Type.TO_FETCH_REQUEST)
     yield toFetchScreenEffect('screen')
     try {
-      const vehicles = yield call(Api.getDriverVehicles, payload)
-      if (vehicles) {
-        yield fetchSuccessEffect('screen', 'initial', vehicles)
-      }
+      yield fetchSuccessEffect('screen', 'initial')
     } catch (error) {
       yield failureEffect('screen', error)
       machine.operation('main_retry')
@@ -291,9 +269,14 @@ function * fetchFuelsFlow() {
     const { payload } = yield take(Type.FETCH_REQUEST)
     yield fetchFuelsEffect('screen')
     try {
-      const vehicle = yield call(Api.getVehicleFuels, payload)
-      if (vehicle) {
-        yield fetchSuccessEffect('screen', 'fetch', vehicle)
+      const fuels = yield call(Api.getVehicleFuels, payload)
+      if (fuels) {
+        yield fetchSuccessEffect('screen', 'fetch', fuels)
+        // I dont know where does this action put ?
+        yield put({
+          type: Type.SET_VEHICLE_SUCCESS,
+          payload: payload.vehicleId
+        })
       }
     } catch (error) {
       yield failureEffect('screen', error)

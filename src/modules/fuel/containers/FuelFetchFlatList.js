@@ -1,13 +1,22 @@
+import { backRequest, fetchFuelsRequest } from '../actions'
+import {
+  fuelArraySelector,
+  vehicleCurrentSelector,
+  vehiclePickerSelector
+} from '../selectors'
+
 import { FuelFetchFlatList } from '../components'
 import { connect } from 'react-redux'
 import immutPropsToJS from '../../../utils/immutPropsToJS'
-import { backRequest } from '../actions'
-import { fuelArraySelector } from '../selectors'
 
 const mapStateToProps = (state, ownProps) => {
   const fuels = fuelArraySelector(state)
+  const vehicles = vehiclePickerSelector(state)
+  const currentVehicle = vehicleCurrentSelector(state)
   return {
     username: state.getIn(['auth', 'username']),
+    vehicles,
+    currentVehicle,
     fuels
   }
 }
@@ -16,6 +25,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     backToMain: username => {
       dispatch(backRequest(username))
+    },
+    fetchVehicleFuels: username => value => {
+      const vehicleId = value ? value[0] : null
+      const payload = { username, vehicleId }
+      dispatch(fetchFuelsRequest(payload))
     }
   }
 }

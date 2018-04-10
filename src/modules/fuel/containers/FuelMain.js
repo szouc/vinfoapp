@@ -21,13 +21,13 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    navToAdd: username => () => {
-      dispatch(toAddRequest(username))
+    navToAdd: () => {
+      dispatch(toAddRequest())
     },
-    navToFetch: username => () => {
-      dispatch(toFetchRequest(username))
+    navToFetch: () => {
+      dispatch(toFetchRequest())
     },
-    getDriverVehicles: username => () => {
+    getDriverVehicles: username => {
       dispatch(fetchVehiclesRequest(username))
     },
     setVehicle: value => {
