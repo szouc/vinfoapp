@@ -1,5 +1,6 @@
 import createImmutableSelector from '../../utils/createImmutableSelector'
 import { fromJS } from 'immutable'
+import moment from 'moment'
 
 const userEntity = state => state.getIn(['entities', 'users'])
 const username = state => state.getIn(['auth', 'username'])
@@ -56,7 +57,17 @@ const fuelArraySelector = createImmutableSelector(
   [fuelEntity, fuelIds],
   (fuels, ids) =>
     !fuels.isEmpty() && !ids.isEmpty()
-      ? ids.map(item => fuels.get(item))
+      ? ids.map(item => fuels.get(item)).sort((a, b) => {
+        if (moment(a.get('date')).isBefore(b.get('date'))) {
+          return 1
+        }
+        if (moment(a.get('date')).isAfter(b.get('date'))) {
+          return -1
+        }
+        if (moment(a.get('date')).isSame(b.get('date'))) {
+          return 0
+        }
+      })
       : fromJS([])
 )
 

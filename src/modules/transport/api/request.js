@@ -2,42 +2,56 @@ import * as URL from '../../../settings/routes'
 import axios from '../../../settings/axiosInstance'
 import replaceAll from '../../../utils/replaceAll'
 
-const getDriverVehicles = username => {
+const getDriverTransports = username => {
   const config = {
-    url: URL.DRIVER_VEHICLE.replace(/:username/, username),
+    url: URL.DRIVER_TRANSPORT.replace(/:username/, username),
     method: 'get'
   }
   return axios(config)
 }
 
-const addVehicleFuel = (username, data) => {
-  const config = {
-    url: URL.DRIVER_FUEL.replace(/:username/, username),
-    method: 'post',
-    data: data
-  }
-  return axios(config)
-}
-
-const getVehicleFuels = (username, vehicleId) => {
-  const config = {
-    url: URL.DRIVER_FUEL.replace(/:username/, username),
-    method: 'get',
-    params: { vehicleId }
-  }
-  return axios(config)
-}
-
-const deleteVehicleFuel = (username, fuelId) => {
+const acceptTransport = (username, transportId) => {
   const mapObj = {
     ':username': username,
-    ':childId': fuelId
+    ':childId': transportId
   }
   const config = {
-    url: replaceAll(URL.DRIVER_FUEL_ID, mapObj),
-    method: 'get'
+    url: replaceAll(URL.DRIVER_TRANSPORT_ID_STATUS, mapObj),
+    method: 'post',
+    data: { status: 'accept' }
   }
   return axios(config)
 }
 
-export { getDriverVehicles, addVehicleFuel, getVehicleFuels, deleteVehicleFuel }
+const submitTransport = (username, transportId) => {
+  const mapObj = {
+    ':username': username,
+    ':childId': transportId
+  }
+  const config = {
+    url: replaceAll(URL.DRIVER_TRANSPORT_ID_STATUS, mapObj),
+    method: 'post',
+    data: { status: 'submit' }
+  }
+  return axios(config)
+}
+
+const updateTransport = (username, transportId, update) => {
+  const mapObj = {
+    ':username': username,
+    ':childId': transportId
+  }
+  const config = {
+    url: replaceAll(URL.DRIVER_TRANSPORT_ID, mapObj),
+    method: 'post',
+    data: update
+  }
+  return axios(config)
+}
+
+export {
+  getDriverTransports,
+  acceptTransport,
+  submitTransport,
+  updateTransport
+}
