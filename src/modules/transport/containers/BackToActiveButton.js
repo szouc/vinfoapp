@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import immutPropsToJS from '../../../utils/immutPropsToJS'
 import { BackButton } from '../../shared'
-import { backRequest } from '../actions'
+import { backToActiveRequest } from '../actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     backToMain: username => () => {
-      dispatch(backRequest(username))
+      dispatch(backToActiveRequest(username))
     }
   }
 }
