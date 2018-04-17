@@ -1,15 +1,17 @@
 import Main from './MainTabNavigator'
 import { StackNavigator } from 'react-navigation'
-import { FuelAddScreen, FuelFetchScreen } from '../screens'
+import { FuelAddScreen, FuelFetchScreen, TransportAcceptScreen } from '../screens'
 
-const AppStackNavigator = StackNavigator({
-  Main: { screen: Main },
-  FuelAdd: { screen: FuelAddScreen },
-  FuelFetch: { screen: FuelFetchScreen }
-},
-{
-  initialRouteName: 'Main'
-}
+const AppStackNavigator = StackNavigator(
+  {
+    Main: { screen: Main },
+    FuelAdd: { screen: FuelAddScreen },
+    FuelFetch: { screen: FuelFetchScreen },
+    TransAccept: { screen: TransportAcceptScreen }
+  },
+  {
+    initialRouteName: 'Main'
+  }
 )
 
 export default AppStackNavigator

@@ -109,7 +109,7 @@ function * acceptScreenEffect(scope, action, data = '', pagination = {}) {
       break
     case 'accept':
       yield put({
-        type: Type.FETCH_SUCCESS,
+        type: Type.ACCEPT_SUCCESS,
         payload: data.get('result')
       })
       yield put({
@@ -146,7 +146,7 @@ function * activeScreenEffect(scope, action, data = '', pagination = {}) {
       break
     case 'submit':
       yield put({
-        type: Type.ADD_SUCCESS,
+        type: Type.SUBMIT_SUCCESS,
         payload: data.get('result')
       })
       yield put({
@@ -177,7 +177,7 @@ function * submitScreenEffect(scope, action, data = '', pagination = {}) {
       break
     case 'save':
       yield put({
-        type: Type.ADD_SUCCESS,
+        type: Type.SAVE_SUCCESS,
         payload: data.get('result')
       })
       yield put({

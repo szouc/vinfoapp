@@ -2,19 +2,24 @@ import React, { Component } from 'react'
 import { Grid } from 'antd-mobile'
 import { GridItem } from '../../../shared'
 
-class FuelGrid extends Component {
+class TransportGrid extends Component {
   constructor(props) {
     super(props)
     this.data = [
       {
-        icon: 'plus',
-        text: '添加',
-        action: this.props.navToAdd
+        icon: 'check-square',
+        text: '接单',
+        action: this.props.navToAccept
+      },
+      {
+        icon: 'upload',
+        text: '提交',
+        action: this.props.navToActive
       },
       {
         icon: 'list-alt',
         text: '查询',
-        action: this.props.navToFetch
+        action: this.props.navToList
       }
     ]
   }
@@ -28,4 +33,4 @@ class FuelGrid extends Component {
   }
 }
 
-export default FuelGrid
+export default TransportGrid

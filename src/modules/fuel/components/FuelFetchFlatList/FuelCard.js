@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { Text } from 'react-native'
 import R from 'ramda'
 import moment from 'moment'
-import { Card } from 'antd-mobile'
+import { Card, List } from 'antd-mobile'
+import { QueryListItem } from '../../../shared'
 
 class FuelCard extends React.PureComponent {
   constructor(props) {
@@ -46,18 +47,11 @@ class FuelCard extends React.PureComponent {
           extra={isCheck ? '通过' : '未审核'}
         />
         <Card.Body>
-          <View>
-            <Text>升数：</Text>
-            <Text>{litre}</Text>
-          </View>
-          <View>
-            <Text>费用：</Text>
-            <Text>{cost}</Text>
-          </View>
-          <View>
-            <Text>里程：</Text>
-            <Text>{mile}</Text>
-          </View>
+          <List>
+            <QueryListItem iconName='tint' extra={litre} label='升数：' />
+            <QueryListItem iconName='credit-card' extra={cost} label='费用：' />
+            <QueryListItem iconName='truck' extra={mile} label='里程：' />
+          </List>
         </Card.Body>
         <Card.Footer extra={<Text>{`${fullname}(${username})`}</Text>} />
       </Card>

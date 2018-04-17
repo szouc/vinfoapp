@@ -1,15 +1,11 @@
 import React from 'react'
 import { FlatList, BackHandler } from 'react-native'
-import FuelCard from './FuelCard'
-import { WingBlank, WhiteSpace } from 'antd-mobile'
-import DefaultVehiclePicker from '../DefaultVehiclePicker'
+import Card from './Card'
+import { WingBlank } from 'antd-mobile'
 
-class FuelFetchFlatList extends React.PureComponent {
+class AcceptFlatList extends React.PureComponent {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
-    this.props.fetchVehicleFuels(this.props.username)([
-      this.props.currentVehicle._id
-    ])
   }
 
   componentWillUnmount() {
@@ -23,7 +19,7 @@ class FuelFetchFlatList extends React.PureComponent {
 
   _keyExtractor = (item, index) => item._id
 
-  _renderItem = ({ item }) => <FuelCard fuel={item} />
+  _renderItem = ({ item }) => <Card transport={item} />
 
   _getItemLayout = (data, index) => ({
     length: 120,
@@ -32,18 +28,10 @@ class FuelFetchFlatList extends React.PureComponent {
   })
 
   render() {
-    const { username, currentVehicle, vehicles, fetchVehicleFuels } = this.props
-    const fetchUserFuels = fetchVehicleFuels(username)
     return (
       <WingBlank>
-        <DefaultVehiclePicker
-          currentVehicle={currentVehicle}
-          vehicles={vehicles}
-          setVehicle={fetchUserFuels}
-        />
-        <WhiteSpace size='xl' />
         <FlatList
-          data={this.props.fuels}
+          data={this.props.transports}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
           getItemLayout={this._getItemLayout}
@@ -53,4 +41,4 @@ class FuelFetchFlatList extends React.PureComponent {
   }
 }
 
-export default FuelFetchFlatList
+export default AcceptFlatList

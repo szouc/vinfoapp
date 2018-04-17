@@ -1,4 +1,4 @@
-import { Transport, Maintain, Profile, FuelMainScreen } from '../screens'
+import { TransportMainScreen, Maintain, Profile, FuelMainScreen } from '../screens'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 import React from 'react'
@@ -12,7 +12,7 @@ const tabWidth = deviceWidth / tabCount
 const MainNavigator = TabNavigator(
   {
     Transport: {
-      screen: Transport,
+      screen: TransportMainScreen,
       navigationOptions: {
         tabBarLabel: '运输',
         tabBarIcon: ({ focused, tintColor }) => (
