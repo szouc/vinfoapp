@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet, BackHandler } from 'react-native'
 import TransportGrid from '../TransportGrid'
 import { ErrorBoundary } from '../../../shared'
+import { ActivityIndicator } from 'antd-mobile'
 
 class TransportMain extends Component {
   componentDidMount() {
@@ -21,6 +22,11 @@ class TransportMain extends Component {
     const { navToAccept, navToActive, navToList } = this.props
     return (
       <View style={styles.container}>
+        <ActivityIndicator
+          toast
+          text='载入中...'
+          animating={this.props.loading}
+        />
         <View style={styles.title}>
           <Text>运输页面</Text>
         </View>

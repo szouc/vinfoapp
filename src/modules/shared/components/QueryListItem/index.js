@@ -10,6 +10,7 @@ class ListItem extends PureComponent {
     const name = iconName || 'question'
     return (
       <Item
+        wrap
         thumb={
           <Icon name={name} size={15} color='#33f' style={{ width: 30 }} />
         }

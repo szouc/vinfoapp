@@ -7,9 +7,13 @@ import { vehiclePickerSelector, vehicleInitPickerSelector } from '../selectors'
 const mapStateToProps = (state, ownProps) => {
   const vehicles = vehiclePickerSelector(state)
   const initialValues = vehicleInitPickerSelector(state)
+  const loading = state.getIn(['fuel', 'screenLoading'])
+  const formLoading = state.getIn(['fuel', 'formLoading'])
   return {
     username: state.getIn(['auth', 'username']),
     vehicles,
+    loading,
+    formLoading,
     initialValues
   }
 }

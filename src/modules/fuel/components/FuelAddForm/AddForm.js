@@ -2,7 +2,13 @@ import React from 'react'
 import VehiclePickerField from '../VehiclePickerField'
 import { InputItemField } from '../../../shared'
 import { reduxForm, Field } from 'redux-form/immutable'
-import { List, WingBlank, WhiteSpace, Button } from 'antd-mobile'
+import {
+  List,
+  WingBlank,
+  WhiteSpace,
+  Button,
+  ActivityIndicator
+} from 'antd-mobile'
 
 const validate = values => {
   const errors = {}
@@ -23,6 +29,11 @@ class FuelAddForm extends React.PureComponent {
     const { vehicles, handleSubmit, onSubmit } = this.props
     return (
       <WingBlank>
+        <ActivityIndicator
+          toast
+          text='提交中...'
+          animating={this.props.loading}
+        />
         <List renderHeader={() => '新增加油记录'}>
           <Field name='applicant' component={() => null} />
           <VehiclePickerField name='vehicleId' data={vehicles} label='车辆' />

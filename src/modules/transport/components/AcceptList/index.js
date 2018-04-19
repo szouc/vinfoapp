@@ -1,7 +1,7 @@
 import React from 'react'
-import { FlatList, BackHandler } from 'react-native'
+import { FlatList, BackHandler, View, Text } from 'react-native'
 import Card from './Card'
-import { WingBlank } from 'antd-mobile'
+import { WingBlank, ActivityIndicator } from 'antd-mobile'
 
 class AcceptFlatList extends React.PureComponent {
   componentDidMount() {
@@ -22,19 +22,31 @@ class AcceptFlatList extends React.PureComponent {
   _renderItem = ({ item }) => <Card transport={item} />
 
   _getItemLayout = (data, index) => ({
-    length: 120,
-    offset: 120 * index,
+    length: 300,
+    offset: 300 * index,
     index
   })
 
   render() {
     return (
       <WingBlank>
+        <ActivityIndicator toast text='载入中...' animating={this.props.loading} />
         <FlatList
           data={this.props.transports}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
           getItemLayout={this._getItemLayout}
+          ListFooterComponent={
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                height: 100
+              }}
+            >
+              <Text>已经到底了！</Text>
+            </View>
+          }
         />
       </WingBlank>
     )

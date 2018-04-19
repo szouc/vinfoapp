@@ -49,12 +49,12 @@ function * mainScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
     case 'initial':
       yield put({
-        type: Type.FETCH_VEHICLE_SUCCESS,
-        payload: data.get('result')
-      })
-      yield put({
         type: ADD_VEHICLE_ENTITY,
         payload: data.get('entities')
+      })
+      yield put({
+        type: Type.FETCH_VEHICLE_SUCCESS,
+        payload: data.get('result')
       })
       break
     case 'set':
@@ -94,22 +94,22 @@ function * fetchScreenEffect(scope, action, data = '', pagination = {}) {
       break
     case 'fetch':
       yield put({
-        type: Type.FETCH_SUCCESS,
-        payload: data.get('result')
-      })
-      yield put({
         type: ADD_FUEL_ENTITY,
         payload: data.get('entities')
+      })
+      yield put({
+        type: Type.FETCH_SUCCESS,
+        payload: data.get('result')
       })
       break
     case 'delete':
       yield put({
-        type: Type.DELETE_SUCCESS,
-        payload: data
-      })
-      yield put({
         type: DELETE_ENTITY,
         payload: { stateKey: 'fuels', id: data }
+      })
+      yield put({
+        type: Type.DELETE_SUCCESS,
+        payload: data
       })
       break
     default:
@@ -131,12 +131,12 @@ function * addScreenEffect(scope, action, data = '', pagination = {}) {
       break
     case 'add':
       yield put({
-        type: Type.ADD_SUCCESS,
-        payload: data.get('result')
-      })
-      yield put({
         type: ADD_VEHICLE_ENTITY,
         payload: data.get('entities')
+      })
+      yield put({
+        type: Type.ADD_SUCCESS,
+        payload: data.get('result')
       })
       yield put(resetSection('FuelAddForm', 'litre', 'cost', 'mile'))
       Toast.success('提交成功！', 2)

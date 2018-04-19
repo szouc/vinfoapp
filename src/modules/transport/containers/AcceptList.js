@@ -7,8 +7,10 @@ import { transportArraySelector } from '../selectors'
 
 const mapStateToProps = (state, ownProps) => {
   const transports = transportArraySelector(state)
+  const loading = state.getIn(['transport', 'screenLoading'])
   return {
     username: state.getIn(['auth', 'username']),
+    loading,
     transports
   }
 }

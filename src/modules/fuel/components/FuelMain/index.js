@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, BackHandler } from 'react-native'
 import FuelGrid from '../FuelGrid'
 import DefaultVehiclePicker from '../DefaultVehiclePicker'
 import { ErrorBoundary } from '../../../shared'
-import { WingBlank } from 'antd-mobile'
+import { ActivityIndicator, WingBlank } from 'antd-mobile'
 
 class FuelMain extends Component {
   componentDidMount() {
@@ -29,6 +29,7 @@ class FuelMain extends Component {
     } = this.props
     return (
       <View style={styles.container}>
+        <ActivityIndicator toast text='载入中...' animating={this.props.loading} />
         <View style={styles.title}>
           <Text>加油页面</Text>
         </View>

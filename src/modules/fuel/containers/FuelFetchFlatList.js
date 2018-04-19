@@ -13,10 +13,12 @@ const mapStateToProps = (state, ownProps) => {
   const fuels = fuelArraySelector(state)
   const vehicles = vehiclePickerSelector(state)
   const currentVehicle = vehicleCurrentSelector(state)
+  const loading = state.getIn(['fuel', 'screenLoading'])
   return {
     username: state.getIn(['auth', 'username']),
     vehicles,
     currentVehicle,
+    loading,
     fuels
   }
 }

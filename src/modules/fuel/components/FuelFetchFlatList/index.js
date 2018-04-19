@@ -1,7 +1,7 @@
 import React from 'react'
-import { FlatList, BackHandler } from 'react-native'
+import { FlatList, BackHandler, View, Text } from 'react-native'
 import FuelCard from './FuelCard'
-import { WingBlank, WhiteSpace } from 'antd-mobile'
+import { ActivityIndicator, WingBlank, WhiteSpace } from 'antd-mobile'
 import DefaultVehiclePicker from '../DefaultVehiclePicker'
 
 class FuelFetchFlatList extends React.PureComponent {
@@ -36,6 +36,11 @@ class FuelFetchFlatList extends React.PureComponent {
     const fetchUserFuels = fetchVehicleFuels(username)
     return (
       <WingBlank>
+        <ActivityIndicator
+          toast
+          text='载入中...'
+          animating={this.props.loading}
+        />
         <DefaultVehiclePicker
           currentVehicle={currentVehicle}
           vehicles={vehicles}
@@ -47,6 +52,17 @@ class FuelFetchFlatList extends React.PureComponent {
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
           getItemLayout={this._getItemLayout}
+          ListFooterComponent={
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                height: 300
+              }}
+            >
+              <Text>已经到底了！</Text>
+            </View>
+          }
         />
       </WingBlank>
     )

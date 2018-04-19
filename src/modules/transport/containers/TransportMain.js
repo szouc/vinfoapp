@@ -9,8 +9,10 @@ import {
 } from '../actions'
 
 const mapStateToProps = (state, ownProps) => {
+  const loading = state.getIn(['transport', 'screenLoading'])
   return {
-    username: state.getIn(['auth', 'username'])
+    username: state.getIn(['auth', 'username']),
+    loading
   }
 }
 

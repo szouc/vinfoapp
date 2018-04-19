@@ -1,7 +1,7 @@
 import React from 'react'
 import R from 'ramda'
 import moment from 'moment'
-import { Card, List } from 'antd-mobile'
+import { WingBlank, Card, List, Button, WhiteSpace } from 'antd-mobile'
 import { QueryListItem } from '../../../shared'
 
 class TransportCard extends React.PureComponent {
@@ -71,14 +71,30 @@ class TransportCard extends React.PureComponent {
         />
         <Card.Body>
           <List>
-            <QueryListItem name='user' extra={assigner} label='队长' />
-            <QueryListItem name='user' extra={principal} label='主驾驶' />
-            <QueryListItem name='user' extra={secondary} label='副驾驶' />
-            <QueryListItem name='user' extra={fromCompany} label='出发公司' />
-            <QueryListItem name='user' extra={toCompany} label='到达公司' />
-            <QueryListItem name='user' extra={product} label='产品' />
-            <QueryListItem name='user' extra={status} label='当前状态' />
+            <QueryListItem iconName='male' extra={assigner} label='队长' />
+            <QueryListItem iconName='user' extra={principal} label='主驾驶' />
+            <QueryListItem iconName='user' extra={secondary} label='副驾驶' />
+            <QueryListItem
+              iconName='industry'
+              extra={fromCompany}
+              label='出发公司'
+            />
+            <QueryListItem
+              iconName='industry'
+              extra={toCompany}
+              label='到达公司'
+            />
+            <QueryListItem iconName='archive' extra={product} label='产品' />
+            <QueryListItem
+              iconName='hourglass-start'
+              extra={status}
+              label='当前状态'
+            />
           </List>
+          <WhiteSpace size='xl' />
+          <WingBlank>
+            <Button type='ghost'>接单</Button>
+          </WingBlank>
         </Card.Body>
         <Card.Footer />
       </Card>

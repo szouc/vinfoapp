@@ -62,22 +62,22 @@ function * mainScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
     case 'initial':
       yield put({
-        type: Type.FETCH_SUCCESS,
-        payload: data.get('result')
-      })
-      yield put({
         type: ADD_TRANSPORT_ENTITY,
         payload: data.get('entities')
+      })
+      yield put({
+        type: Type.FETCH_SUCCESS,
+        payload: data.get('result')
       })
       break
     case 'back':
       yield put({
-        type: Type.FETCH_SUCCESS,
-        payload: data.get('result')
-      })
-      yield put({
         type: ADD_TRANSPORT_ENTITY,
         payload: data.get('entities')
+      })
+      yield put({
+        type: Type.FETCH_SUCCESS,
+        payload: data.get('result')
       })
       yield put(NavigationActions.back())
       break
@@ -109,22 +109,22 @@ function * acceptScreenEffect(scope, action, data = '', pagination = {}) {
       break
     case 'accept':
       yield put({
-        type: Type.ACCEPT_SUCCESS,
-        payload: data.get('result')
-      })
-      yield put({
         type: ADD_TRANSPORT_ENTITY,
         payload: data.get('entities')
+      })
+      yield put({
+        type: Type.ACCEPT_SUCCESS,
+        payload: data.get('result')
       })
       break
     case 'delete':
       yield put({
-        type: Type.DELETE_SUCCESS,
-        payload: data
-      })
-      yield put({
         type: DELETE_ENTITY,
         payload: { stateKey: 'transports', id: data }
+      })
+      yield put({
+        type: Type.DELETE_SUCCESS,
+        payload: data
       })
       break
     default:
@@ -146,12 +146,12 @@ function * activeScreenEffect(scope, action, data = '', pagination = {}) {
       break
     case 'submit':
       yield put({
-        type: Type.SUBMIT_SUCCESS,
-        payload: data.get('result')
-      })
-      yield put({
         type: ADD_TRANSPORT_ENTITY,
         payload: data.get('entities')
+      })
+      yield put({
+        type: Type.SUBMIT_SUCCESS,
+        payload: data.get('result')
       })
       Toast.success('提交成功！', 2)
       break
@@ -177,12 +177,12 @@ function * submitScreenEffect(scope, action, data = '', pagination = {}) {
       break
     case 'save':
       yield put({
-        type: Type.SAVE_SUCCESS,
-        payload: data.get('result')
-      })
-      yield put({
         type: ADD_TRANSPORT_ENTITY,
         payload: data.get('entities')
+      })
+      yield put({
+        type: Type.SAVE_SUCCESS,
+        payload: data.get('result')
       })
       Toast.success('暂存成功！', 2)
       break

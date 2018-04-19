@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet, BackHandler } from 'react-native'
 import FuelAddForm from './AddForm'
 import { ErrorBoundary } from '../../../shared'
+import { ActivityIndicator } from 'antd-mobile'
 
 class FuelAddFormWithHardwareBack extends Component {
   componentDidMount() {
@@ -22,11 +23,17 @@ class FuelAddFormWithHardwareBack extends Component {
     const onUserSubmit = onSubmit(username)
     return (
       <View style={styles.container}>
+        <ActivityIndicator
+          toast
+          text='载入中...'
+          animating={this.props.loading}
+        />
         <ErrorBoundary>
           <FuelAddForm
             vehicles={vehicles}
             initialValues={initialValues}
             onSubmit={onUserSubmit}
+            loading={this.props.formLoading}
           />
         </ErrorBoundary>
       </View>
