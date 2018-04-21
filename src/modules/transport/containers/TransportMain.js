@@ -7,11 +7,16 @@ import {
   toListRequest,
   fetchRequest
 } from '../actions'
+import { assignCountSelector, acceptCountSelector } from '../selectors'
 
 const mapStateToProps = (state, ownProps) => {
   const loading = state.getIn(['transport', 'screenLoading'])
+  const assignCount = assignCountSelector(state)
+  const acceptCount = acceptCountSelector(state)
   return {
     username: state.getIn(['auth', 'username']),
+    assignCount,
+    acceptCount,
     loading
   }
 }

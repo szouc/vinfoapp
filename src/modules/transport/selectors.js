@@ -1,9 +1,13 @@
 import createImmutableSelector from '../../utils/createImmutableSelector'
 import { fromJS } from 'immutable'
-import { transportDenormalize, transportArrayDenormalize } from '../../settings/schema'
+import {
+  transportDenormalize,
+  transportArrayDenormalize
+} from '../../settings/schema'
 // import moment from 'moment'
 
 const entity = state => state.get('entities')
+const transportEntity = state => state.getIn(['entities', 'transports'])
 const userEntity = state => state.getIn(['entities', 'users'])
 const username = state => state.getIn(['auth', 'username'])
 const transportIds = state => state.getIn(['transport', 'transportIds'])
@@ -26,6 +30,64 @@ const transportCurrentSelector = createImmutableSelector(
   [entity, currentTransport],
   (entities, current) => {
     return transportDenormalize(current, entities)
+  }
+)
+
+const assignArraySelector = createImmutableSelector(
+  [transportArraySelector],
+  transports => {
+    return transports.filter(item => item.get('captain_status') === 'assign')
+  }
+)
+
+// // heavy performance
+// const assignCountSelector = createImmutableSelector(
+//   [assignArraySelector],
+//   transports => transports.count()
+// )
+
+const assignCountSelector = createImmutableSelector(
+  [transportEntity, transportIds],
+  (transports, ids) => {
+    let newAcc
+    return ids.isEmpty() || transports.isEmpty()
+      ? 0
+      : ids
+        .reduce((acc, item) => {
+          if (transports.getIn([item, 'captain_status']) === 'assign') {
+            newAcc = acc.push(item)
+          } else {
+            newAcc = acc
+          }
+          return newAcc
+        }, fromJS([]))
+        .count()
+  }
+)
+
+const acceptArraySelector = createImmutableSelector(
+  [transportArraySelector],
+  transports => {
+    return transports.filter(item => item.get('captain_status') === 'accept')
+  }
+)
+
+const acceptCountSelector = createImmutableSelector(
+  [transportEntity, transportIds],
+  (transports, ids) => {
+    let newAcc
+    return ids.isEmpty() || transports.isEmpty()
+      ? 0
+      : ids
+        .reduce((acc, item) => {
+          if (transports.getIn([item, 'captain_status']) === 'accept') {
+            newAcc = acc.push(item)
+          } else {
+            newAcc = acc
+          }
+          return newAcc
+        }, fromJS([]))
+        .count()
   }
 )
 
@@ -69,4 +131,12 @@ const transportCurrentSelector = createImmutableSelector(
 //       : fromJS([])
 // )
 
-export { userSelector, transportArraySelector, transportCurrentSelector }
+export {
+  userSelector,
+  transportArraySelector,
+  transportCurrentSelector,
+  assignArraySelector,
+  assignCountSelector,
+  acceptArraySelector,
+  acceptCountSelector
+}

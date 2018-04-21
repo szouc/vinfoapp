@@ -19,6 +19,7 @@ async function getDriverTransports(username) {
 
 async function acceptTransport({ username, transportId }) {
   const response = await Request.acceptTransport(username, transportId)
+  console.tron.log(response)
   if (response.status === STATUS_OK) {
     const data = response.data.result || {}
     const transport = transportNormalize(data)

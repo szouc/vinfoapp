@@ -19,7 +19,32 @@ class TransportMain extends Component {
   }
 
   render() {
-    const { navToAccept, navToActive, navToList } = this.props
+    const {
+      navToAccept,
+      navToActive,
+      navToList,
+      assignCount,
+      acceptCount
+    } = this.props
+    const gridData = [
+      {
+        icon: 'check-square',
+        text: '接单',
+        badge: assignCount,
+        action: navToAccept
+      },
+      {
+        icon: 'upload',
+        text: '提交',
+        badge: acceptCount,
+        action: navToActive
+      },
+      {
+        icon: 'list-alt',
+        text: '查询',
+        action: navToList
+      }
+    ]
     return (
       <View style={styles.container}>
         <ActivityIndicator
@@ -32,11 +57,7 @@ class TransportMain extends Component {
         </View>
         <View style={styles.grid}>
           <ErrorBoundary>
-            <TransportGrid
-              navToAccept={navToAccept}
-              navToActive={navToActive}
-              navToList={navToList}
-            />
+            <TransportGrid data={gridData} />
           </ErrorBoundary>
         </View>
       </View>
@@ -47,7 +68,8 @@ class TransportMain extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   title: {
     flex: 1,
@@ -58,7 +80,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   grid: {
-    flex: 2
+    flex: 2,
+    alignSelf: 'stretch'
   }
 })
 

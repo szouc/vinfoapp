@@ -1,34 +1,26 @@
-import React, { Component } from 'react'
-import { Grid } from 'antd-mobile'
+import React, { PureComponent } from 'react'
+import { View } from 'react-native'
+import { Grid, Badge } from 'antd-mobile'
 import { GridItem } from '../../../shared'
 
-class TransportGrid extends Component {
+class TransportGrid extends PureComponent {
   constructor(props) {
     super(props)
-    this.data = [
-      {
-        icon: 'check-square',
-        text: '接单',
-        action: this.props.navToAccept
-      },
-      {
-        icon: 'upload',
-        text: '提交',
-        action: this.props.navToActive
-      },
-      {
-        icon: 'list-alt',
-        text: '查询',
-        action: this.props.navToList
-      }
-    ]
   }
 
-  renderItem = item => <GridItem item={item} />
+  renderItem = item => {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Badge text={item.badge}>
+          <GridItem item={item} />
+        </Badge>
+      </View>
+    )
+  }
 
   render() {
     return (
-      <Grid data={this.data} hasLine={false} renderItem={this.renderItem} />
+      <Grid data={this.props.data} hasLine={false} renderItem={this.renderItem} />
     )
   }
 }

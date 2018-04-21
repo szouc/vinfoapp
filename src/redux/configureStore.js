@@ -1,6 +1,6 @@
 // @flow
 
-import '../settings/reactotronConfig'
+// import '../settings/reactotronConfig'
 
 import { autoRehydrate, persistStore } from 'redux-persist-immutable'
 

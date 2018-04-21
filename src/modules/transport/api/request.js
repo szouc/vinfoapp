@@ -17,7 +17,7 @@ const acceptTransport = (username, transportId) => {
   }
   const config = {
     url: replaceAll(URL.DRIVER_TRANSPORT_ID_STATUS, mapObj),
-    method: 'post',
+    method: 'put',
     data: { status: 'accept' }
   }
   return axios(config)
@@ -30,7 +30,7 @@ const submitTransport = (username, transportId) => {
   }
   const config = {
     url: replaceAll(URL.DRIVER_TRANSPORT_ID_STATUS, mapObj),
-    method: 'post',
+    method: 'put',
     data: { status: 'submit' }
   }
   return axios(config)
@@ -43,7 +43,7 @@ const updateTransport = (username, transportId, update) => {
   }
   const config = {
     url: replaceAll(URL.DRIVER_TRANSPORT_ID, mapObj),
-    method: 'post',
+    method: 'put',
     data: update
   }
   return axios(config)

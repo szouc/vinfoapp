@@ -1,12 +1,12 @@
-import { backRequest } from '../actions'
+import { backRequest, acceptRequest } from '../actions'
 
 import { AcceptList } from '../components'
 import { connect } from 'react-redux'
 import immutPropsToJS from '../../../utils/immutPropsToJS'
-import { transportArraySelector } from '../selectors'
+import { assignArraySelector } from '../selectors'
 
 const mapStateToProps = (state, ownProps) => {
-  const transports = transportArraySelector(state)
+  const transports = assignArraySelector(state)
   const loading = state.getIn(['transport', 'screenLoading'])
   return {
     username: state.getIn(['auth', 'username']),
@@ -19,6 +19,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     backToMain: username => {
       dispatch(backRequest(username))
+    },
+    acceptTransport: ({username, transportId}) => () => {
+      dispatch(acceptRequest({username, transportId}))
     }
   }
 }

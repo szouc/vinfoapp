@@ -19,7 +19,15 @@ class AcceptFlatList extends React.PureComponent {
 
   _keyExtractor = (item, index) => item._id
 
-  _renderItem = ({ item }) => <Card transport={item} />
+  _renderItem = ({ item, index }) => {
+    const acceptTransport = this.props.acceptTransport({
+      username: this.props.username,
+      transportId: item._id
+    })
+    return (
+      <Card transport={item} index={index} acceptTransport={acceptTransport} />
+    )
+  }
 
   _getItemLayout = (data, index) => ({
     length: 300,
@@ -30,7 +38,11 @@ class AcceptFlatList extends React.PureComponent {
   render() {
     return (
       <WingBlank>
-        <ActivityIndicator toast text='载入中...' animating={this.props.loading} />
+        <ActivityIndicator
+          toast
+          text='载入中...'
+          animating={this.props.loading}
+        />
         <FlatList
           data={this.props.transports}
           keyExtractor={this._keyExtractor}
