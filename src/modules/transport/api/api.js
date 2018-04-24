@@ -17,9 +17,28 @@ async function getDriverTransports(username) {
   throw new Error('Something wrong.(getDriverTransports)')
 }
 
+async function getAcceptTransports(username) {
+  const response = await Request.getAcceptTransports(username)
+  if (response.status === STATUS_OK) {
+    const data = response.data.result || {}
+    const transports = transportArrayNormalize(data)
+    return fromJS(transports)
+  }
+  throw new Error('Something wrong.(getAcceptTransports)')
+}
+
+async function getAssignTransports(username) {
+  const response = await Request.getAssignTransports(username)
+  if (response.status === STATUS_OK) {
+    const data = response.data.result || {}
+    const transports = transportArrayNormalize(data)
+    return fromJS(transports)
+  }
+  throw new Error('Something wrong.(getAssignTransports)')
+}
+
 async function acceptTransport({ username, transportId }) {
   const response = await Request.acceptTransport(username, transportId)
-  console.tron.log(response)
   if (response.status === STATUS_OK) {
     const data = response.data.result || {}
     const transport = transportNormalize(data)
@@ -50,6 +69,8 @@ async function updateTransport({ username, transportId, update }) {
 
 export {
   getDriverTransports,
+  getAssignTransports,
+  getAcceptTransports,
   acceptTransport,
   submitTransport,
   updateTransport

@@ -5,7 +5,7 @@ import {
   toAcceptRequest,
   toActiveRequest,
   toListRequest,
-  fetchRequest
+  initialRequest
 } from '../actions'
 import { assignCountSelector, acceptCountSelector } from '../selectors'
 
@@ -33,7 +33,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(toListRequest())
     },
     fetchTransports: username => {
-      dispatch(fetchRequest(username))
+      dispatch(initialRequest(username))
     }
   }
 }
