@@ -7,9 +7,11 @@ import {
 // import moment from 'moment'
 
 const entity = state => state.get('entities')
-const transportEntity = state => state.getIn(['entities', 'transports'])
+// const transportEntity = state => state.getIn(['entities', 'transports'])
 const userEntity = state => state.getIn(['entities', 'users'])
 const username = state => state.getIn(['auth', 'username'])
+const assignIds = state => state.getIn(['transport', 'assignIds'])
+const acceptIds = state => state.getIn(['transport', 'acceptIds'])
 const transportIds = state => state.getIn(['transport', 'transportIds'])
 const currentTransport = state => state.getIn(['transport', 'currentTransport'])
 
@@ -34,62 +36,46 @@ const transportCurrentSelector = createImmutableSelector(
 )
 
 const assignArraySelector = createImmutableSelector(
-  [transportArraySelector],
-  transports => {
-    return transports.filter(item => item.get('captain_status') === 'assign')
+  [entity, assignIds],
+  (entities, ids) => {
+    return transportArrayDenormalize(ids, entities)
   }
 )
 
-// // heavy performance
-// const assignCountSelector = createImmutableSelector(
-//   [assignArraySelector],
-//   transports => transports.count()
-// )
-
 const assignCountSelector = createImmutableSelector(
-  [transportEntity, transportIds],
-  (transports, ids) => {
-    let newAcc
-    return ids.isEmpty() || transports.isEmpty()
-      ? 0
-      : ids
-        .reduce((acc, item) => {
-          if (transports.getIn([item, 'captain_status']) === 'assign') {
-            newAcc = acc.push(item)
-          } else {
-            newAcc = acc
-          }
-          return newAcc
-        }, fromJS([]))
-        .count()
-  }
+  [assignIds],
+  transports => transports.count()
 )
 
 const acceptArraySelector = createImmutableSelector(
-  [transportArraySelector],
-  transports => {
-    return transports.filter(item => item.get('captain_status') === 'accept')
+  [entity, acceptIds],
+  (entities, ids) => {
+    return transportArrayDenormalize(ids, entities)
   }
 )
 
 const acceptCountSelector = createImmutableSelector(
-  [transportEntity, transportIds],
-  (transports, ids) => {
-    let newAcc
-    return ids.isEmpty() || transports.isEmpty()
-      ? 0
-      : ids
-        .reduce((acc, item) => {
-          if (transports.getIn([item, 'captain_status']) === 'accept') {
-            newAcc = acc.push(item)
-          } else {
-            newAcc = acc
-          }
-          return newAcc
-        }, fromJS([]))
-        .count()
-  }
+  [acceptIds],
+  transports => transports.count()
 )
+// const acceptCountSelector = createImmutableSelector(
+//   [transportEntity, transportIds],
+//   (transports, ids) => {
+//     let newAcc
+//     return ids.isEmpty() || transports.isEmpty()
+//       ? 0
+//       : ids
+//         .reduce((acc, item) => {
+//           if (transports.getIn([item, 'captain_status']) === 'accept') {
+//             newAcc = acc.push(item)
+//           } else {
+//             newAcc = acc
+//           }
+//           return newAcc
+//         }, fromJS([]))
+//         .count()
+//   }
+// )
 
 // const vehiclePickerSelector = createImmutableSelector(
 //   [vehicleArraySelector],

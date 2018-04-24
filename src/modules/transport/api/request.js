@@ -10,6 +10,24 @@ const getDriverTransports = username => {
   return axios(config)
 }
 
+const getAssignTransports = username => {
+  const config = {
+    url: URL.DRIVER_TRANSPORT_STATUS.replace(/:username/, username),
+    method: 'get',
+    params: { captain_status: 'assign' }
+  }
+  return axios(config)
+}
+
+const getAcceptTransports = username => {
+  const config = {
+    url: URL.DRIVER_TRANSPORT_STATUS.replace(/:username/, username),
+    method: 'get',
+    params: { captain_status: 'accept' }
+  }
+  return axios(config)
+}
+
 const acceptTransport = (username, transportId) => {
   const mapObj = {
     ':username': username,
@@ -51,6 +69,8 @@ const updateTransport = (username, transportId, update) => {
 
 export {
   getDriverTransports,
+  getAssignTransports,
+  getAcceptTransports,
   acceptTransport,
   submitTransport,
   updateTransport

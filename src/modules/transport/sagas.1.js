@@ -14,24 +14,35 @@ import Machine from '../../utils/machine'
 const transportState = {
   currentState: 'main_screen',
   states: {
+    initial_main_screen: {
+      initial_main: 'loading'
+    },
     main_screen: {
-      initial: 'loading',
       to_accept: 'loading',
       to_active: 'loading',
       to_list: 'loading'
     },
     loading: {
       // response 'fetch', 'back'
-      fetch_success: 'main_screen',
+      initial_main_success: 'main_screen',
+      back_success: 'main_screen',
       // response 'to_accept', 'accept'
+      to_accept_success: 'accept_screen',
       accept_success: 'accept_screen',
       // response 'to_active', back_active', 'submit'
-      active_success: 'active_screen',
+      to_active_success: 'active_screen',
+      back_active_success: 'active_screen',
+      submit_success: 'active_screen',
       // response 'to_list'
-      list_success: 'list_screen',
+      to_list_success: 'list_screen',
       // response 'to_submit', 'save'
+      to_submit_success: 'submit_screen',
       save_success: 'submit_screen',
+      // response to 'error'
       failure: 'error'
+    },
+    initial_accept_screen: {
+      initial_accept: 'loading'
     },
     accept_screen: {
       accept: 'loading',
