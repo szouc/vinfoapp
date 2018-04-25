@@ -1,11 +1,7 @@
 import createImmutableSelector from '../../utils/createImmutableSelector'
 
-const driverEntity = state => state.getIn(['entities', 'users'])
-const driverCurrent = state => state.getIn(['driver', 'username'])
+const driver = state => state.getIn(['driver', 'user'])
 
-const driverSelector = createImmutableSelector(
-  [driverEntity, driverCurrent],
-  (users, current) => users.get(current)
-)
+const driverSelector = createImmutableSelector([driver], user => user)
 
 export { driverSelector }

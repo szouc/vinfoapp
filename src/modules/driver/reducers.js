@@ -4,14 +4,14 @@ import Immutable from 'immutable'
 
 const initialState = Immutable.fromJS({
   screenLoading: false,
-  username: undefined
+  user: null
 })
 
 const driverReducer = (state = initialState, action) => {
   const { type, payload } = action
   switch (type) {
     case Type.FETCH_PROFILE_SUCCESS:
-      return state.set('username', payload)
+      return state.set('user', payload)
     case Type.SET_LOADING:
       return state.set(`${payload.scope}Loading`, payload.loading)
     default:

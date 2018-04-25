@@ -12,6 +12,7 @@ const userEntity = state => state.getIn(['entities', 'users'])
 const username = state => state.getIn(['auth', 'username'])
 const assignIds = state => state.getIn(['transport', 'assignIds'])
 const acceptIds = state => state.getIn(['transport', 'acceptIds'])
+const checkIds = state => state.getIn(['transport', 'checkIds'])
 const transportIds = state => state.getIn(['transport', 'transportIds'])
 const currentTransport = state => state.getIn(['transport', 'currentTransport'])
 
@@ -56,6 +57,18 @@ const acceptArraySelector = createImmutableSelector(
 
 const acceptCountSelector = createImmutableSelector(
   [acceptIds],
+  transports => transports.count()
+)
+
+const checkArraySelector = createImmutableSelector(
+  [entity, checkIds],
+  (entities, ids) => {
+    return transportArrayDenormalize(ids, entities)
+  }
+)
+
+const checkCountSelector = createImmutableSelector(
+  [checkIds],
   transports => transports.count()
 )
 // const acceptCountSelector = createImmutableSelector(
@@ -124,5 +137,7 @@ export {
   assignArraySelector,
   assignCountSelector,
   acceptArraySelector,
-  acceptCountSelector
+  acceptCountSelector,
+  checkArraySelector,
+  checkCountSelector
 }

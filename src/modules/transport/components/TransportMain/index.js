@@ -7,7 +7,7 @@ import { ActivityIndicator } from 'antd-mobile'
 class TransportMain extends Component {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
-    this.props.fetchTransports(this.props.username)
+    this.props.initialFetchTransports(this.props.username)
   }
 
   componentWillUnmount() {
@@ -22,8 +22,10 @@ class TransportMain extends Component {
     const {
       navToAccept,
       navToActive,
+      navToCheck,
       navToList,
       assignCount,
+      checkCount,
       acceptCount
     } = this.props
     const gridData = [
@@ -38,6 +40,12 @@ class TransportMain extends Component {
         text: '提交',
         badge: acceptCount,
         action: navToActive
+      },
+      {
+        icon: 'stack-overflow',
+        text: '待检',
+        badge: checkCount,
+        action: navToCheck
       },
       {
         icon: 'list-alt',

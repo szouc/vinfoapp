@@ -12,7 +12,7 @@ const getDriverTransports = username => {
 
 const getAssignTransports = username => {
   const config = {
-    url: URL.DRIVER_TRANSPORT_STATUS.replace(/:username/, username),
+    url: URL.DRIVER_TRANSPORT.replace(/:username/, username),
     method: 'get',
     params: { captain_status: 'assign' }
   }
@@ -21,9 +21,18 @@ const getAssignTransports = username => {
 
 const getAcceptTransports = username => {
   const config = {
-    url: URL.DRIVER_TRANSPORT_STATUS.replace(/:username/, username),
+    url: URL.DRIVER_TRANSPORT.replace(/:username/, username),
     method: 'get',
     params: { captain_status: 'accept' }
+  }
+  return axios(config)
+}
+
+const getCheckTransports = username => {
+  const config = {
+    url: URL.DRIVER_TRANSPORT.replace(/:username/, username),
+    method: 'get',
+    params: { captain_status: 'submit' }
   }
   return axios(config)
 }
@@ -71,6 +80,7 @@ export {
   getDriverTransports,
   getAssignTransports,
   getAcceptTransports,
+  getCheckTransports,
   acceptTransport,
   submitTransport,
   updateTransport

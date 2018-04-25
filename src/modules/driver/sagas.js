@@ -1,7 +1,6 @@
 import * as Api from './api'
 import * as Type from './actionTypes'
 import { REQUEST_ERROR } from '../error'
-import { ADD_USER_ENTITY } from '../entity'
 import { fromJS } from 'immutable'
 
 import { call, fork, put, take } from 'redux-saga/effects'
@@ -28,11 +27,7 @@ function * screenEffect(scope, action, data = '', pagination = {}) {
     case 'fetch':
       yield put({
         type: Type.FETCH_PROFILE_SUCCESS,
-        payload: data.get('result')
-      })
-      yield put({
-        type: ADD_USER_ENTITY,
-        payload: data.get('entities')
+        payload: data
       })
       break
     default:

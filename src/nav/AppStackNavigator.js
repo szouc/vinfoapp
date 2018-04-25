@@ -4,7 +4,8 @@ import {
   FuelAddScreen,
   FuelFetchScreen,
   TransportAcceptScreen,
-  TransportActiveScreen
+  TransportActiveScreen,
+  TransportSubmitScreen
 } from '../screens'
 
 const AppStackNavigator = StackNavigator(
@@ -13,7 +14,8 @@ const AppStackNavigator = StackNavigator(
     FuelAdd: { screen: FuelAddScreen },
     FuelFetch: { screen: FuelFetchScreen },
     TransAccept: { screen: TransportAcceptScreen },
-    TransActive: { screen: TransportActiveScreen }
+    TransActive: { screen: TransportActiveScreen },
+    TransSubmit: { screen: TransportSubmitScreen }
   },
   {
     initialRouteName: 'Main'

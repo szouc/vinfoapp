@@ -8,6 +8,7 @@ const initialState = Immutable.fromJS({
   currentTransport: null,
   assignIds: [],
   acceptIds: [],
+  checkIds: [],
   transportIds: []
 })
 
@@ -20,6 +21,8 @@ const transportReducer = (state = initialState, action) => {
       return state.set('assignIds', payload)
     case Type.FETCH_ACCEPT_SUCCESS:
       return state.set('acceptIds', payload)
+    case Type.FETCH_CHECK_SUCCESS:
+      return state.set('checkIds', payload)
     case Type.ACCEPT_SUCCESS:
       const assignPosition = state.get('assignIds').indexOf(payload)
       return state.deleteIn(['assignIds', assignPosition])

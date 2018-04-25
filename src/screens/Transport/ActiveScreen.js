@@ -8,7 +8,7 @@ import { WhiteSpace } from 'antd-mobile'
 
 class ActiveScreen extends React.PureComponent {
   static navigationOptions = {
-    title: '运输记录',
+    title: '运输界面',
     headerLeft: <BackToMainButton />
   }
 

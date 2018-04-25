@@ -18,6 +18,7 @@ const transportState = {
       initial: 'loading',
       to_accept: 'loading',
       to_active: 'loading',
+      to_check: 'loading',
       to_list: 'loading'
     },
     loading: {
@@ -27,6 +28,8 @@ const transportState = {
       accept_success: 'accept_screen',
       // response 'to_active', back_active', 'submit'
       active_success: 'active_screen',
+      // response 'to_check'
+      check_success: 'check_screen',
       // response 'to_list'
       list_success: 'list_screen',
       // response 'to_submit', 'save'
@@ -46,6 +49,9 @@ const transportState = {
       submit: 'loading',
       back_active: 'loading'
     },
+    check_screen: {
+      back: 'loading'
+    },
     list_screen: {
       back: 'loading'
     },
@@ -53,6 +59,7 @@ const transportState = {
       main_retry: 'main_screen',
       accept_retry: 'accept_screen',
       active_retry: 'active_screen',
+      check_retry: 'check_screen',
       list_retry: 'list_screen',
       submit_retry: 'submit_screen'
     }
@@ -71,12 +78,20 @@ function * mainScreenEffect(scope, action, data = '', pagination = {}) {
         payload: data.accept.get('entities')
       })
       yield put({
+        type: ADD_TRANSPORT_ENTITY,
+        payload: data.check.get('entities')
+      })
+      yield put({
         type: Type.FETCH_ASSIGN_SUCCESS,
         payload: data.assign.get('result')
       })
       yield put({
         type: Type.FETCH_ACCEPT_SUCCESS,
         payload: data.accept.get('result')
+      })
+      yield put({
+        type: Type.FETCH_CHECK_SUCCESS,
+        payload: data.check.get('result')
       })
       break
     case 'back':
@@ -89,12 +104,20 @@ function * mainScreenEffect(scope, action, data = '', pagination = {}) {
         payload: data.accept.get('entities')
       })
       yield put({
+        type: ADD_TRANSPORT_ENTITY,
+        payload: data.check.get('entities')
+      })
+      yield put({
         type: Type.FETCH_ASSIGN_SUCCESS,
         payload: data.assign.get('result')
       })
       yield put({
         type: Type.FETCH_ACCEPT_SUCCESS,
         payload: data.accept.get('result')
+      })
+      yield put({
+        type: Type.FETCH_CHECK_SUCCESS,
+        payload: data.check.get('result')
       })
       yield put(NavigationActions.back())
       break
@@ -220,6 +243,23 @@ function * submitScreenEffect(scope, action, data = '', pagination = {}) {
   })
 }
 
+function * checkScreenEffect(scope, action, data = '', pagination = {}) {
+  switch (action) {
+    case 'initial':
+      yield put(NavigationActions.navigate({ routeName: 'TransCheck' }))
+      break
+    default:
+      yield put({
+        type: REQUEST_ERROR,
+        payload: fromJS({ message: '没有相应的操作。' })
+      })
+  }
+  yield put({
+    type: Type.SET_LOADING,
+    payload: { scope: scope, loading: false }
+  })
+}
+
 function * listScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
     case 'initial':
@@ -267,6 +307,7 @@ const transportEffects = {
   accept_screen: acceptScreenEffect,
   active_screen: activeScreenEffect,
   submit_screen: submitScreenEffect,
+  check_screen: checkScreenEffect,
   list_screen: listScreenEffect
 }
 
@@ -274,10 +315,12 @@ const machine = new Machine(transportState, transportEffects)
 const initialEffect = machine.getEffect('initial')
 const toAcceptScreenEffect = machine.getEffect('to_accept')
 const toActiveScreenEffect = machine.getEffect('to_active')
+const toCheckScreenEffect = machine.getEffect('to_check')
 const toListScreenEffect = machine.getEffect('to_list')
 const fetchSuccessEffect = machine.getEffect('fetch_success')
 const acceptSuccessEffect = machine.getEffect('accept_success')
 const activeSuccessEffect = machine.getEffect('active_success')
+const checkSuccessEffect = machine.getEffect('check_success')
 const listSuccessEffect = machine.getEffect('list_success')
 const saveSuccessEffect = machine.getEffect('save_success')
 const acceptEffect = machine.getEffect('accept')
@@ -292,12 +335,13 @@ function * initialFlow(action) {
   const { payload } = action
   yield initialEffect('screen')
   try {
-    const [assign, accept] = yield all([
+    const [assign, accept, check] = yield all([
       call(Api.getAssignTransports, payload),
-      call(Api.getAcceptTransports, payload)
+      call(Api.getAcceptTransports, payload),
+      call(Api.getCheckTransports, payload)
     ])
-    if (assign && accept) {
-      yield fetchSuccessEffect('screen', 'initial', { assign, accept })
+    if (assign && accept && check) {
+      yield fetchSuccessEffect('screen', 'initial', { assign, accept, check })
     }
   } catch (error) {
     yield failureEffect('screen', error)
@@ -319,6 +363,16 @@ function * toActiveScreenFlow() {
   yield toActiveScreenEffect('screen')
   try {
     yield activeSuccessEffect('screen', 'initial')
+  } catch (error) {
+    yield failureEffect('screen', error)
+    machine.operation('main_retry')
+  }
+}
+
+function * toCheckScreenFlow() {
+  yield toCheckScreenEffect('screen')
+  try {
+    yield checkSuccessEffect('screen', 'initial')
   } catch (error) {
     yield failureEffect('screen', error)
     machine.operation('main_retry')
@@ -413,12 +467,13 @@ function * backFlow(action) {
   const { payload } = action
   yield backEffect('screen')
   try {
-    const [assign, accept] = yield all([
+    const [assign, accept, check] = yield all([
       call(Api.getAssignTransports, payload),
-      call(Api.getAcceptTransports, payload)
+      call(Api.getAcceptTransports, payload),
+      call(Api.getCheckTransports, payload)
     ])
-    if (assign && accept) {
-      yield fetchSuccessEffect('screen', 'back', { assign, accept })
+    if (assign && accept && check) {
+      yield fetchSuccessEffect('screen', 'back', { assign, accept, check })
     }
   } catch (error) {
     yield failureEffect('screen', error)
@@ -450,6 +505,7 @@ export default function * rootSagas() {
   yield takeLatest(Type.INITIAL_REQUEST, initialFlow)
   yield takeLatest(Type.TO_ACCEPT_REQUEST, toAcceptScreenFlow)
   yield takeLatest(Type.TO_ACTIVE_REQUEST, toActiveScreenFlow)
+  yield takeLatest(Type.TO_CHECK_REQUEST, toCheckScreenFlow)
   yield takeLatest(Type.TO_LIST_REQUEST, toListScreenFlow)
   yield takeLatest(Type.TO_SUBMIT_REQUEST, toSubmitScreenFlow)
   yield takeLatest(Type.ACCEPT_REQUEST, acceptFlow)

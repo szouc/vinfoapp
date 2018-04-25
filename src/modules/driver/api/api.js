@@ -7,9 +7,9 @@ const STATUS_OK = 200
 async function getDriverByUsername (username) {
   const response = await Request.getDriverByUsername(username)
   if (response.status === STATUS_OK) {
-    const data = response.data.result
-    const driver = userNormalize(data)
-    return fromJS(driver)
+    const data = response.data.result || {}
+    // const driver = userNormalize(data)
+    return fromJS(data)
   }
   throw new Error('Something Wrong.(getDriverByUsername)')
 }
@@ -19,7 +19,7 @@ async function changePasswordByUsername (values) {
   const password = values.get('password')
   const response = await Request.changePasswordByUsername(username, password)
   if (response.status === STATUS_OK) {
-    const data = response.data.result
+    const data = response.data.result || {}
     const driver = userNormalize(data)
     return fromJS(driver)
   }

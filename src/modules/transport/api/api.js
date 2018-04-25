@@ -37,6 +37,16 @@ async function getAssignTransports(username) {
   throw new Error('Something wrong.(getAssignTransports)')
 }
 
+async function getCheckTransports(username) {
+  const response = await Request.getCheckTransports(username)
+  if (response.status === STATUS_OK) {
+    const data = response.data.result || {}
+    const transports = transportArrayNormalize(data)
+    return fromJS(transports)
+  }
+  throw new Error('Something wrong.(getCheckTransports)')
+}
+
 async function acceptTransport({ username, transportId }) {
   const response = await Request.acceptTransport(username, transportId)
   if (response.status === STATUS_OK) {
@@ -71,6 +81,7 @@ export {
   getDriverTransports,
   getAssignTransports,
   getAcceptTransports,
+  getCheckTransports,
   acceptTransport,
   submitTransport,
   updateTransport
