@@ -1,7 +1,7 @@
 import { SubmitForm } from '../components'
 import { connect } from 'react-redux'
 import immutPropsToJS from '../../../utils/immutPropsToJS'
-import { submitRequest, backToActiveRequest } from '../actions'
+import { saveRequest, submitRequest, backToActiveRequest } from '../actions'
 import { transportCurrentSelector } from '../selectors'
 
 const mapStateToProps = (state, ownProps) => {
@@ -21,8 +21,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     backToActive: () => {
       dispatch(backToActiveRequest())
     },
-    onSubmit: username => values => {
-      dispatch(submitRequest(values))
+    onSave: ({ username, transportId }) => values => {
+      dispatch(saveRequest({ username, transportId, update: values }))
+    },
+    onSubmit: ({ username, transportId }) => values => {
+      dispatch(submitRequest({ username, transportId, update: values }))
     }
   }
 }

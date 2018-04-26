@@ -187,11 +187,15 @@ function * activeScreenEffect(scope, action, data = '', pagination = {}) {
     case 'submit':
       yield put({
         type: ADD_TRANSPORT_ENTITY,
-        payload: data.get('entities')
+        payload: data.submit.get('entities')
+      })
+      yield put({
+        type: Type.SAVE_SUCCESS,
+        payload: data.update.get('result')
       })
       yield put({
         type: Type.SUBMIT_SUCCESS,
-        payload: data.get('result')
+        payload: data.submit.get('result')
       })
       yield put(NavigationActions.back())
       Toast.success('提交成功！', 2)
@@ -436,9 +440,12 @@ function * submitFlow(action) {
   const { payload } = action
   yield submitEffect('screen')
   try {
-    const transport = yield call(Api.submitTransport, payload)
-    if (transport) {
-      yield activeSuccessEffect('screen', 'submit', transport)
+    const [update, submit] = yield all([
+      call(Api.updateTransport, payload),
+      call(Api.submitTransport, payload)
+    ])
+    if (update && submit) {
+      yield activeSuccessEffect('screen', 'submit', { update, submit })
     }
   } catch (error) {
     yield failureEffect('screen', error)

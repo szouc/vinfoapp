@@ -50,7 +50,7 @@ async function getCheckTransports(username) {
 async function acceptTransport({ username, transportId }) {
   const response = await Request.acceptTransport(username, transportId)
   if (response.status === STATUS_OK) {
-    const data = response.data.result || {}
+    const data = response.data.result[0] || {}
     const transport = transportNormalize(data)
     return fromJS(transport)
   }
@@ -60,7 +60,7 @@ async function acceptTransport({ username, transportId }) {
 async function submitTransport({ username, transportId }) {
   const response = await Request.submitTransport(username, transportId)
   if (response.status === STATUS_OK) {
-    const data = response.data.result || {}
+    const data = response.data.result[0] || {}
     const transport = transportNormalize(data)
     return fromJS(transport)
   }

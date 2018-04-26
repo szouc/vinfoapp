@@ -19,8 +19,15 @@ class TransportSubmitFormWithHardwareBack extends Component {
   }
 
   render() {
-    const { username, initialValues, onSubmit } = this.props
-    const onUserSubmit = onSubmit(username)
+    const { username, initialValues, onSave, onSubmit } = this.props
+    const onUserSave = onSave({
+      username,
+      transportId: initialValues._id
+    })
+    const onUserSubmit = onSubmit({
+      username,
+      transportId: initialValues._id
+    })
     return (
       <View style={styles.container}>
         <ActivityIndicator
@@ -32,6 +39,7 @@ class TransportSubmitFormWithHardwareBack extends Component {
           <TransportSubmitForm
             initialValues={initialValues}
             onSubmit={onUserSubmit}
+            onSave={onUserSave}
             loading={this.props.formLoading}
           />
         </ErrorBoundary>
