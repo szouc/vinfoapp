@@ -4,8 +4,12 @@ import {
   transportDenormalize,
   transportArrayDenormalize
 } from '../../settings/schema'
+import { formValueSelector } from 'redux-form/immutable'
 // import moment from 'moment'
 
+const submitFormSelector = formValueSelector('TransportSubmitForm')
+const fromEntity = state => submitFormSelector(state, 'from')
+const toEntity = state => submitFormSelector(state, 'to')
 const entity = state => state.get('entities')
 // const transportEntity = state => state.getIn(['entities', 'transports'])
 const userEntity = state => state.getIn(['entities', 'users'])
@@ -70,6 +74,11 @@ const checkArraySelector = createImmutableSelector(
 const checkCountSelector = createImmutableSelector(
   [checkIds],
   transports => transports.count()
+)
+
+const saveFormValuesSelector = createImmutableSelector(
+  [fromEntity, toEntity],
+  (fromInfo, toInfo) => fromJS({from: fromInfo, to: toInfo})
 )
 // const acceptCountSelector = createImmutableSelector(
 //   [transportEntity, transportIds],
@@ -139,5 +148,6 @@ export {
   acceptArraySelector,
   acceptCountSelector,
   checkArraySelector,
-  checkCountSelector
+  checkCountSelector,
+  saveFormValuesSelector
 }

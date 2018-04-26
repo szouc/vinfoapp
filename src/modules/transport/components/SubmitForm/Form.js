@@ -1,5 +1,5 @@
 import React from 'react'
-import { InputItemField } from '../../../shared'
+import { InputItemField, DatePickerField } from '../../../shared'
 import { reduxForm } from 'redux-form/immutable'
 import { FormSection } from 'redux-form'
 import {
@@ -7,6 +7,7 @@ import {
   WingBlank,
   WhiteSpace,
   Button,
+  InputItem,
   ActivityIndicator
 } from 'antd-mobile'
 
@@ -45,7 +46,22 @@ class TransportSubmitForm extends React.PureComponent {
   }
 
   render() {
-    const { handleSubmit, onSave, onSubmit } = this.props
+    const {
+      username,
+      transportId,
+      handleSubmit,
+      onSave,
+      onSubmit,
+      saveValues
+    } = this.props
+    const onUserSave = onSave({
+      username,
+      transportId
+    })
+    const onUserSubmit = onSubmit({
+      username,
+      transportId
+    })
     return (
       <WingBlank>
         <ActivityIndicator
@@ -74,12 +90,7 @@ class TransportSubmitForm extends React.PureComponent {
             />
           </FormSection>
           <FormSection name='from'>
-            <InputItemField
-              name='date'
-              type='number'
-              placeholder='请输入出发日期'
-              label='出发日期'
-            />
+            <DatePickerField name='date' label='出发日期' />
           </FormSection>
         </List>
         <List renderHeader={() => '添加运输内容'}>
@@ -103,18 +114,13 @@ class TransportSubmitForm extends React.PureComponent {
             />
           </FormSection>
           <FormSection name='to'>
-            <InputItemField
-              name='date'
-              type='number'
-              placeholder='请输入到达日期'
-              label='到达日期'
-            />
+            <DatePickerField name='date' label='到达日期' />
           </FormSection>
         </List>
         <WhiteSpace />
-        <Button onClick={onSave}>暂存</Button>
+        <Button onClick={onUserSave(saveValues)}>暂存</Button>
         <WhiteSpace />
-        <Button onClick={handleSubmit(onSubmit)}>提交</Button>
+        <Button onClick={handleSubmit(onUserSubmit)}>提交</Button>
       </WingBlank>
     )
   }

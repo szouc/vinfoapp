@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, BackHandler } from 'react-native'
+import { BackHandler } from 'react-native'
 import TransportSubmitForm from './Form'
 import { ErrorBoundary } from '../../../shared'
 import { ActivityIndicator } from 'antd-mobile'
+import moment from 'moment'
 
 class TransportSubmitFormWithHardwareBack extends Component {
   componentDidMount() {
@@ -19,17 +20,14 @@ class TransportSubmitFormWithHardwareBack extends Component {
   }
 
   render() {
-    const { username, initialValues, onSave, onSubmit } = this.props
-    const onUserSave = onSave({
-      username,
-      transportId: initialValues._id
-    })
-    const onUserSubmit = onSubmit({
-      username,
-      transportId: initialValues._id
-    })
+    const { username, saveValues, initialValues, onSave, onSubmit } = this.props
+    const { from, to } = initialValues
+    const fromDate = moment(from.date).toDate()
+    const toDate = moment(to.date).toDate()
+    initialValues.from.date = fromDate
+    initialValues.to.date = toDate
     return (
-      <View style={styles.container}>
+      <React.Fragment>
         <ActivityIndicator
           toast
           text='载入中...'
@@ -38,21 +36,17 @@ class TransportSubmitFormWithHardwareBack extends Component {
         <ErrorBoundary>
           <TransportSubmitForm
             initialValues={initialValues}
-            onSubmit={onUserSubmit}
-            onSave={onUserSave}
+            username={username}
+            transportId={initialValues._id}
+            onSubmit={onSubmit}
+            onSave={onSave}
+            saveValues={saveValues}
             loading={this.props.formLoading}
           />
         </ErrorBoundary>
-      </View>
+      </React.Fragment>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center'
-  }
-})
 
 export default TransportSubmitFormWithHardwareBack
