@@ -47,9 +47,8 @@ const assignArraySelector = createImmutableSelector(
   }
 )
 
-const assignCountSelector = createImmutableSelector(
-  [assignIds],
-  transports => transports.count()
+const assignCountSelector = createImmutableSelector([assignIds], transports =>
+  transports.count()
 )
 
 const acceptArraySelector = createImmutableSelector(
@@ -59,9 +58,8 @@ const acceptArraySelector = createImmutableSelector(
   }
 )
 
-const acceptCountSelector = createImmutableSelector(
-  [acceptIds],
-  transports => transports.count()
+const acceptCountSelector = createImmutableSelector([acceptIds], transports =>
+  transports.count()
 )
 
 const checkArraySelector = createImmutableSelector(
@@ -71,14 +69,13 @@ const checkArraySelector = createImmutableSelector(
   }
 )
 
-const checkCountSelector = createImmutableSelector(
-  [checkIds],
-  transports => transports.count()
+const checkCountSelector = createImmutableSelector([checkIds], transports =>
+  transports.count()
 )
 
 const saveFormValuesSelector = createImmutableSelector(
   [fromEntity, toEntity],
-  (fromInfo, toInfo) => fromJS({from: fromInfo, to: toInfo})
+  (fromInfo, toInfo) => fromJS({ from: fromInfo, to: toInfo })
 )
 // const acceptCountSelector = createImmutableSelector(
 //   [transportEntity, transportIds],

@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 
-import { Picker as AntPicker } from 'antd-mobile'
+import { List, Picker as AntPicker } from 'antd-mobile'
 
 class Picker extends Component {
   render() {
-    const { input, meta, ...rest } = this.props
-    return <AntPicker onOk={input.onChange} {...input} {...rest} />
+    const { label, input, meta, ...rest } = this.props
+    return (
+      <AntPicker onOk={input.onChange} {...input} {...rest}>
+        <List.Item arrow='horizontal'>{label}</List.Item>
+      </AntPicker>
+    )
   }
 }
 

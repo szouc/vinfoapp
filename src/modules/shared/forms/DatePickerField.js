@@ -5,10 +5,7 @@ import { Field } from 'redux-form/immutable'
 
 class DatePickerField extends React.PureComponent {
   render() {
-    const { label, ...rest } = this.props
-    return (
-      <Field component={DatePicker} label={label} {...rest} />
-    )
+    return <Field component={DatePicker} {...this.props} />
   }
 }
 

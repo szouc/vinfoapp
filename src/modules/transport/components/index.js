@@ -1,4 +1,6 @@
 export TransportMain from './TransportMain'
 export AcceptList from './AcceptList'
 export ActiveList from './ActiveList'
+export CheckList from './CheckList'
+export FetchList from './FetchList'
 export SubmitForm from './SubmitForm'

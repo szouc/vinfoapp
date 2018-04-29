@@ -1,13 +1,11 @@
 import React from 'react'
 import { InputItemField, DatePickerField } from '../../../shared'
-import { reduxForm } from 'redux-form/immutable'
-import { FormSection } from 'redux-form'
+import { FormSection, reduxForm } from 'redux-form/immutable'
 import {
   List,
   WingBlank,
   WhiteSpace,
   Button,
-  InputItem,
   ActivityIndicator
 } from 'antd-mobile'
 
@@ -90,7 +88,12 @@ class TransportSubmitForm extends React.PureComponent {
             />
           </FormSection>
           <FormSection name='from'>
-            <DatePickerField name='date' label='出发日期' />
+            <DatePickerField
+              name='date'
+              label='出发日期'
+              title='出发日期'
+              extra='请选择出发日期'
+            />
           </FormSection>
         </List>
         <List renderHeader={() => '添加运输内容'}>
@@ -114,7 +117,12 @@ class TransportSubmitForm extends React.PureComponent {
             />
           </FormSection>
           <FormSection name='to'>
-            <DatePickerField name='date' label='到达日期' />
+            <DatePickerField
+              name='date'
+              label='到达日期'
+              title='到达日期'
+              extra='请选择到达日期'
+            />
           </FormSection>
         </List>
         <WhiteSpace />

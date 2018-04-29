@@ -4,6 +4,7 @@ import TransportSubmitForm from './Form'
 import { ErrorBoundary } from '../../../shared'
 import { ActivityIndicator } from 'antd-mobile'
 import moment from 'moment'
+import R from 'ramda'
 
 class TransportSubmitFormWithHardwareBack extends Component {
   componentDidMount() {

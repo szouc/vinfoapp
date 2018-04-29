@@ -2,15 +2,20 @@ import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { ProfileCard } from '../modules/driver/containers'
 import { LogoutButton } from '../modules/auth/containers'
-import { WhiteSpace } from 'antd-mobile'
+import { WhiteSpace, WingBlank } from 'antd-mobile'
 
-class Login extends Component {
+class Profile extends Component {
+  static navigationOptions = {
+    header: null
+  }
   render() {
     return (
       <View style={styles.container}>
         <ProfileCard />
         <WhiteSpace size='xl' />
-        <LogoutButton />
+        <WingBlank>
+          <LogoutButton />
+        </WingBlank>
       </View>
     )
   }
@@ -23,4 +28,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Login
+export default Profile

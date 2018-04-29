@@ -1,5 +1,5 @@
 import React from 'react'
-import { WingBlank, Card, Button, WhiteSpace } from 'antd-mobile'
+import { Card } from 'antd-mobile'
 import { TransportReviewList } from '../TransportCardList'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -12,7 +12,7 @@ class TransportCard extends React.PureComponent {
     return (
       <Card>
         <Card.Header
-          title='待提交'
+          title='待审核'
           thumb={
             <Icon
               name='check-circle'
@@ -24,12 +24,6 @@ class TransportCard extends React.PureComponent {
         />
         <Card.Body>
           <TransportReviewList transport={this.props.transport} />
-          <WhiteSpace size='xl' />
-          <WingBlank>
-            <Button type='ghost' onClick={this.props.NavToSubmit}>
-              填单
-            </Button>
-          </WingBlank>
         </Card.Body>
         <Card.Footer />
       </Card>

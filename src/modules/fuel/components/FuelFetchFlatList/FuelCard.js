@@ -47,13 +47,13 @@ class FuelCard extends React.PureComponent {
           extra={isCheck ? '通过' : '未审核'}
         />
         <Card.Body>
-          <List>
+          <List renderHeader={() => '加油信息'}>
             <QueryListItem iconName='tint' extra={litre} label='升数：' />
             <QueryListItem iconName='credit-card' extra={cost} label='费用：' />
             <QueryListItem iconName='truck' extra={mile} label='里程：' />
           </List>
         </Card.Body>
-        <Card.Footer extra={<Text>{`${fullname}(${username})`}</Text>} />
+        <Card.Footer />
       </Card>
     )
   }

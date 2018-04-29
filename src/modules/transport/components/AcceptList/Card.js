@@ -1,6 +1,6 @@
 import React from 'react'
 import { WingBlank, Card, Button, WhiteSpace } from 'antd-mobile'
-import TransportDetailList from '../TransportDetailList'
+import { TransportOrderList } from '../TransportCardList'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 class TransportCard extends React.PureComponent {
@@ -23,7 +23,7 @@ class TransportCard extends React.PureComponent {
           extra={this.props.index + 1}
         />
         <Card.Body>
-          <TransportDetailList transport={this.props.transport} />
+          <TransportOrderList transport={this.props.transport} />
           <WhiteSpace size='xl' />
           <WingBlank>
             <Button type='ghost' onClick={this.props.acceptTransport}>

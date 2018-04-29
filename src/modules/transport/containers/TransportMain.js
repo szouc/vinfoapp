@@ -8,7 +8,11 @@ import {
   toListRequest,
   initialRequest
 } from '../actions'
-import { assignCountSelector, acceptCountSelector, checkCountSelector } from '../selectors'
+import {
+  assignCountSelector,
+  acceptCountSelector,
+  checkCountSelector
+} from '../selectors'
 
 const mapStateToProps = (state, ownProps) => {
   const loading = state.getIn(['transport', 'screenLoading'])
@@ -35,8 +39,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     navToCheck: () => {
       dispatch(toCheckRequest())
     },
-    navToList: () => {
-      dispatch(toListRequest())
+    navToList: username => () => {
+      dispatch(toListRequest(username))
     },
     initialFetchTransports: username => {
       dispatch(initialRequest(username))

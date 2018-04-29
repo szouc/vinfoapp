@@ -20,6 +20,7 @@ class TransportMain extends Component {
 
   render() {
     const {
+      username,
       navToAccept,
       navToActive,
       navToCheck,
@@ -50,7 +51,7 @@ class TransportMain extends Component {
       {
         icon: 'list-alt',
         text: '查询',
-        action: navToList
+        action: navToList(username)
       }
     ]
     return (

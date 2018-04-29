@@ -8,6 +8,7 @@ import { resetSection } from 'redux-form'
 import { Toast } from 'antd-mobile'
 
 import { call, fork, put, take } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
 import Machine from '../../utils/machine'
 
 const fuelState = {
@@ -226,6 +227,7 @@ function * toAddScreenFlow() {
   while (true) {
     yield take(Type.TO_ADD_REQUEST)
     yield toAddScreenEffect('screen')
+    yield delay(50) // show spinning
     try {
       yield addSuccessEffect('screen', 'initial')
     } catch (error) {
@@ -239,6 +241,7 @@ function * toFetchScreenFlow() {
   while (true) {
     yield take(Type.TO_FETCH_REQUEST)
     yield toFetchScreenEffect('screen')
+    yield delay(50)
     try {
       yield fetchSuccessEffect('screen', 'initial')
     } catch (error) {
