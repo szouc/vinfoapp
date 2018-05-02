@@ -1,4 +1,4 @@
-import R from 'ramda'
+import {compose, props, propOr, join} from 'ramda'
 import moment from 'moment'
 
 const statusTranslate = {
@@ -10,81 +10,81 @@ const statusTranslate = {
   deny: '被拒绝'
 }
 
-const extractDataFromProps = props => {
-  const num = R.compose(R.propOr('', 'num'), R.propOr({}, 'transport'))(props)
-  const assigner = R.compose(
-    R.propOr('', 'fullname'),
-    R.propOr({}, 'assigner'),
-    R.propOr({}, 'transport')
-  )(props)
-  const vehicle = R.compose(
-    R.propOr('', 'plate'),
-    R.propOr({}, 'vehicle'),
-    R.propOr({}, 'transport')
-  )(props)
-  const principal = R.compose(
-    R.propOr('', 'fullname'),
-    R.propOr({}, 'principal'),
-    R.propOr({}, 'transport')
-  )(props)
-  const secondary = R.compose(
-    R.propOr('', 'fullname'),
-    R.propOr({}, 'principal'),
-    R.propOr({}, 'transport')
-  )(props)
-  const fromCompany = R.compose(
-    R.join(' —— '),
-    R.props(['name', 'addr']),
-    R.propOr({}, 'company'),
-    R.propOr({}, 'from'),
-    R.propOr({}, 'transport')
-  )(props)
-  const fromWeight = R.compose(
-    R.propOr(null, 'weight'),
-    R.propOr({}, 'from'),
-    R.propOr({}, 'transport')
-  )(props)
-  const fromDate = R.compose(
+const extractDataFromProps = value => {
+  const num = compose(propOr('', 'num'), propOr({}, 'transport'))(value)
+  const assigner = compose(
+    propOr('', 'fullname'),
+    propOr({}, 'assigner'),
+    propOr({}, 'transport')
+  )(value)
+  const vehicle = compose(
+    propOr('', 'plate'),
+    propOr({}, 'vehicle'),
+    propOr({}, 'transport')
+  )(value)
+  const principal = compose(
+    propOr('', 'fullname'),
+    propOr({}, 'principal'),
+    propOr({}, 'transport')
+  )(value)
+  const secondary = compose(
+    propOr('', 'fullname'),
+    propOr({}, 'principal'),
+    propOr({}, 'transport')
+  )(value)
+  const fromCompany = compose(
+    join(' —— '),
+    props(['name', 'addr']),
+    propOr({}, 'company'),
+    propOr({}, 'from'),
+    propOr({}, 'transport')
+  )(value)
+  const fromWeight = compose(
+    propOr(null, 'weight'),
+    propOr({}, 'from'),
+    propOr({}, 'transport')
+  )(value)
+  const fromDate = compose(
     moment,
-    R.propOr('', 'date'),
-    R.propOr({}, 'from'),
-    R.propOr({}, 'transport')
-  )(props)
-  const toCompany = R.compose(
-    R.join(' —— '),
-    R.props(['name', 'addr']),
-    R.propOr({}, 'company'),
-    R.propOr({}, 'to'),
-    R.propOr({}, 'transport')
-  )(props)
-  const toWeight = R.compose(
-    R.propOr(null, 'weight'),
-    R.propOr({}, 'to'),
-    R.propOr({}, 'transport')
-  )(props)
-  const toDate = R.compose(
+    propOr('', 'date'),
+    propOr({}, 'from'),
+    propOr({}, 'transport')
+  )(value)
+  const toCompany = compose(
+    join(' —— '),
+    props(['name', 'addr']),
+    propOr({}, 'company'),
+    propOr({}, 'to'),
+    propOr({}, 'transport')
+  )(value)
+  const toWeight = compose(
+    propOr(null, 'weight'),
+    propOr({}, 'to'),
+    propOr({}, 'transport')
+  )(value)
+  const toDate = compose(
     moment,
-    R.propOr('', 'date'),
-    R.propOr({}, 'to'),
-    R.propOr({}, 'transport')
-  )(props)
-  const product = R.compose(
-    R.join(' —— '),
-    R.props(['name', 'specs']),
-    R.propOr({}, 'product'),
-    R.propOr({}, 'transport')
-  )(props)
-  const created = R.compose(
+    propOr('', 'date'),
+    propOr({}, 'to'),
+    propOr({}, 'transport')
+  )(value)
+  const product = compose(
+    join(' —— '),
+    props(['name', 'specs']),
+    propOr({}, 'product'),
+    propOr({}, 'transport')
+  )(value)
+  const created = compose(
     moment,
-    R.propOr('', 'created'),
-    R.propOr({}, 'transport')
-  )(props)
-  const status = R.compose(
-    R.propOr('', 'captain_status'),
-    R.propOr({}, 'transport')
-  )(props)
-  // const info = R.compose(R.propOr('', 'info'), R.propOr({}, 'fuel'))(
-  //   props
+    propOr('', 'created'),
+    propOr({}, 'transport')
+  )(value)
+  const status = compose(
+    propOr('', 'captain_status'),
+    propOr({}, 'transport')
+  )(value)
+  // const info = compose(propOr('', 'info'), propOr({}, 'fuel'))(
+  //   value
   // )
 
   const orderProps = {

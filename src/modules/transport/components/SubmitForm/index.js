@@ -4,7 +4,7 @@ import TransportSubmitForm from './Form'
 import { ErrorBoundary } from '../../../shared'
 import { ActivityIndicator } from 'antd-mobile'
 import moment from 'moment'
-import R from 'ramda'
+import { evolve } from 'ramda'
 
 class TransportSubmitFormWithHardwareBack extends Component {
   componentDidMount() {
@@ -22,11 +22,21 @@ class TransportSubmitFormWithHardwareBack extends Component {
 
   render() {
     const { username, saveValues, initialValues, onSave, onSubmit } = this.props
-    const { from, to } = initialValues
-    const fromDate = moment(from.date).toDate()
-    const toDate = moment(to.date).toDate()
-    initialValues.from.date = fromDate
-    initialValues.to.date = toDate
+    const formatDate = date => moment(date).toDate()
+    const TransformDate = {
+      from: { date: formatDate },
+      to: { date: formatDate }
+    }
+    const formatDateInitialValues = evolve(TransformDate, initialValues)
+
+    // const formatDateInitialValues = {
+    //   ...initialValues,
+    //   from: {
+    //     ...initialValues.from,
+    //     date: moment(initialValues.from.date).toDate()
+    //   },
+    //   to: { ...initialValues.to, date: moment(initialValues.to.date).toDate() }
+    // }
     return (
       <React.Fragment>
         <ActivityIndicator
@@ -36,7 +46,7 @@ class TransportSubmitFormWithHardwareBack extends Component {
         />
         <ErrorBoundary>
           <TransportSubmitForm
-            initialValues={initialValues}
+            initialValues={formatDateInitialValues}
             username={username}
             transportId={initialValues._id}
             onSubmit={onSubmit}

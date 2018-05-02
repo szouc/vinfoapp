@@ -342,6 +342,7 @@ const failureEffect = machine.getEffect('failure')
 function * initialFlow(action) {
   const { payload } = action
   yield initialEffect('screen')
+  yield call(delay, 200)
   try {
     const [assign, accept, check] = yield all([
       call(Api.getAssignTransports, payload),
@@ -359,7 +360,7 @@ function * initialFlow(action) {
 
 function * toAcceptScreenFlow() {
   yield toAcceptScreenEffect('screen')
-  yield call(delay, 100)
+  yield call(delay, 200)
   try {
     yield acceptSuccessEffect('screen', 'initial')
   } catch (error) {
@@ -370,7 +371,7 @@ function * toAcceptScreenFlow() {
 
 function * toActiveScreenFlow() {
   yield toActiveScreenEffect('screen')
-  yield call(delay, 100)
+  yield call(delay, 200)
   try {
     yield activeSuccessEffect('screen', 'initial')
   } catch (error) {
@@ -381,7 +382,7 @@ function * toActiveScreenFlow() {
 
 function * toCheckScreenFlow() {
   yield toCheckScreenEffect('screen')
-  yield call(delay, 100)
+  yield call(delay, 200)
   try {
     yield checkSuccessEffect('screen', 'initial')
   } catch (error) {
@@ -392,7 +393,7 @@ function * toCheckScreenFlow() {
 
 function * toListScreenFlow() {
   yield toListScreenEffect('screen')
-  yield call(delay, 100)
+  yield call(delay, 200)
   try {
     yield listSuccessEffect('screen', 'initial')
   } catch (error) {
@@ -404,7 +405,7 @@ function * toListScreenFlow() {
 function * toSubmitScreenFlow(action) {
   const { payload } = action
   yield toSubmitScreenEffect('screen')
-  yield call(delay, 100)
+  yield call(delay, 200)
   try {
     yield saveSuccessEffect('screen', 'initial', payload)
   } catch (error) {
@@ -416,6 +417,7 @@ function * toSubmitScreenFlow(action) {
 function * acceptFlow(action) {
   const { payload } = action
   yield acceptEffect('form')
+  yield call(delay, 200)
   try {
     const transport = yield call(Api.acceptTransport, payload)
     if (transport) {
@@ -430,6 +432,7 @@ function * acceptFlow(action) {
 function * saveFlow(action) {
   const { payload } = action
   yield saveEffect('screen')
+  yield call(delay, 200)
   try {
     const transport = yield call(Api.updateTransport, payload)
     if (transport) {
@@ -444,6 +447,7 @@ function * saveFlow(action) {
 function * fetchFlow(action) {
   const { payload } = action
   yield fetchEffect('screen')
+  yield call(delay, 200)
   try {
     const transport = yield call(Api.getDriverTransports, payload)
     if (transport) {
@@ -458,6 +462,7 @@ function * fetchFlow(action) {
 function * submitFlow(action) {
   const { payload } = action
   yield submitEffect('screen')
+  yield call(delay, 200)
   try {
     const [update, submit] = yield all([
       call(Api.updateTransport, payload),
@@ -491,6 +496,7 @@ function * submitFlow(action) {
 function * backFlow(action) {
   const { payload } = action
   yield backEffect('screen')
+  yield call(delay, 200)
   try {
     const [assign, accept, check] = yield all([
       call(Api.getAssignTransports, payload),
@@ -508,7 +514,7 @@ function * backFlow(action) {
 
 function * backActiveFlow() {
   yield backActiveEffect('screen')
-  yield call(delay, 100)
+  yield call(delay, 200)
   try {
     yield activeSuccessEffect('screen', 'back_active')
   } catch (error) {

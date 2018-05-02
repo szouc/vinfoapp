@@ -7,7 +7,7 @@ import { NavigationActions } from 'react-navigation'
 import { resetSection } from 'redux-form'
 import { Toast } from 'antd-mobile'
 
-import { call, fork, put, take } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import Machine from '../../utils/machine'
 
@@ -15,18 +15,25 @@ const fuelState = {
   currentState: 'main_screen',
   states: {
     main_screen: {
-      fetch_vehicle: 'loading',
-      set: 'loading',
+      initial_main: 'loading',
+      set_vehicle: 'loading',
       to_add: 'loading',
       to_fetch: 'loading'
     },
     loading: {
-      fetch_vehicle_success: 'main_screen',
-      set_success: 'main_screen',
+      // main_screen actions
+      initial_main_success: 'main_screen',
+      set_vehicle_success: 'main_screen',
+      to_add_success: 'add_screen',
+      to_fetch_success: 'fetch_screen',
+      // add_screen actions
       add_success: 'add_screen',
+      // fetch_screen actions
       fetch_success: 'fetch_screen',
       delete_success: 'fetch_screen',
+      // responsibility for 'back' action in add_screen & fetch_screen
       back_success: 'main_screen',
+      // error_screen
       failure: 'error'
     },
     add_screen: {
@@ -48,7 +55,7 @@ const fuelState = {
 
 function * mainScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
-    case 'initial':
+    case 'initial_main':
       yield put({
         type: ADD_VEHICLE_ENTITY,
         payload: data.get('entities')
@@ -58,7 +65,7 @@ function * mainScreenEffect(scope, action, data = '', pagination = {}) {
         payload: data.get('result')
       })
       break
-    case 'set':
+    case 'set_vehicle':
       yield put({
         type: Type.SET_VEHICLE_SUCCESS,
         payload: data
@@ -90,7 +97,7 @@ function * mainScreenEffect(scope, action, data = '', pagination = {}) {
  */
 function * fetchScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
-    case 'initial':
+    case 'to_fetch':
       yield put(NavigationActions.navigate({ routeName: 'FuelFetch' }))
       break
     case 'fetch':
@@ -127,7 +134,7 @@ function * fetchScreenEffect(scope, action, data = '', pagination = {}) {
 
 function * addScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
-    case 'initial':
+    case 'to_add':
       yield put(NavigationActions.navigate({ routeName: 'FuelAdd' }))
       break
     case 'add':
@@ -178,155 +185,149 @@ const fuelEffects = {
 }
 
 const machine = new Machine(fuelState, fuelEffects)
-const fetchVehicleEffect = machine.getEffect('fetch_vehicle')
-const setVehicleEffect = machine.getEffect('set')
+const initialMainEffect = machine.getEffect('initial_main')
+const setVehicleEffect = machine.getEffect('set_vehicle')
 const toAddScreenEffect = machine.getEffect('to_add')
 const toFetchScreenEffect = machine.getEffect('to_fetch')
-const fetchVehicleSuccessEffect = machine.getEffect('fetch_vehicle_success')
-const setSuccessEffect = machine.getEffect('set_success')
+const initialMainSuccessEffect = machine.getEffect('initial_main_success')
+const setVehicleSuccessEffect = machine.getEffect('set_vehicle_success')
+const toAddSuccessEffect = machine.getEffect('to_add_success')
+const toFetchSuccessEffect = machine.getEffect('to_fetch_success')
 const addSuccessEffect = machine.getEffect('add_success')
 const fetchSuccessEffect = machine.getEffect('fetch_success')
 const deleteSuccessEffect = machine.getEffect('delete_success')
 const backSuccessEffect = machine.getEffect('back_success')
 const failureEffect = machine.getEffect('failure')
-const addFuelEffect = machine.getEffect('add')
-const fetchFuelsEffect = machine.getEffect('fetch')
-const deleteFuelEffect = machine.getEffect('delete')
+const addEffect = machine.getEffect('add')
 const backEffect = machine.getEffect('back')
+const fetchEffect = machine.getEffect('fetch')
+const deleteEffect = machine.getEffect('delete')
 
-function * fetchVehicleFlow() {
-  while (true) {
-    const { payload } = yield take(Type.FETCH_VEHICLE_REQUEST)
-    yield fetchVehicleEffect('screen')
-    try {
-      const vehicles = yield call(Api.getDriverVehicles, payload)
-      if (vehicles) {
-        yield fetchVehicleSuccessEffect('screen', 'initial', vehicles)
-      }
-    } catch (error) {
-      yield failureEffect('screen', error)
-      machine.operation('main_retry')
+function * initialMainFlow(action) {
+  const { payload } = action
+  yield initialMainEffect('screen')
+  yield call(delay, 200)
+  try {
+    const vehicles = yield call(Api.getDriverVehicles, payload)
+    if (vehicles) {
+      yield initialMainSuccessEffect('screen', 'initial_main', vehicles)
     }
+  } catch (error) {
+    yield failureEffect('screen', error)
+    machine.operation('main_retry')
   }
 }
 
-function * setVehicleFlow() {
-  while (true) {
-    const { payload } = yield take(Type.SET_VEHICLE_REQUEST)
-    yield setVehicleEffect('screen')
-    try {
-      yield setSuccessEffect('screen', 'set', payload)
-    } catch (error) {
-      yield failureEffect('screen', error)
-      machine.operation('main_retry')
-    }
+function * setVehicleFlow(action) {
+  const { payload } = action
+  yield setVehicleEffect('screen')
+  yield call(delay, 200)
+  try {
+    yield setVehicleSuccessEffect('screen', 'set_vehicle', payload)
+  } catch (error) {
+    yield failureEffect('screen', error)
+    machine.operation('main_retry')
   }
 }
 
 function * toAddScreenFlow() {
-  while (true) {
-    yield take(Type.TO_ADD_REQUEST)
-    yield toAddScreenEffect('screen')
-    yield delay(50) // show spinning
-    try {
-      yield addSuccessEffect('screen', 'initial')
-    } catch (error) {
-      yield failureEffect('screen', error)
-      machine.operation('main_retry')
-    }
+  yield toAddScreenEffect('screen')
+  yield call(delay, 200) // show spinning
+  try {
+    yield toAddSuccessEffect('screen', 'to_add')
+  } catch (error) {
+    yield failureEffect('screen', error)
+    machine.operation('main_retry')
   }
 }
 
 function * toFetchScreenFlow() {
-  while (true) {
-    yield take(Type.TO_FETCH_REQUEST)
-    yield toFetchScreenEffect('screen')
-    yield delay(50)
-    try {
-      yield fetchSuccessEffect('screen', 'initial')
-    } catch (error) {
-      yield failureEffect('screen', error)
-      machine.operation('main_retry')
-    }
+  yield toFetchScreenEffect('screen')
+  yield call(delay, 200)
+  try {
+    yield toFetchSuccessEffect('screen', 'to_fetch')
+  } catch (error) {
+    yield failureEffect('screen', error)
+    machine.operation('main_retry')
   }
 }
 
-function * addFuelFlow() {
-  while (true) {
-    const { payload } = yield take(Type.ADD_REQUEST)
-    yield addFuelEffect('form')
-    try {
-      const vehicle = yield call(Api.addVehicleFuel, payload)
-      if (vehicle) {
-        yield addSuccessEffect('form', 'add', vehicle)
-      }
-    } catch (error) {
-      yield failureEffect('form', error)
-      machine.operation('add_retry')
+function * addFlow(action) {
+  const { payload } = action
+  yield addEffect('form')
+  yield call(delay, 200)
+  try {
+    const vehicle = yield call(Api.addVehicleFuel, payload)
+    if (vehicle) {
+      yield addSuccessEffect('form', 'add', vehicle)
     }
+  } catch (error) {
+    yield failureEffect('form', error)
+    machine.operation('add_retry')
   }
 }
 
-function * fetchFuelsFlow() {
-  while (true) {
-    const { payload } = yield take(Type.FETCH_REQUEST)
-    yield fetchFuelsEffect('screen')
-    try {
-      const fuels = yield call(Api.getVehicleFuels, payload)
-      if (fuels) {
-        yield fetchSuccessEffect('screen', 'fetch', fuels)
-        // I dont know where does this action put ?
-        yield put({
-          type: Type.SET_VEHICLE_SUCCESS,
-          payload: payload.vehicleId
-        })
-      }
-    } catch (error) {
-      yield failureEffect('screen', error)
-      machine.operation('fetch_retry')
+function * fetchFlow(action) {
+  const { payload } = action
+  yield fetchEffect('screen')
+  yield call(delay, 200)
+  try {
+    const fuels = yield call(Api.getVehicleFuels, payload)
+    if (fuels) {
+      yield fetchSuccessEffect('screen', 'fetch', fuels)
+      // I dont know where does this action put ?
+      yield put({
+        type: Type.SET_VEHICLE_SUCCESS,
+        payload: payload.vehicleId
+      })
     }
+  } catch (error) {
+    yield failureEffect('screen', error)
+    machine.operation('fetch_retry')
   }
 }
 
-function * deleteFuelFlow() {
-  while (true) {
-    const { payload } = yield take(Type.DELETE_REQUEST)
-    yield deleteFuelEffect('screen')
-    try {
-      const vehicle = yield call(Api.deleteVehicleFuel, payload)
-      if (vehicle) {
-        yield deleteSuccessEffect('screen', 'delete', vehicle)
-      }
-    } catch (error) {
-      yield failureEffect('screen', error)
-      machine.operation('fetch_retry')
+function * deleteFlow(action) {
+  const { payload } = action
+  yield deleteEffect('screen')
+  yield call(delay, 200)
+  try {
+    const vehicle = yield call(Api.deleteVehicleFuel, payload)
+    if (vehicle) {
+      yield deleteSuccessEffect('screen', 'delete', vehicle)
     }
+  } catch (error) {
+    yield failureEffect('screen', error)
+    machine.operation('fetch_retry')
   }
 }
 
 function * backFlow() {
-  while (true) {
-    const { payload } = yield take(Type.BACK_REQUEST)
-    yield backEffect('screen')
-    try {
-      const fuels = yield call(Api.getDriverVehicles, payload)
-      if (fuels) {
-        yield backSuccessEffect('screen', 'back', fuels)
-      }
-    } catch (error) {
-      yield failureEffect('screen', error)
-      machine.operation('main_retry')
-    }
+  yield backEffect('screen')
+  yield call(delay, 200)
+  try {
+    yield backSuccessEffect('screen', 'back')
+  } catch (error) {
+    yield failureEffect('screen', error)
+    machine.operation('main_retry')
   }
 }
 
 export default function * rootSagas() {
-  yield fork(fetchVehicleFlow)
-  yield fork(setVehicleFlow)
-  yield fork(toAddScreenFlow)
-  yield fork(toFetchScreenFlow)
-  yield fork(addFuelFlow)
-  yield fork(fetchFuelsFlow)
-  yield fork(deleteFuelFlow)
-  yield fork(backFlow)
+  // yield fork(fetchVehicleFlow)
+  // yield fork(setVehicleFlow)
+  // yield fork(toAddScreenFlow)
+  // yield fork(toFetchScreenFlow)
+  // yield fork(addFuelFlow)
+  // yield fork(fetchFuelsFlow)
+  // yield fork(deleteFuelFlow)
+  // yield fork(backFlow)
+  yield takeLatest(Type.FETCH_VEHICLE_REQUEST, initialMainFlow)
+  yield takeLatest(Type.SET_VEHICLE_REQUEST, setVehicleFlow)
+  yield takeLatest(Type.TO_ADD_REQUEST, toAddScreenFlow)
+  yield takeLatest(Type.TO_FETCH_REQUEST, toFetchScreenFlow)
+  yield takeLatest(Type.ADD_REQUEST, addFlow)
+  yield takeLatest(Type.FETCH_REQUEST, fetchFlow)
+  yield takeLatest(Type.DELETE_REQUEST, deleteFlow)
+  yield takeLatest(Type.BACK_REQUEST, backFlow)
 }
