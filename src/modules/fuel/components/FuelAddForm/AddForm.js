@@ -36,6 +36,7 @@ class FuelAddForm extends React.PureComponent {
         />
         <List renderHeader={() => '新增加油记录'}>
           <Field name='applicant' component={() => null} />
+          <Field name='fullname' component={() => null} />
           <VehiclePickerField name='vehicleId' data={vehicles} label='车辆' />
           <InputItemField
             name='litre'

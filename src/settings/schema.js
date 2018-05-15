@@ -17,26 +17,19 @@ export const userSchema = new schema.Entity(
 
 export const fuelSchema = new schema.Entity(
   FUEL_STATE_KEY,
-  {
-    applicant: userSchema
-  },
+  {},
   { idAttribute: '_id' }
 )
 
 export const maintainSchema = new schema.Entity(
   MAINTAIN_STATE_KEY,
-  {
-    applicant: userSchema
-  },
+  {},
   { idAttribute: '_id' }
 )
 
 export const vehicleSchema = new schema.Entity(
   VEHICLE_STATE_KEY,
   {
-    captain: userSchema,
-    principal: userSchema,
-    secondary: userSchema,
     fuels: [fuelSchema],
     maintenance: [maintainSchema]
   },
@@ -58,27 +51,14 @@ export const priceHistorySchema = new schema.Entity(
 export const productSchema = new schema.Entity(
   PRODUCT_STATE_KEY,
   {
-    price_history: [priceHistorySchema]
+    priceHistory: [priceHistorySchema]
   },
   { idAttribute: '_id' }
 )
 
 export const transportSchema = new schema.Entity(
   TRANSPORT_STATE_KEY,
-  {
-    assigner: userSchema,
-    vehicle: vehicleSchema,
-    principal: userSchema,
-    secondary: userSchema,
-    from: {
-      company: companySchema
-    },
-    to: {
-      company: companySchema
-    },
-    product: productSchema,
-    accountant: userSchema
-  },
+  {},
   { idAttribute: '_id' }
 )
 
@@ -128,12 +108,12 @@ export {
   companyArrayNormalize,
   productNormalize,
   productArrayNormalize,
-  vehicleNormalize,
-  vehicleArrayNormalize,
   fuelNormalize,
   fuelArrayNormalize,
   maintainNormalize,
   maintainArrayNormalize,
+  vehicleNormalize,
+  vehicleArrayNormalize,
   transportNormalize,
   transportArrayNormalize,
   userDenormalize,
@@ -147,35 +127,3 @@ export {
   transportDenormalize,
   transportArrayDenormalize
 }
-
-// const userNormalize = data => normalize(data, userSchema)
-// const userArrayNormalize = data => normalize(data, [userSchema])
-// const companyNormalize = data => normalize(data, companySchema)
-// const companyArrayNormalize = data => normalize(data, [companySchema])
-// const productNormalize = data => normalize(data, productSchema)
-// const productArrayNormalize = data => normalize(data, [productSchema])
-// const vehicleNormalize = data => normalize(data, vehicleSchema)
-// const vehicleArrayNormalize = data => normalize(data, [vehicleSchema])
-// const fuelNormalize = data => normalize(data, fuelSchema)
-// const fuelArrayNormalize = data => normalize(data, [fuelSchema])
-// const maintainNormalize = data => normalize(data, maintainSchema)
-// const maintainArrayNormalize = data => normalize(data, [maintainSchema])
-// const transportNormalize = data => normalize(data, transportSchema)
-// const transportArrayNormalize = data => normalize(data, [transportSchema])
-
-// export {
-//   userNormalize,
-//   userArrayNormalize,
-//   companyNormalize,
-//   companyArrayNormalize,
-//   productNormalize,
-//   productArrayNormalize,
-//   vehicleNormalize,
-//   vehicleArrayNormalize,
-//   fuelNormalize,
-//   fuelArrayNormalize,
-//   maintainNormalize,
-//   maintainArrayNormalize,
-//   transportNormalize,
-//   transportArrayNormalize
-// }
