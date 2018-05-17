@@ -15,15 +15,20 @@ const DriverCard = props => {
     props
   )
   const role = R.compose(R.propOr('', 'role'), R.propOr({}, 'profile'))(props)
-  const cert = R.compose(R.propOr('', 'cert'), R.propOr({}, 'profile'))(props)
+  const cert = R.compose(
+    R.propOr('', 'cert'),
+    R.propOr({}, 'detail'),
+    R.propOr({}, 'profile')
+  )(props)
   const certExpired = R.compose(
     moment,
-    R.propOr('', 'cert_expired'),
+    R.propOr('', 'certExpired'),
+    R.propOr({}, 'detail'),
     R.propOr({}, 'profile')
   )(props)
   const created = R.compose(
     moment,
-    R.propOr('', 'created'),
+    R.propOr('', 'createdAt'),
     R.propOr({}, 'profile')
   )(props)
 
@@ -50,7 +55,11 @@ const DriverCard = props => {
           </View>
         </Card.Body>
         <Card.Footer
-          extra={<Text style={styles.footer_extra}>{moment().format('HH:mm:ss')}</Text>}
+          extra={
+            <Text style={styles.footer_extra}>
+              {moment().format('HH:mm:ss')}
+            </Text>
+          }
         />
       </Card>
     </WingBlank>

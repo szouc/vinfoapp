@@ -1,5 +1,4 @@
 import React from 'react'
-import { Text } from 'react-native'
 import R from 'ramda'
 import moment from 'moment'
 import { Card, List } from 'antd-mobile'
@@ -11,14 +10,8 @@ class FuelCard extends React.PureComponent {
   }
 
   render() {
-    const username = R.compose(
-      R.propOr('', 'username'),
-      R.propOr({}, 'applicant'),
-      R.propOr({}, 'fuel')
-    )(this.props)
     const fullname = R.compose(
-      R.propOr('', 'fullname'),
-      R.propOr({}, 'applicant'),
+      R.propOr({}, 'fullname'),
       R.propOr({}, 'fuel')
     )(this.props)
     const litre = R.compose(R.propOr('', 'litre'), R.propOr({}, 'fuel'))(
@@ -30,7 +23,7 @@ class FuelCard extends React.PureComponent {
     const mile = R.compose(R.propOr('', 'mile'), R.propOr({}, 'fuel'))(
       this.props
     )
-    const date = R.compose(moment, R.propOr('', 'date'), R.propOr({}, 'fuel'))(
+    const date = R.compose(moment, R.propOr('', 'appliedAt'), R.propOr({}, 'fuel'))(
       this.props
     )
     const isCheck = R.compose(R.propOr('', 'is_check'), R.propOr({}, 'fuel'))(

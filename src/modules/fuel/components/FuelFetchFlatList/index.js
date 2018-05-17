@@ -7,9 +7,10 @@ import DefaultVehiclePicker from '../DefaultVehiclePicker'
 class FuelFetchFlatList extends React.PureComponent {
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
-    this.props.fetchVehicleFuels(this.props.username)([
-      this.props.currentVehicle._id
-    ])
+    this.props.currentVehicle &&
+      this.props.fetchVehicleFuels(this.props.username)([
+        this.props.currentVehicle._id
+      ])
   }
 
   componentWillUnmount() {
@@ -17,7 +18,7 @@ class FuelFetchFlatList extends React.PureComponent {
   }
 
   onBackPress = () => {
-    this.props.backToMain(this.props.username)
+    this.props.backToMain()
     return true
   }
 

@@ -113,12 +113,11 @@ export function * loginFlow(): any {
     const action: { type: string, payload: Immut } = yield take(
       Type.LOGIN_REQUEST
     )
-    const username: string = action.payload.get('username')
     yield loginEffect('form')
     try {
-      let isAuth: ?boolean = yield call(Api.login, action.payload)
-      if (isAuth) {
-        yield loginSuccessEffect('form', 'login', username)
+      let user = yield call(Api.login, action.payload)
+      if (user) {
+        yield loginSuccessEffect('form', 'login', user)
       }
     } catch (error) {
       yield failureEffect('form', error)

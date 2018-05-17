@@ -5,6 +5,11 @@ import { ErrorBoundary } from '../../../shared'
 import { ActivityIndicator } from 'antd-mobile'
 
 class FuelAddFormWithHardwareBack extends Component {
+  constructor(props) {
+    super(props)
+    this.onUserSubmit = props.onSubmit(props.username)
+  }
+
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
   }
@@ -14,13 +19,12 @@ class FuelAddFormWithHardwareBack extends Component {
   }
 
   onBackPress = () => {
-    this.props.backToMain(this.props.username)
+    this.props.backToMain()
     return true
   }
 
   render() {
-    const { username, vehicles, initialValues, onSubmit } = this.props
-    const onUserSubmit = onSubmit(username)
+    const { vehicles, initialValues } = this.props
     return (
       <View style={styles.container}>
         <ActivityIndicator
@@ -32,7 +36,7 @@ class FuelAddFormWithHardwareBack extends Component {
           <FuelAddForm
             vehicles={vehicles}
             initialValues={initialValues}
-            onSubmit={onUserSubmit}
+            onSubmit={this.onUserSubmit}
             loading={this.props.formLoading}
           />
         </ErrorBoundary>

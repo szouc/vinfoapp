@@ -1,14 +1,12 @@
 import { connect } from 'react-redux'
 import { ProfileCard } from '../components'
-import { driverSelector } from '../selectors'
 import immutPropsToJS from '../../../utils/immutPropsToJS'
 import { fetchProfileRequest } from '../actions'
 
 const mapStateToProps = (state, ownProps) => {
-  const profile = driverSelector(state)
   return {
     username: state.getIn(['auth', 'username']),
-    profile
+    profile: state.getIn(['driver', 'user'])
   }
 }
 

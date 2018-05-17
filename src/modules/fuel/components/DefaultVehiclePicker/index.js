@@ -8,7 +8,7 @@ class DefaultVehiclePicker extends React.PureComponent {
       <List renderHeader={() => '选择默认车辆'}>
         <Picker
           data={vehicles}
-          value={[currentVehicle._id]}
+          value={currentVehicle && [currentVehicle._id]}
           cols={1}
           onOk={setVehicle}
         >

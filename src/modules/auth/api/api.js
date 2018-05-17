@@ -5,11 +5,10 @@ const TRUE = true
 const STATUS_OK = 200
 
 async function login(payload) {
-  const username = payload.get('username')
   const response = await Request.loginRequest(payload)
   if (response.status === STATUS_OK) {
-    await setLocalLoggedIn(username)
-    return TRUE
+    await setLocalLoggedIn(response.data)
+    return response.data
   }
   throw new Error('Something wrong at login Process.')
 }

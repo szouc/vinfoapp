@@ -9,7 +9,8 @@ const initialState = Immutable.fromJS({
   formLoading: false,
   screenLoading: false,
   loggedIn: false,
-  username: null
+  username: undefined,
+  fullname: undefined
 })
 
 const authReducer = (
@@ -21,9 +22,13 @@ const authReducer = (
     case Type.SET_AUTH:
       return state
         .set('loggedIn', true)
-        .set('username', payload)
+        .set('username', payload.username)
+        .set('fullname', payload.fullname)
     case Type.REMOVE_AUTH:
-      return state.delete('loggedIn').delete('username')
+      return state
+        .delete('loggedIn')
+        .delete('username')
+        .delete('fullname')
     case Type.SET_LOADING:
       return state.set(`${payload.scope}Loading`, payload.loading)
     default:

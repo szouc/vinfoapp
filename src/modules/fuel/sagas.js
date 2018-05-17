@@ -169,7 +169,10 @@ function * loadingEffect(scope) {
 }
 
 function * errorEffect(scope, error) {
-  yield put({ type: REQUEST_ERROR, payload: fromJS(error) })
+  yield put({
+    type: REQUEST_ERROR,
+    payload: fromJS({ errorScope: 'Fuel', message: error.message })
+  })
   yield put({
     type: Type.SET_LOADING,
     payload: { scope: scope, loading: false }
@@ -275,7 +278,7 @@ function * fetchFlow(action) {
     const fuels = yield call(Api.getVehicleFuels, payload)
     if (fuels) {
       yield fetchSuccessEffect('screen', 'fetch', fuels)
-      // I dont know where does this action put ?
+      // TODO: I dont know where does this action put ?
       yield put({
         type: Type.SET_VEHICLE_SUCCESS,
         payload: payload.vehicleId
