@@ -14,10 +14,11 @@ const errorReducer = (
   const { type, payload } = action
   switch (type) {
     case Type.REQUEST_ERROR:
-      if (payload.get('message') !== '没有相应的操作。') {
-        // Toast.fail('网络超时或操作错误', 3)
-        Toast.fail(payload.get('message'), 3)
-      }
+      Toast.fail(payload.get('message'), 3)
+      // if (payload.get('message') !== '没有相应的操作。') {
+      //   // Toast.fail('网络超时或操作错误', 3)
+      //   Toast.fail(payload.get('message'), 3)
+      // }
       return state.clear().merge(payload)
     case Type.CLEAR_ERROR:
       return state.clear()
