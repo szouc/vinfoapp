@@ -24,8 +24,8 @@ class TransportSubmitFormWithHardwareBack extends Component {
     const { username, saveValues, initialValues, onSave, onSubmit } = this.props
     const formatDate = date => moment(date).toDate()
     const TransformDate = {
-      from: { date: formatDate },
-      to: { date: formatDate }
+      fromDate: formatDate,
+      toDate: formatDate
     }
     const formatDateInitialValues = evolve(TransformDate, initialValues)
 

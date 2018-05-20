@@ -14,7 +14,7 @@ const getAssignTransports = username => {
   const config = {
     url: URL.DRIVER_TRANSPORT.replace(/:username/, username),
     method: 'get',
-    params: { captain_status: 'assign' }
+    params: { captainStatus: 'assign' }
   }
   return axios(config)
 }
@@ -23,7 +23,7 @@ const getAcceptTransports = username => {
   const config = {
     url: URL.DRIVER_TRANSPORT.replace(/:username/, username),
     method: 'get',
-    params: { captain_status: 'accept' }
+    params: { captainStatus: 'accept' }
   }
   return axios(config)
 }
@@ -32,7 +32,7 @@ const getCheckTransports = username => {
   const config = {
     url: URL.DRIVER_TRANSPORT.replace(/:username/, username),
     method: 'get',
-    params: { captain_status: 'submit' }
+    params: { captainStatus: 'submit' }
   }
   return axios(config)
 }

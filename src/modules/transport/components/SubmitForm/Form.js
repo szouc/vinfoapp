@@ -1,6 +1,6 @@
 import React from 'react'
 import { InputItemField, DatePickerField } from '../../../shared'
-import { FormSection, reduxForm } from 'redux-form/immutable'
+import { reduxForm } from 'redux-form/immutable'
 import {
   List,
   WingBlank,
@@ -39,27 +39,27 @@ const validate = values => {
 }
 
 class TransportSubmitForm extends React.PureComponent {
+  constructor(props) {
+    super(props)
+    this.onUserSave = props.onSave({
+      username: props.username,
+      transportId: props.transportId
+    })
+    this.onUserSubmit = props.onSubmit({
+      username: props.username,
+      transportId: props.transportId
+    })
+  }
+
   setTextToInput = value => {
     return value ? value.toString() : null
   }
 
   render() {
     const {
-      username,
-      transportId,
       handleSubmit,
-      onSave,
-      onSubmit,
       saveValues
     } = this.props
-    const onUserSave = onSave({
-      username,
-      transportId
-    })
-    const onUserSubmit = onSubmit({
-      username,
-      transportId
-    })
     return (
       <WingBlank>
         <ActivityIndicator
@@ -68,67 +68,51 @@ class TransportSubmitForm extends React.PureComponent {
           animating={this.props.loading}
         />
         <List renderHeader={() => '添加运输内容'}>
-          <FormSection name='from'>
-            <FormSection name='company'>
-              <InputItemField
-                name='name'
-                multiline
-                editable={false}
-                label='出发公司'
-              />
-            </FormSection>
-          </FormSection>
-          <FormSection name='from'>
-            <InputItemField
-              name='weight'
-              type='number'
-              format={this.setTextToInput}
-              placeholder='请输入出发重量'
-              label='出发重量'
-            />
-          </FormSection>
-          <FormSection name='from'>
-            <DatePickerField
-              name='date'
-              label='出发日期'
-              title='出发日期'
-              extra='请选择出发日期'
-            />
-          </FormSection>
+          <InputItemField
+            name='fromName'
+            multiline
+            editable={false}
+            label='出发公司'
+          />
+          <InputItemField
+            name='fromWeight'
+            type='number'
+            format={this.setTextToInput}
+            placeholder='请输入出发重量'
+            label='出发重量'
+          />
+          <DatePickerField
+            name='fromDate'
+            label='出发日期'
+            title='出发日期'
+            extra='请选择出发日期'
+          />
         </List>
         <List renderHeader={() => '添加运输内容'}>
-          <FormSection name='to'>
-            <FormSection name='company'>
-              <InputItemField
-                name='name'
-                multiline
-                editable={false}
-                label='到达公司'
-              />
-            </FormSection>
-          </FormSection>
-          <FormSection name='to'>
-            <InputItemField
-              name='weight'
-              type='number'
-              format={this.setTextToInput}
-              placeholder='请输入到达重量'
-              label='到达重量'
-            />
-          </FormSection>
-          <FormSection name='to'>
-            <DatePickerField
-              name='date'
-              label='到达日期'
-              title='到达日期'
-              extra='请选择到达日期'
-            />
-          </FormSection>
+          <InputItemField
+            name='toName'
+            multiline
+            editable={false}
+            label='到达公司'
+          />
+          <InputItemField
+            name='toWeight'
+            type='number'
+            format={this.setTextToInput}
+            placeholder='请输入到达重量'
+            label='到达重量'
+          />
+          <DatePickerField
+            name='toDate'
+            label='到达日期'
+            title='到达日期'
+            extra='请选择到达日期'
+          />
         </List>
         <WhiteSpace />
-        <Button onClick={onUserSave(saveValues)}>暂存</Button>
+        <Button onClick={this.onUserSave(saveValues)}>暂存</Button>
         <WhiteSpace />
-        <Button onClick={handleSubmit(onUserSubmit)}>提交</Button>
+        <Button onClick={handleSubmit(this.onUserSubmit)}>提交</Button>
       </WingBlank>
     )
   }

@@ -39,8 +39,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     navToCheck: () => {
       dispatch(toCheckRequest())
     },
-    navToList: username => () => {
-      dispatch(toListRequest(username))
+    navToList: () => {
+      dispatch(toListRequest())
     },
     initialFetchTransports: username => {
       dispatch(initialRequest(username))

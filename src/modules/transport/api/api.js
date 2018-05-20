@@ -13,7 +13,9 @@ async function getDriverTransports(username) {
     return fromJS(transports)
   }
   if (!response.data.ok) {
-    throw new Error(response.data.error)
+    const data = {}
+    const transports = transportArrayNormalize(data)
+    return fromJS(transports)
   }
   throw new Error('Something wrong.(getDriverTransports)')
 }
@@ -26,7 +28,9 @@ async function getAcceptTransports(username) {
     return fromJS(transports)
   }
   if (!response.data.ok) {
-    throw new Error(response.data.error)
+    const data = {}
+    const transports = transportArrayNormalize(data)
+    return fromJS(transports)
   }
   throw new Error('Something wrong.(getAcceptTransports)')
 }
@@ -39,7 +43,9 @@ async function getAssignTransports(username) {
     return fromJS(transports)
   }
   if (!response.data.ok) {
-    throw new Error(response.data.error)
+    const data = {}
+    const transports = transportArrayNormalize(data)
+    return fromJS(transports)
   }
   throw new Error('Something wrong.(getAssignTransports)')
 }
@@ -52,7 +58,9 @@ async function getCheckTransports(username) {
     return fromJS(transports)
   }
   if (!response.data.ok) {
-    throw new Error(response.data.error)
+    const data = {}
+    const transports = transportArrayNormalize(data)
+    return fromJS(transports)
   }
   throw new Error('Something wrong.(getCheckTransports)')
 }

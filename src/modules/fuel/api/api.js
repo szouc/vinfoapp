@@ -14,7 +14,9 @@ async function getDriverVehicles(username) {
     return fromJS(vehicles)
   }
   if (!response.data.ok) {
-    throw new Error(response.data.error)
+    const data = {}
+    const vehicles = vehicleArrayNormalize(data)
+    return fromJS(vehicles)
   }
   throw new Error('Something wrong.(getDriverVehicles)')
 }

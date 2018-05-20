@@ -13,74 +13,61 @@ const statusTranslate = {
 const extractDataFromProps = value => {
   const num = compose(propOr('', 'num'), propOr({}, 'transport'))(value)
   const assigner = compose(
-    propOr('', 'fullname'),
-    propOr({}, 'assigner'),
+    propOr('', 'assignerName'),
     propOr({}, 'transport')
   )(value)
   const vehicle = compose(
     propOr('', 'plate'),
-    propOr({}, 'vehicle'),
     propOr({}, 'transport')
   )(value)
   const principal = compose(
-    propOr('', 'fullname'),
-    propOr({}, 'principal'),
+    propOr('', 'principalName'),
     propOr({}, 'transport')
   )(value)
   const secondary = compose(
-    propOr('', 'fullname'),
-    propOr({}, 'principal'),
+    propOr('', 'secondaryName'),
     propOr({}, 'transport')
   )(value)
   const fromCompany = compose(
     join(' —— '),
-    props(['name', 'addr']),
-    propOr({}, 'company'),
-    propOr({}, 'from'),
+    props(['fromName', 'fromAddr']),
     propOr({}, 'transport')
   )(value)
   const fromWeight = compose(
-    propOr(null, 'weight'),
-    propOr({}, 'from'),
+    propOr(null, 'fromWeight'),
     propOr({}, 'transport')
   )(value)
   const fromDate = compose(
     moment,
-    propOr('', 'date'),
-    propOr({}, 'from'),
+    propOr('', 'fromDate'),
     propOr({}, 'transport')
   )(value)
   const toCompany = compose(
     join(' —— '),
-    props(['name', 'addr']),
-    propOr({}, 'company'),
-    propOr({}, 'to'),
+    props(['toName', 'toAddr']),
     propOr({}, 'transport')
   )(value)
   const toWeight = compose(
-    propOr(null, 'weight'),
-    propOr({}, 'to'),
+    propOr(null, 'toWeight'),
     propOr({}, 'transport')
   )(value)
   const toDate = compose(
     moment,
-    propOr('', 'date'),
-    propOr({}, 'to'),
+    propOr('', 'toDate'),
     propOr({}, 'transport')
   )(value)
   const product = compose(
     join(' —— '),
-    props(['name', 'specs']),
-    propOr({}, 'product'),
+    props(['productName', 'productSpecs']),
     propOr({}, 'transport')
   )(value)
   const created = compose(
     moment,
-    propOr('', 'created'),
+    propOr('', 'createdAt'),
     propOr({}, 'transport')
   )(value)
   const status = compose(
-    propOr('', 'captain_status'),
+    propOr('', 'captainStatus'),
     propOr({}, 'transport')
   )(value)
   // const info = compose(propOr('', 'info'), propOr({}, 'fuel'))(

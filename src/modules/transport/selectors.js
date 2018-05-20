@@ -4,8 +4,14 @@ import { formValueSelector } from 'redux-form/immutable'
 // import moment from 'moment'
 
 const submitFormSelector = formValueSelector('TransportSubmitForm')
-const fromEntity = state => submitFormSelector(state, 'from')
-const toEntity = state => submitFormSelector(state, 'to')
+const fromName = state => submitFormSelector(state, 'fromName')
+const toName = state => submitFormSelector(state, 'toName')
+const fromAddr = state => submitFormSelector(state, 'fromAddr')
+const toAddr = state => submitFormSelector(state, 'toAddr')
+const fromWeight = state => submitFormSelector(state, 'fromWeight')
+const toWeight = state => submitFormSelector(state, 'toWeight')
+const fromDate = state => submitFormSelector(state, 'fromDate')
+const toDate = state => submitFormSelector(state, 'toDate')
 const transportEntity = state => state.getIn(['entities', 'transports'])
 const assignIds = state => state.getIn(['transport', 'assignIds'])
 const acceptIds = state => state.getIn(['transport', 'acceptIds'])
@@ -16,7 +22,7 @@ const currentTransport = state => state.getIn(['transport', 'currentTransport'])
 const transportArraySelector = createImmutableSelector(
   [transportEntity, transportIds],
   (transports, ids) => {
-    return ids.isEmpty() ? ids.map(item => transports.get(item)) : ids
+    return !ids.isEmpty() ? ids.map(item => transports.get(item)) : ids
   }
 )
 
@@ -30,7 +36,7 @@ const transportCurrentSelector = createImmutableSelector(
 const assignArraySelector = createImmutableSelector(
   [transportEntity, assignIds],
   (transports, ids) => {
-    return ids.isEmpty() ? ids.map(item => transports.get(item)) : ids
+    return !ids.isEmpty() ? ids.map(item => transports.get(item)) : ids
   }
 )
 
@@ -41,7 +47,7 @@ const assignCountSelector = createImmutableSelector([assignIds], transports =>
 const acceptArraySelector = createImmutableSelector(
   [transportEntity, acceptIds],
   (transports, ids) => {
-    return ids.isEmpty() ? ids.map(item => transports.get(item)) : ids
+    return !ids.isEmpty() ? ids.map(item => transports.get(item)) : ids
   }
 )
 
@@ -52,7 +58,7 @@ const acceptCountSelector = createImmutableSelector([acceptIds], transports =>
 const checkArraySelector = createImmutableSelector(
   [transportEntity, checkIds],
   (transports, ids) => {
-    return ids.isEmpty() ? ids.map(item => transports.get(item)) : ids
+    return !ids.isEmpty() ? ids.map(item => transports.get(item)) : ids
   }
 )
 
@@ -61,8 +67,27 @@ const checkCountSelector = createImmutableSelector([checkIds], transports =>
 )
 
 const saveFormValuesSelector = createImmutableSelector(
-  [fromEntity, toEntity],
-  (fromInfo, toInfo) => fromJS({ from: fromInfo, to: toInfo })
+  [fromName, toName, fromAddr, toAddr, fromWeight, toWeight, fromDate, toDate],
+  (
+    fromName,
+    toName,
+    fromAddr,
+    toAddr,
+    fromWeight,
+    toWeight,
+    fromDate,
+    toDate
+  ) =>
+    fromJS({
+      fromName,
+      toName,
+      fromAddr,
+      toAddr,
+      fromWeight,
+      toWeight,
+      fromDate,
+      toDate
+    })
 )
 // const acceptCountSelector = createImmutableSelector(
 //   [transportEntity, transportIds],
