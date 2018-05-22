@@ -10,7 +10,6 @@ class TransportOrderList extends React.PureComponent {
 
   render() {
     const data = extractDataFromProps(this.props)
-    console.tron.log(this.props)
     return (
       <List renderHeader={() => '基本信息'}>
         <OrderItem {...data.orderProps} />

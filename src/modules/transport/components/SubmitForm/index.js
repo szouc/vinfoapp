@@ -29,14 +29,6 @@ class TransportSubmitFormWithHardwareBack extends Component {
     }
     const formatDateInitialValues = evolve(TransformDate, initialValues)
 
-    // const formatDateInitialValues = {
-    //   ...initialValues,
-    //   from: {
-    //     ...initialValues.from,
-    //     date: moment(initialValues.from.date).toDate()
-    //   },
-    //   to: { ...initialValues.to, date: moment(initialValues.to.date).toDate() }
-    // }
     return (
       <React.Fragment>
         <ActivityIndicator

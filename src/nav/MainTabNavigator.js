@@ -1,4 +1,4 @@
-import { TransportMainScreen, Maintain, Profile, FuelMainScreen } from '../screens'
+import { TransportMainScreen, DriverMainScreen, Maintain, FuelMainScreen } from '../screens'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 import React from 'react'
@@ -6,7 +6,7 @@ import { TabNavigator } from 'react-navigation'
 import { Dimensions } from 'react-native'
 
 const deviceWidth = Dimensions.get('window').width
-const tabCount = 4
+const tabCount = 3
 const tabWidth = deviceWidth / tabCount
 
 const MainNavigator = TabNavigator(
@@ -29,17 +29,17 @@ const MainNavigator = TabNavigator(
         )
       }
     },
-    Maintain: {
-      screen: Maintain,
-      navigationOptions: {
-        tabBarLabel: '维修',
-        tabBarIcon: ({ focused, tintColor }) => (
-          <Icon name='wrench' size={26} color={focused ? tintColor : null} />
-        )
-      }
-    },
+    // Maintain: {
+    //   screen: Maintain,
+    //   navigationOptions: {
+    //     tabBarLabel: '维修',
+    //     tabBarIcon: ({ focused, tintColor }) => (
+    //       <Icon name='wrench' size={26} color={focused ? tintColor : null} />
+    //     )
+    //   }
+    // },
     Profile: {
-      screen: Profile,
+      screen: DriverMainScreen,
       navigationOptions: {
         tabBarLabel: '我的',
         tabBarIcon: ({ focused, tintColor }) => (

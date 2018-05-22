@@ -11,30 +11,19 @@ import {
 
 const validate = values => {
   const errors = {}
-  const fromErrors = {}
-  const toErrors = {}
-  if (!values.get('from')) {
-    errors.from = '必填'
-  } else {
-    if (!values.getIn(['from', 'weight'])) {
-      fromErrors.weight = '必填'
+  const checkKeys = [
+    'fromName',
+    'toName',
+    'fromWeight',
+    'fromDate',
+    'toWeight',
+    'toDate'
+  ]
+  checkKeys.map(key => {
+    if (!values.get(key)) {
+      errors[key] = '必填'
     }
-    if (!values.getIn(['from', 'date'])) {
-      fromErrors.date = '必填'
-    }
-    errors.from = fromErrors
-  }
-  if (!values.get('to')) {
-    errors.to = '必填'
-  } else {
-    if (!values.getIn(['to', 'weight'])) {
-      toErrors.weight = '必填'
-    }
-    if (!values.getIn(['to', 'date'])) {
-      toErrors.date = '必填'
-    }
-    errors.to = toErrors
-  }
+  })
   return errors
 }
 
@@ -56,10 +45,7 @@ class TransportSubmitForm extends React.PureComponent {
   }
 
   render() {
-    const {
-      handleSubmit,
-      saveValues
-    } = this.props
+    const { handleSubmit, saveValues } = this.props
     return (
       <WingBlank>
         <ActivityIndicator

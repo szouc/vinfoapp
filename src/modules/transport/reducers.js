@@ -32,7 +32,7 @@ const transportReducer = (state = initialState, action) => {
       return state.set('currentTransport', payload)
     case Type.SUBMIT_SUCCESS:
       const acceptPosition = state.get('acceptIds').indexOf(payload)
-      return state.deleteIn(['assignIds', acceptPosition])
+      return state.deleteIn(['acceptIds', acceptPosition])
     case Type.SET_LOADING:
       return state.set(`${payload.scope}Loading`, payload.loading)
     default:

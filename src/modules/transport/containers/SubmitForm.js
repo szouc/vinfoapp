@@ -26,8 +26,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     onSave: ({ username, transportId }) => update => () => {
       dispatch(saveRequest({ username, transportId, update }))
     },
-    onSubmit: ({ username, transportId }) => values => {
-      dispatch(submitRequest({ username, transportId, update: values }))
+    onSubmit: ({ username, transportId }) => update => {
+      dispatch(submitRequest({ username, transportId, update }))
     }
   }
 }

@@ -12,15 +12,12 @@ import {
 
 const validate = values => {
   const errors = {}
-  if (!values.get('litre')) {
-    errors.litre = '必填'
-  }
-  if (!values.get('cost')) {
-    errors.cost = '必填'
-  }
-  if (!values.get('mile')) {
-    errors.mile = '必填'
-  }
+  const checkKeys = ['applicant', 'vehicleId', 'litre', 'cost', 'mile']
+  checkKeys.map(key => {
+    if (!values.get(key)) {
+      errors[key] = '必填'
+    }
+  })
   return errors
 }
 

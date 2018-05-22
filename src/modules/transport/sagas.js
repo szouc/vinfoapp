@@ -188,15 +188,11 @@ function * activeScreenEffect(scope, action, data = '', pagination = {}) {
     case 'submit':
       yield put({
         type: ADD_TRANSPORT_ENTITY,
-        payload: data.submit.get('entities')
-      })
-      yield put({
-        type: Type.SAVE_SUCCESS,
-        payload: data.update.get('result')
+        payload: data.get('entities')
       })
       yield put({
         type: Type.SUBMIT_SUCCESS,
-        payload: data.submit.get('result')
+        payload: data.get('result')
       })
       yield put(NavigationActions.back())
       Toast.success('提交成功！', 2)
@@ -302,7 +298,8 @@ function * loadingEffect(scope) {
 function * errorEffect(scope, error) {
   yield put({
     type: REQUEST_ERROR,
-    payload: fromJS({ errorScope: 'Transport', message: error.message }) })
+    payload: fromJS({ errorScope: 'Transport', message: error.message })
+  })
   yield put({
     type: Type.SET_LOADING,
     payload: { scope: scope, loading: false }
@@ -466,12 +463,10 @@ function * submitFlow(action) {
   yield submitEffect('screen')
   yield call(delay, 200)
   try {
-    const [update, submit] = yield all([
-      call(Api.updateTransport, payload),
-      call(Api.submitTransport, payload)
-    ])
-    if (update && submit) {
-      yield activeSuccessEffect('screen', 'submit', { update, submit })
+    yield call(Api.updateTransport, payload)
+    const vehicle = yield call(Api.submitTransport, payload)
+    if (vehicle) {
+      yield activeSuccessEffect('screen', 'submit', vehicle)
     }
   } catch (error) {
     yield failureEffect('screen', error)

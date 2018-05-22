@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, BackHandler } from 'react-native'
+import { View, StyleSheet, BackHandler } from 'react-native'
 import FuelGrid from '../FuelGrid'
 import DefaultVehiclePicker from '../DefaultVehiclePicker'
 import { ErrorBoundary } from '../../../shared'
-import { ActivityIndicator, WingBlank } from 'antd-mobile'
+import { ActivityIndicator, WingBlank, WhiteSpace } from 'antd-mobile'
+import Carousel from '../Carousel'
 
 class FuelMain extends Component {
   componentDidMount() {
@@ -30,9 +31,10 @@ class FuelMain extends Component {
     return (
       <View style={styles.container}>
         <ActivityIndicator toast text='载入中...' animating={this.props.loading} />
-        <View style={styles.title}>
-          <Text>加油页面</Text>
+        <View style={styles.carousel}>
+          <Carousel />
         </View>
+        <WhiteSpace size='xl' />
         <View style={styles.vehicle}>
           <WingBlank>
             <DefaultVehiclePicker
@@ -55,18 +57,23 @@ class FuelMain extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  title: {
-    flex: 1,
+  carousel: {
+    flex: 3,
     alignSelf: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start'
   },
   vehicle: {
-    flex: 1
+    flex: 2,
+    justifyContent: 'center',
+    alignSelf: 'stretch'
   },
   grid: {
-    flex: 2
+    flex: 4,
+    justifyContent: 'flex-start',
+    alignSelf: 'stretch'
   }
 })
 

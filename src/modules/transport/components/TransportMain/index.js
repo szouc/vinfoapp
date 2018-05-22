@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, BackHandler } from 'react-native'
+import { View, StyleSheet, BackHandler } from 'react-native'
 import TransportGrid from '../TransportGrid'
 import { ErrorBoundary } from '../../../shared'
-import { ActivityIndicator } from 'antd-mobile'
+import { ActivityIndicator, WhiteSpace } from 'antd-mobile'
+import Carousel from '../Carousel'
 
 class TransportMain extends Component {
   componentDidMount() {
@@ -60,9 +61,10 @@ class TransportMain extends Component {
           text='载入中...'
           animating={this.props.loading}
         />
-        <View style={styles.title}>
-          <Text>运输页面</Text>
+        <View style={styles.carousel}>
+          <Carousel />
         </View>
+        <WhiteSpace size='xl' />
         <View style={styles.grid}>
           <ErrorBoundary>
             <TransportGrid data={gridData} />
@@ -79,16 +81,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  title: {
+  carousel: {
     flex: 1,
     alignSelf: 'center',
-    justifyContent: 'center'
-  },
-  vehicle: {
-    flex: 1
+    justifyContent: 'flex-start'
   },
   grid: {
     flex: 2,
+    justifyContent: 'flex-start',
     alignSelf: 'stretch'
   }
 })
