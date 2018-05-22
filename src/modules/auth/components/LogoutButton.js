@@ -1,11 +1,11 @@
 import React from 'react'
-import { Button, View } from 'react-native'
+import { Button } from 'antd-mobile'
 
 const LogoutButton = props => {
   return (
-    <View>
-      <Button onPress={props.logout} title='Logout' />
-    </View>
+    <Button type='warning' onClick={props.logout}>
+      用户注销
+    </Button>
   )
 }
 
