@@ -10,34 +10,34 @@ const getDriverVehicles = username => {
   return axios(config)
 }
 
-const addVehicleFuel = (username, data) => {
+const addVehicleMaintain = (username, data) => {
   const config = {
-    url: URL.DRIVER_FUEL.replace(/:username/, username),
+    url: URL.DRIVER_MAINTAIN.replace(/:username/, username),
     method: 'post',
     data: data
   }
   return axios(config)
 }
 
-const getVehicleFuels = (username, vehicleId) => {
+const getVehicleMaintains = (username, vehicleId) => {
   const config = {
-    url: URL.DRIVER_FUEL.replace(/:username/, username),
+    url: URL.DRIVER_MAINTAIN.replace(/:username/, username),
     method: 'get',
     params: { vehicleId }
   }
   return axios(config)
 }
 
-const deleteVehicleFuel = (username, fuelId) => {
+const deleteVehicleMaintain = (username, maintainId) => {
   const mapObj = {
     ':username': username,
-    ':childId': fuelId
+    ':childId': maintainId
   }
   const config = {
-    url: replaceAll(URL.DRIVER_FUEL_ID, mapObj),
+    url: replaceAll(URL.DRIVER_MAINTAIN_ID, mapObj),
     method: 'get'
   }
   return axios(config)
 }
 
-export { getDriverVehicles, addVehicleFuel, getVehicleFuels, deleteVehicleFuel }
+export { getDriverVehicles, addVehicleMaintain, getVehicleMaintains, deleteVehicleMaintain }

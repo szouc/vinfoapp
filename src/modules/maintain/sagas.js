@@ -1,7 +1,7 @@
 import * as Api from './api'
 import * as Type from './actionTypes'
 import { REQUEST_ERROR } from '../error'
-import { ADD_VEHICLE_ENTITY, ADD_FUEL_ENTITY, DELETE_ENTITY } from '../entity'
+import { ADD_VEHICLE_ENTITY, ADD_MAINTAIN_ENTITY, DELETE_ENTITY } from '../entity'
 import { fromJS } from 'immutable'
 import { NavigationActions } from 'react-navigation'
 import { resetSection } from 'redux-form'
@@ -87,7 +87,7 @@ function * mainScreenEffect(scope, action, data = '', pagination = {}) {
 }
 
 /**
- * Fetch & Delete Fuel Screen
+ * Fetch & Delete maintain Screen
  *
  * @param {string} scope - the area of showing loading
  * @param {string} action - the phrase of the screen
@@ -98,11 +98,11 @@ function * mainScreenEffect(scope, action, data = '', pagination = {}) {
 function * fetchScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
     case 'to_fetch':
-      yield put(NavigationActions.navigate({ routeName: 'FuelFetch' }))
+      yield put(NavigationActions.navigate({ routeName: 'MaintainFetch' }))
       break
     case 'fetch':
       yield put({
-        type: ADD_FUEL_ENTITY,
+        type: ADD_MAINTAIN_ENTITY,
         payload: data.get('entities')
       })
       yield put({
@@ -113,7 +113,7 @@ function * fetchScreenEffect(scope, action, data = '', pagination = {}) {
     case 'delete':
       yield put({
         type: DELETE_ENTITY,
-        payload: { stateKey: 'fuels', id: data }
+        payload: { stateKey: 'maintenance', id: data }
       })
       yield put({
         type: Type.DELETE_SUCCESS,
@@ -135,7 +135,7 @@ function * fetchScreenEffect(scope, action, data = '', pagination = {}) {
 function * addScreenEffect(scope, action, data = '', pagination = {}) {
   switch (action) {
     case 'to_add':
-      yield put(NavigationActions.navigate({ routeName: 'FuelAdd' }))
+      yield put(NavigationActions.navigate({ routeName: 'MaintainAdd' }))
       break
     case 'add':
       yield put({
@@ -146,7 +146,7 @@ function * addScreenEffect(scope, action, data = '', pagination = {}) {
         type: Type.ADD_SUCCESS,
         payload: data.get('result')
       })
-      yield put(resetSection('FuelAddForm', 'litre', 'cost', 'mile'))
+      yield put(resetSection('MaintainAddForm', 'reason', 'cost', 'mile'))
       Toast.success('提交成功！', 2)
       break
     default:
@@ -169,14 +169,17 @@ function * loadingEffect(scope) {
 }
 
 function * errorEffect(scope, error) {
-  yield put({ type: REQUEST_ERROR, payload: fromJS(error) })
+  yield put({
+    type: REQUEST_ERROR,
+    payload: fromJS({ errorScope: 'Maintain', message: error.message })
+  })
   yield put({
     type: Type.SET_LOADING,
     payload: { scope: scope, loading: false }
   })
 }
 
-const fuelEffects = {
+const maintainEffects = {
   loading: loadingEffect,
   error: errorEffect,
   main_screen: mainScreenEffect,
@@ -184,7 +187,7 @@ const fuelEffects = {
   fetch_screen: fetchScreenEffect
 }
 
-const machine = new Machine(fuelState, fuelEffects)
+const machine = new Machine(maintainState, maintainEffects)
 const initialMainEffect = machine.getEffect('initial_main')
 const setVehicleEffect = machine.getEffect('set_vehicle')
 const toAddScreenEffect = machine.getEffect('to_add')
@@ -257,7 +260,7 @@ function * addFlow(action) {
   yield addEffect('form')
   yield call(delay, 200)
   try {
-    const vehicle = yield call(Api.addVehicleFuel, payload)
+    const vehicle = yield call(Api.addVehicleMaintain, payload)
     if (vehicle) {
       yield addSuccessEffect('form', 'add', vehicle)
     }
@@ -272,10 +275,10 @@ function * fetchFlow(action) {
   yield fetchEffect('screen')
   yield call(delay, 200)
   try {
-    const fuels = yield call(Api.getVehicleFuels, payload)
-    if (fuels) {
-      yield fetchSuccessEffect('screen', 'fetch', fuels)
-      // I dont know where does this action put ?
+    const maintenance = yield call(Api.getVehicleMaintains, payload)
+    if (maintenance) {
+      yield fetchSuccessEffect('screen', 'fetch', maintenance)
+      // TODO: I dont know where does this action put ?
       yield put({
         type: Type.SET_VEHICLE_SUCCESS,
         payload: payload.vehicleId
@@ -292,7 +295,7 @@ function * deleteFlow(action) {
   yield deleteEffect('screen')
   yield call(delay, 200)
   try {
-    const vehicle = yield call(Api.deleteVehicleFuel, payload)
+    const vehicle = yield call(Api.deleteVehicleMaintain, payload)
     if (vehicle) {
       yield deleteSuccessEffect('screen', 'delete', vehicle)
     }

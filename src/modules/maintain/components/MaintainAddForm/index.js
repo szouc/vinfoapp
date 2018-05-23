@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, BackHandler } from 'react-native'
-import FuelAddForm from './AddForm'
+import AddForm from './AddForm'
 import { ErrorBoundary } from '../../../shared'
 import { ActivityIndicator } from 'antd-mobile'
 
-class FuelAddFormWithHardwareBack extends Component {
+class AddFormWithHardwareBack extends Component {
   constructor(props) {
     super(props)
     this.onUserSubmit = props.onSubmit(props.username)
@@ -33,7 +33,7 @@ class FuelAddFormWithHardwareBack extends Component {
           animating={loading}
         />
         <ErrorBoundary>
-          <FuelAddForm
+          <AddForm
             vehicles={vehicles}
             initialValues={initialValues}
             onSubmit={this.onUserSubmit}
@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default FuelAddFormWithHardwareBack
+export default AddFormWithHardwareBack

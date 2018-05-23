@@ -6,6 +6,7 @@ import { reducer as authReducer } from '../modules/auth'
 import { reducer as errorReducer } from '../modules/error'
 import { reducer as driverReducer } from '../modules/driver'
 import { reducer as fuelReducer } from '../modules/fuel'
+import { reducer as maintainReducer } from '../modules/maintain'
 import { reducer as transportReducer } from '../modules/transport'
 
 const rootReducer = combineReducers({
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   form: formReducer,
   driver: driverReducer,
   fuel: fuelReducer,
+  maintain: maintainReducer,
   transport: transportReducer
 })
 

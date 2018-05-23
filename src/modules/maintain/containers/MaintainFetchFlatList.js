@@ -1,25 +1,25 @@
-import { backRequest, fetchFuelsRequest } from '../actions'
+import { backRequest, fetchRequest } from '../actions'
 import {
-  fuelArraySelector,
+  maintainArraySelector,
   vehicleCurrentSelector,
   vehiclePickerSelector
 } from '../selectors'
 
-import { FuelFetchFlatList } from '../components'
+import { MaintainFetchFlatList } from '../components'
 import { connect } from 'react-redux'
 import immutPropsToJS from '../../../utils/immutPropsToJS'
 
 const mapStateToProps = (state, ownProps) => {
-  const fuels = fuelArraySelector(state)
+  const maintains = maintainArraySelector(state)
   const vehicles = vehiclePickerSelector(state)
   const currentVehicle = vehicleCurrentSelector(state)
-  const loading = state.getIn(['fuel', 'screenLoading'])
+  const loading = state.getIn(['maintain', 'screenLoading'])
   return {
     username: state.getIn(['auth', 'username']),
     vehicles,
     currentVehicle,
     loading,
-    fuels
+    maintains
   }
 }
 
@@ -28,14 +28,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     backToMain: username => {
       dispatch(backRequest(username))
     },
-    fetchFuels: username => value => {
+    fetchMaintains: username => value => {
       const vehicleId = value && value[0]
       const payload = { username, vehicleId }
-      dispatch(fetchFuelsRequest(payload))
+      dispatch(fetchRequest(payload))
     }
   }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  immutPropsToJS(FuelFetchFlatList)
+  immutPropsToJS(MaintainFetchFlatList)
 )

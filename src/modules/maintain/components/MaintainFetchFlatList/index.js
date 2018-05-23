@@ -1,19 +1,19 @@
 import React from 'react'
 import { FlatList, BackHandler, View, Text } from 'react-native'
-import FuelCard from './FuelCard'
+import MaintainCard from './MaintainCard'
 import { ActivityIndicator, WingBlank, WhiteSpace } from 'antd-mobile'
 import DefaultVehiclePicker from '../DefaultVehiclePicker'
 
-class FuelFetchFlatList extends React.PureComponent {
+class FetchFlatList extends React.PureComponent {
   constructor(props) {
     super(props)
-    this.fetchUserFuels = props.fetchFuels(props.username)
+    this.fetchUserMaintains = props.fetchMaintains(props.username)
   }
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress)
     this.props.currentVehicle &&
-      this.fetchUserFuels([this.props.currentVehicle._id])
+      this.fetchUserMaintains([this.props.currentVehicle._id])
   }
 
   componentWillUnmount() {
@@ -27,7 +27,7 @@ class FuelFetchFlatList extends React.PureComponent {
 
   _keyExtractor = (item, index) => item._id
 
-  _renderItem = ({ item }) => <FuelCard fuel={item} />
+  _renderItem = ({ item }) => <MaintainCard item={item} />
 
   _getItemLayout = (data, index) => ({
     length: 120,
@@ -36,22 +36,18 @@ class FuelFetchFlatList extends React.PureComponent {
   })
 
   render() {
-    const { loading, currentVehicle, vehicles } = this.props
+    const { loading, currentVehicle, vehicles, maintains } = this.props
     return (
       <WingBlank>
-        <ActivityIndicator
-          toast
-          text='载入中...'
-          animating={loading}
-        />
+        <ActivityIndicator toast text='载入中...' animating={loading} />
         <DefaultVehiclePicker
           currentVehicle={currentVehicle}
           vehicles={vehicles}
-          setVehicle={this.fetchUserFuels}
+          setVehicle={this.fetchUserMaintains}
         />
         <WhiteSpace size='xl' />
         <FlatList
-          data={this.props.fuels}
+          data={maintains}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
           getItemLayout={this._getItemLayout}
@@ -72,4 +68,4 @@ class FuelFetchFlatList extends React.PureComponent {
   }
 }
 
-export default FuelFetchFlatList
+export default FetchFlatList

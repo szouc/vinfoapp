@@ -22,7 +22,6 @@ class DriverMain extends Component {
         <View style={styles.carousel}>
           <Carousel />
         </View>
-        <WhiteSpace size='xl' />
         <View style={styles.card}>
           <WingBlank>
             <ErrorBoundary>
@@ -51,7 +50,7 @@ const styles = StyleSheet.create({
   card: {
     flex: 2,
     alignSelf: 'stretch',
-    justifyContent: 'flex-start'
+    justifyContent: 'center'
   }
 })
 

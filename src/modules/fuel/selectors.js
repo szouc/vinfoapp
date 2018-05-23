@@ -53,13 +53,13 @@ const fuelArraySelector = createImmutableSelector(
   (fuels, ids) =>
     !ids.isEmpty()
       ? ids.map(item => fuels.get(item)).sort((a, b) => {
-        if (moment(a.get('date')).isBefore(b.get('date'))) {
+        if (moment(a.get('appliedAt')).isBefore(b.get('appliedAt'))) {
           return 1
         }
-        if (moment(a.get('date')).isAfter(b.get('date'))) {
+        if (moment(a.get('appliedAt')).isAfter(b.get('appliedAt'))) {
           return -1
         }
-        if (moment(a.get('date')).isSame(b.get('date'))) {
+        if (moment(a.get('appliedAt')).isSame(b.get('appliedAt'))) {
           return 0
         }
       })

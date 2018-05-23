@@ -1,4 +1,4 @@
-import { FuelMain } from '../components'
+import { MaintainMain } from '../components'
 import { connect } from 'react-redux'
 import immutPropsToJS from '../../../utils/immutPropsToJS'
 import {
@@ -12,7 +12,7 @@ import { vehiclePickerSelector, vehicleCurrentSelector } from '../selectors'
 const mapStateToProps = (state, ownProps) => {
   const vehicles = vehiclePickerSelector(state)
   const currentVehicle = vehicleCurrentSelector(state)
-  const loading = state.getIn(['fuel', 'screenLoading'])
+  const loading = state.getIn(['maintain', 'screenLoading'])
   return {
     username: state.getIn(['auth', 'username']),
     currentVehicle,
@@ -40,5 +40,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  immutPropsToJS(FuelMain)
+  immutPropsToJS(MaintainMain)
 )
