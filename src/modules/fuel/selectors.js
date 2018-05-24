@@ -38,11 +38,11 @@ const vehiclePickerSelector = createImmutableSelector(
 )
 
 const vehicleInitPickerSelector = createImmutableSelector(
-  [vehicleCurrentSelector, username, fullname],
+  [currentVehicle, username, fullname],
   (vehicle, username, fullname) =>
     vehicle &&
     fromJS({
-      vehicleId: vehicle.get('_id'),
+      vehicleId: vehicle,
       applicant: username,
       fullname: `${fullname}(${username})`
     })

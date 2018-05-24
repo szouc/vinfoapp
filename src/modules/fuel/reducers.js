@@ -14,9 +14,9 @@ const fuelReducer = (state = initialState, action) => {
   const { type, payload } = action
   switch (type) {
     case Type.FETCH_VEHICLE_SUCCESS:
-      return state.get('currentVehicle')
-        ? state.set('vehicleIds', payload)
-        : state.set('vehicleIds', payload).set('currentVehicle', payload.get(0))
+      return state
+        .set('vehicleIds', payload)
+        .set('currentVehicle', payload.get(0))
     case Type.SET_VEHICLE_SUCCESS:
       return state.set('currentVehicle', payload)
     case Type.FETCH_SUCCESS:

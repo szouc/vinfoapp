@@ -60,7 +60,7 @@ function * mainScreenEffect(scope, action, data = '', pagination = {}) {
         type: Type.SET_AUTH,
         payload: data
       })
-      yield put(NavigationActions.navigate({ routeName: 'Main' }))
+      yield put(NavigationActions.navigate({ routeName: 'App' }))
       break
     default:
       yield put({
