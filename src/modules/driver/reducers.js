@@ -4,6 +4,7 @@ import Immutable from 'immutable'
 
 const initialState = Immutable.fromJS({
   screenLoading: false,
+  formLoading: false,
   user: null
 })
 

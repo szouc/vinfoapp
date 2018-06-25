@@ -15,10 +15,8 @@ async function getDriverByUsername(username) {
   throw new Error('Something Wrong.(getDriverByUsername)')
 }
 
-async function changePasswordByUsername(values) {
-  const username = values.get('username')
-  const password = values.get('password')
-  const response = await Request.changePasswordByUsername(username, password)
+async function changePasswordByUsername({ username, values }) {
+  const response = await Request.changePasswordByUsername(username, values)
   if (response.data.ok) {
     const data = response.data.result || {}
     const driver = userNormalize(data)

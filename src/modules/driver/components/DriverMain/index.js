@@ -3,7 +3,7 @@ import Card from '../ProfileCard'
 import { View, StyleSheet } from 'react-native'
 import Carousel from '../Carousel'
 import { ErrorBoundary } from '../../../shared'
-import { WhiteSpace, WingBlank, ActivityIndicator } from 'antd-mobile'
+import { Button, WhiteSpace, WingBlank, ActivityIndicator } from 'antd-mobile'
 import { LogoutButton } from '../../../auth/containers'
 
 class DriverMain extends Component {
@@ -27,6 +27,8 @@ class DriverMain extends Component {
             <ErrorBoundary>
               <Card profile={this.props.profile} />
             </ErrorBoundary>
+            <WhiteSpace size='xl' />
+            <Button onClick={this.props.toChangeScreen}>修改密码</Button>
             <WhiteSpace size='xl' />
             <LogoutButton />
           </WingBlank>

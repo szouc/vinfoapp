@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { DriverMain } from '../components'
 import immutPropsToJS from '../../../utils/immutPropsToJS'
-import { fetchProfileRequest } from '../actions'
+import { fetchProfileRequest, toChangeRequest } from '../actions'
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchProfile: username => {
       dispatch(fetchProfileRequest(username))
+    },
+    toChangeScreen: () => {
+      dispatch(toChangeRequest())
     }
   }
 }

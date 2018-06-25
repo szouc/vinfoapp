@@ -157,6 +157,7 @@ function * acceptScreenEffect(scope, action, data = '', pagination = {}) {
         type: Type.ACCEPT_SUCCESS,
         payload: data.get('result')
       })
+      Toast.success('接单成功！', 2)
       break
     case 'delete':
       yield put({
