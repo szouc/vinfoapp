@@ -4,6 +4,7 @@ import TransportGrid from '../TransportGrid'
 import { ErrorBoundary } from '../../../shared'
 import { ActivityIndicator, WhiteSpace } from 'antd-mobile'
 import Carousel from '../Carousel'
+import { ImagePicker } from '../../../shared/components'
 
 class TransportMain extends Component {
   componentDidMount() {
@@ -65,10 +66,15 @@ class TransportMain extends Component {
           <Carousel />
         </View>
         <WhiteSpace size='xl' />
-        <View style={styles.grid}>
-          <ErrorBoundary>
-            <TransportGrid data={gridData} />
-          </ErrorBoundary>
+        <View style={styles.content}>
+          <View style={styles.grid}>
+            <ErrorBoundary>
+              <TransportGrid data={gridData} />
+            </ErrorBoundary>
+          </View>
+          <View style={styles.picker}>
+            <ImagePicker />
+          </View>
         </View>
       </View>
     )
@@ -86,10 +92,18 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'flex-start'
   },
-  grid: {
+  content: {
     flex: 2,
+    alignSelf: 'stretch'
+  },
+  grid: {
+    flex: 1,
     justifyContent: 'flex-start',
     alignSelf: 'stretch'
+  },
+  picker: {
+    flex: 1,
+    alignSelf: 'center'
   }
 })
 

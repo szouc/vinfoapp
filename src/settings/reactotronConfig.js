@@ -15,7 +15,7 @@ Reactotron.configure({
   port: 9090,
   socketIoProperties: {
     reconnection: true,
-    reconnectionDelay: 2000,
+    reconnectionDelay: 200,
     reconnectionDelayMax: 5000,
     reconnectionAttempts: 5
   }
