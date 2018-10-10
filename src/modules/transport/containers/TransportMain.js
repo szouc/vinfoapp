@@ -19,8 +19,9 @@ const mapStateToProps = (state, ownProps) => {
   const assignCount = assignCountSelector(state)
   const acceptCount = acceptCountSelector(state)
   const checkCount = checkCountSelector(state)
+  const username = state.getIn(['auth', 'username'])
   return {
-    username: state.getIn(['auth', 'username']),
+    username,
     assignCount,
     acceptCount,
     checkCount,

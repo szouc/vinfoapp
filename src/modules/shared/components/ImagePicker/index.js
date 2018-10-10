@@ -25,15 +25,14 @@ export default class ImagePicker extends React.Component {
       }
     }
 
-    Picker.showImagePicker(options, response => {
-      console.log('Response = ', response)
-
+    Picker.showImagePicker(options, async response => {
+      console.tron.log('Response = ', response)
       if (response.didCancel) {
-        console.log('User cancelled photo picker')
+        console.tron.log('User cancelled photo picker')
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error)
+        console.tron.log('ImagePicker Error: ', response.error)
       } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton)
+        console.tron.log('User tapped custom button: ', response.customButton)
       } else {
         let source = { uri: response.uri, path: response.path }
 
@@ -44,7 +43,14 @@ export default class ImagePicker extends React.Component {
           avatarSource: source
         })
 
-        uploadFile(response.path)
+        const res = await uploadFile(
+          this.props.uploadUrl,
+          response.fileName,
+          response.path
+        )
+        if (res) {
+          await this.props.input.onChange(res.data)
+        }
       }
     })
   }

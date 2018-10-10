@@ -17,4 +17,7 @@ export const DRIVER_MAINTAIN = '/api/driver/:username/maintenance'
 export const DRIVER_MAINTAIN_ID = '/api/driver/:username/maintenance/:childId'
 export const DRIVER_TRANSPORT = '/api/driver/:username/transport'
 export const DRIVER_TRANSPORT_ID = '/api/driver/:username/transport/:childId'
-export const DRIVER_TRANSPORT_ID_STATUS = '/api/driver/:username/transport/:childId/status'
+export const DRIVER_TRANSPORT_ID_STATUS =
+  '/api/driver/:username/transport/:childId/status'
+export const DRIVER_TRANSPORT_UPLOAD_PIC =
+  '/api/driver/:username/transport/:childId/upload/shipping'
