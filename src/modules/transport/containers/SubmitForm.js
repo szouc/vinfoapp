@@ -3,18 +3,24 @@ import { connect } from 'react-redux'
 import immutPropsToJS from '../../../utils/immutPropsToJS'
 import { saveRequest, submitRequest, backToActiveRequest } from '../actions'
 import { transportCurrentSelector, saveFormValuesSelector } from '../selectors'
+import { WEB_ADDR } from '../../../settings/configs'
+import { DRIVER_TRANSPORT_UPLOAD_PIC } from '../../../settings/routes'
 
 const mapStateToProps = (state, ownProps) => {
   const initialValues = transportCurrentSelector(state)
   const loading = state.getIn(['transport', 'screenLoading'])
   const formLoading = state.getIn(['transport', 'formLoading'])
   const saveValues = saveFormValuesSelector(state)
+  const username = state.getIn(['auth', 'username'])
+  const uploadUrl =
+    WEB_ADDR + DRIVER_TRANSPORT_UPLOAD_PIC.replace(/:username/, username)
   return {
-    username: state.getIn(['auth', 'username']),
+    username,
     loading,
     formLoading,
     saveValues,
-    initialValues
+    initialValues,
+    uploadUrl
   }
 }
 

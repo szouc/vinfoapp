@@ -24,13 +24,7 @@ class FuelAddFormWithHardwareBack extends Component {
   }
 
   render() {
-    const {
-      vehicles,
-      initialValues,
-      loading,
-      formLoading,
-      uploadUrl
-    } = this.props
+    const { vehicles, initialValues, loading, formLoading } = this.props
     return (
       <View style={styles.container}>
         <ActivityIndicator toast text='载入中...' animating={loading} />
@@ -40,7 +34,6 @@ class FuelAddFormWithHardwareBack extends Component {
             initialValues={initialValues}
             onSubmit={this.onUserSubmit}
             loading={formLoading}
-            uploadUrl={uploadUrl}
           />
         </ErrorBoundary>
       </View>

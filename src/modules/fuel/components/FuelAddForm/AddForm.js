@@ -1,6 +1,6 @@
 import React from 'react'
 import VehiclePickerField from '../VehiclePickerField'
-import { InputItemField, UploadImageField } from '../../../shared'
+import { InputItemField } from '../../../shared'
 import { reduxForm, Field } from 'redux-form/immutable'
 import {
   List,
@@ -23,7 +23,7 @@ const validate = values => {
 
 class FuelAddForm extends React.PureComponent {
   render() {
-    const { vehicles, handleSubmit, onSubmit, uploadUrl } = this.props
+    const { vehicles, handleSubmit, onSubmit } = this.props
     return (
       <WingBlank>
         <ActivityIndicator
@@ -54,7 +54,6 @@ class FuelAddForm extends React.PureComponent {
             placeholder='请输入当前里程'
             label='里程'
           />
-          <UploadImageField name='shipping' uploadUrl={uploadUrl} />
         </List>
         <WhiteSpace />
         <Button onClick={handleSubmit(onSubmit)}>提交</Button>

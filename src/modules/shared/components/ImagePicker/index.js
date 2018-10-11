@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  PixelRatio,
-  TouchableOpacity,
-  Image
-} from 'react-native'
-
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import Picker from 'react-native-image-picker'
 import { uploadFile } from '../../utils/uploadFile'
 
@@ -26,7 +18,6 @@ export default class ImagePicker extends React.Component {
     }
 
     Picker.showImagePicker(options, async response => {
-      console.tron.log('Response = ', response)
       if (response.didCancel) {
         console.tron.log('User cancelled photo picker')
       } else if (response.error) {
@@ -44,12 +35,13 @@ export default class ImagePicker extends React.Component {
         })
 
         const res = await uploadFile(
+          this.props.input.name,
           this.props.uploadUrl,
           response.fileName,
           response.path
         )
         if (res) {
-          await this.props.input.onChange(res.data)
+          await this.props.input.onChange(JSON.parse(res.data))
         }
       }
     })
@@ -58,16 +50,11 @@ export default class ImagePicker extends React.Component {
   render() {
     return (
       <TouchableOpacity onPress={this.selectPhotoTapped.bind(this)}>
-        <View
-          style={[styles.avatar, styles.avatarContainer, { marginBottom: 20 }]}
-        >
+        <View style={styles.avatarContainer}>
           {this.state.avatarSource === null ? (
-            <Text>请选择照片</Text>
+            <Text style={styles.text}>请选择照片</Text>
           ) : (
-            <View>
-              <Image style={styles.avatar} source={this.state.avatarSource} />
-              <Text>{this.state.avatarSource.uri}</Text>
-            </View>
+            <Image style={styles.avatar} source={this.state.avatarSource} />
           )}
         </View>
       </TouchableOpacity>
@@ -77,14 +64,17 @@ export default class ImagePicker extends React.Component {
 
 const styles = StyleSheet.create({
   avatarContainer: {
-    borderColor: '#9B9B9B',
-    borderWidth: 1 / PixelRatio.get(),
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
   },
+  text: {
+    flex: 1,
+    height: 50
+  },
   avatar: {
-    borderRadius: 5,
-    width: 200,
-    height: 100
+    flex: 1,
+    width: '100%',
+    height: '100%'
   }
 })

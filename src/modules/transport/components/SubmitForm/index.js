@@ -21,7 +21,14 @@ class TransportSubmitFormWithHardwareBack extends Component {
   }
 
   render() {
-    const { username, saveValues, initialValues, onSave, onSubmit } = this.props
+    const {
+      username,
+      saveValues,
+      initialValues,
+      onSave,
+      onSubmit,
+      uploadUrl
+    } = this.props
     const formatDate = date => moment(date).toDate()
     const TransformDate = {
       fromDate: formatDate,
@@ -45,6 +52,7 @@ class TransportSubmitFormWithHardwareBack extends Component {
             onSave={onSave}
             saveValues={saveValues}
             loading={this.props.formLoading}
+            uploadUrl={uploadUrl}
           />
         </ErrorBoundary>
       </React.Fragment>

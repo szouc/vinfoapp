@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import immutPropsToJS from '../../../utils/immutPropsToJS'
 import { addFuelRequest, backRequest } from '../actions'
 import { vehiclePickerSelector, vehicleInitPickerSelector } from '../selectors'
-import { WEB_ADDR } from '../../../settings/configs'
-import { DRIVER_TRANSPORT_UPLOAD_PIC } from '../../../settings/routes'
 
 const mapStateToProps = (state, ownProps) => {
   const vehicles = vehiclePickerSelector(state)
@@ -17,9 +15,7 @@ const mapStateToProps = (state, ownProps) => {
     vehicles,
     loading,
     formLoading,
-    initialValues,
-    uploadUrl:
-      WEB_ADDR + DRIVER_TRANSPORT_UPLOAD_PIC.replace(/:username/, username)
+    initialValues
   }
 }
 
