@@ -11,6 +11,9 @@ export default class ImagePicker extends React.Component {
   selectPhotoTapped() {
     const options = {
       title: '请选择',
+      cancelButtonTitle: '取消',
+      takePhotoButtonTitle: '使用相机',
+      chooseFromLibraryButtonTitle: '从图库中选择',
       quality: 1.0,
       storageOptions: {
         skipBackup: true
@@ -75,6 +78,6 @@ const styles = StyleSheet.create({
   avatar: {
     flex: 1,
     width: '100%',
-    height: '100%'
+    height: 400
   }
 })
